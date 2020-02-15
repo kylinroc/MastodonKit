@@ -17,11 +17,6 @@ public struct Instance: Codable {
     /// Added in 1.1.0
     public var description: String
 
-    /// A shorter description defined by the admin.
-    ///
-    /// Added in 2.9.2
-    public var shortDescription: String
-
     /// An email that may be contacted for any inquiries.
     ///
     /// Added in 1.1.0
@@ -31,6 +26,11 @@ public struct Instance: Codable {
     ///
     /// Added in 1.3.0
     public var version: String
+
+    /// Banner image for the website.
+    ///
+    /// Added in 1.6.1
+    public var thumbnail: URL?
 
     /// Primary langauges of the website and its staff.
     ///
@@ -42,13 +42,13 @@ public struct Instance: Codable {
     /// Added in 2.7.2
     public var registrations: Bool
 
+    /// A shorter description defined by the admin.
+    ///
+    /// Added in 2.9.2
+    public var shortDescription: String
+
     /// Whether registrations require moderator approval.
     ///
     /// Added in 2.9.2
     public var approvalRequired: Bool
-
-    /// Banner image for the website.
-    ///
-    /// Added in 1.6.1
-    public var thumbnail: URL?
 }
