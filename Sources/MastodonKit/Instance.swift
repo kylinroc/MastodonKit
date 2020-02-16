@@ -16,11 +16,6 @@ public struct Instance {
     /// Added in 1.1.0
     public var description: String
 
-    /// A shorter description defined by the admin.
-    ///
-    /// Added in 2.9.2
-    public var shortDescription: String
-
     /// An email that may be contacted for any inquiries.
     ///
     /// Added in 1.1.0
@@ -30,21 +25,6 @@ public struct Instance {
     ///
     /// Added in 1.3.0
     public var version: String
-
-    /// Primary langauges of the website and its staff.
-    ///
-    /// Added in 2.3.0
-    public var languages: [String]
-
-    /// Whether registrations are enabled.
-    ///
-    /// Added in 2.7.2
-    public var registrations: Bool
-
-    /// Whether registrations require moderator approval.
-    ///
-    /// Added in 2.9.2
-    public var approvalRequired: Bool
 
     /// URLs of interest for clients apps.
     ///
@@ -61,8 +41,28 @@ public struct Instance {
     /// Added in 1.6.1
     public var thumbnail: URL?
 
+    /// Primary langauges of the website and its staff.
+    ///
+    /// Added in 2.3.0
+    public var languages: [String]
+
     /// A user that can be contacted, as an alternative to `email`.
     ///
     /// Added in 2.3.0
     public var contactAccount: Account?
+
+    /// Whether registrations are enabled.
+    ///
+    /// Added in 2.7.2
+    public var registrations: Bool
+
+    /// A shorter description defined by the admin.
+    ///
+    /// Added in 2.9.2
+    public var shortDescription: String
+
+    /// Whether registrations require moderator approval.
+    ///
+    /// Added in 2.9.2
+    public var approvalRequired: Bool
 }
