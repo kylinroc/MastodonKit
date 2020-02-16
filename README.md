@@ -2,4 +2,4 @@
 
 ## Requirements
 
-- Mastodon 3.1.0+
+- Mastodon 3.0.0+
