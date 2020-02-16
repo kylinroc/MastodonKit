@@ -1,3 +1,5 @@
 # MastodonKit
 
-A description of this package.
+## Requirements
+
+- Mastodon 3.1.0+
