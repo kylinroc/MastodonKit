@@ -27,3 +27,13 @@ public struct Application: Codable {
     /// Added in 2.8.0
     public var vapidKey: String?
 }
+
+extension Application {
+    private enum CodingKeys: String, CodingKey {
+        case name
+        case website
+        case clientID = "client_id"
+        case clientSecret = "client_secret"
+        case vapidKey = "vapid_key"
+    }
+}

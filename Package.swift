@@ -5,5 +5,8 @@ import PackageDescription
 let package = Package(
     name: "MastodonKit",
     products: [.library(name: "MastodonKit", targets: ["MastodonKit"])],
-    targets: [.target(name: "MastodonKit")]
+    targets: [
+        .target(name: "MastodonKit"),
+        .testTarget(name: "MastodonKitTests", dependencies: ["MastodonKit"]),
+    ]
 )
