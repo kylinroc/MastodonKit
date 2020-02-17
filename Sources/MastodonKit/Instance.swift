@@ -1,5 +1,6 @@
 import Foundation
 
+/// Represents the software instance of Mastodon running on this domain.
 public struct Instance {
     /// The domain name of the instance.
     ///
