@@ -26,7 +26,9 @@ public final class Client {
                 }
 
                 do {
-                    let value = try JSONDecoder().decode(T.self, from: data)
+                    let decoder = JSONDecoder()
+                    decoder.dateDecodingStrategy = .formatted(Client.dateFormatter)
+                    let value = try decoder.decode(T.self, from: data)
                     completion(.success(value))
                 } catch {
                     completion(.failure(error))
@@ -56,4 +58,14 @@ extension Client.Request {
             "redirect_uris": redirectURIs,
         ])
     }
+}
+
+extension Client {
+    static let dateFormatter: DateFormatter = {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SZ"
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+        dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
+        return dateFormatter
+    }()
 }

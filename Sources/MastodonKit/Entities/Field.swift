@@ -17,3 +17,11 @@ public struct Field: Codable {
     /// Added in 2.6.0
     public var verifiedAt: Date?
 }
+
+extension Field {
+    private enum CodingKeys: String, CodingKey {
+        case name
+        case value
+        case verifiedAt = "verified_at"
+    }
+}
