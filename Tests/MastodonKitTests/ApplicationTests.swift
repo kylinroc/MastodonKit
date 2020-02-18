@@ -1,4 +1,4 @@
-import MastodonKit
+@testable import MastodonKit
 import XCTest
 
 final class ApplicationTests: XCTestCase {
@@ -16,7 +16,7 @@ final class ApplicationTests: XCTestCase {
             """
             .data(using: .utf8)!
 
-        let application = try! JSONDecoder().decode(Application.self, from: data)
+        let application = try! Client.makeJSONDecoder().decode(Application.self, from: data)
         XCTAssertEqual(application.name, "test app")
         XCTAssertEqual(application.website, nil)
         XCTAssertEqual(application.clientID, "TWhM-tNSuncnqN7DBJmoyeLnk6K3iJJ71KKXxgL1hPM")

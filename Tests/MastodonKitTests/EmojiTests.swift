@@ -1,4 +1,4 @@
-import MastodonKit
+@testable import MastodonKit
 import XCTest
 
 final class EmojiTests: XCTestCase {
@@ -14,7 +14,7 @@ final class EmojiTests: XCTestCase {
             """
             .data(using: .utf8)!
 
-        let emoji = try! JSONDecoder().decode(Emoji.self, from: data)
+        let emoji = try! Client.makeJSONDecoder().decode(Emoji.self, from: data)
         XCTAssertEqual(emoji.shortcode, "blobaww")
         XCTAssertEqual(emoji.url, URL(string: "https://files.mastodon.social/custom_emojis/images/000/011/739/original/blobaww.png"))
         XCTAssertEqual(emoji.staticURL, URL(string: "https://files.mastodon.social/custom_emojis/images/000/011/739/static/blobaww.png"))

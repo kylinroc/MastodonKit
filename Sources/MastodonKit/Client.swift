@@ -26,8 +26,8 @@ public final class Client {
                 }
 
                 do {
-                    let decoder = JSONDecoder()
-                    decoder.dateDecodingStrategy = .formatted(Client.dateFormatter)
+                    let decoder = Self.makeJSONDecoder()
+                    decoder.dateDecodingStrategy = .formatted(Self.dateFormatter)
                     let value = try decoder.decode(T.self, from: data)
                     completion(.success(value))
                 } catch {
@@ -68,4 +68,10 @@ extension Client {
         dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
         return dateFormatter
     }()
+
+    static func makeJSONDecoder() -> JSONDecoder {
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .formatted(dateFormatter)
+        return decoder
+    }
 }

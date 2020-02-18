@@ -1,4 +1,4 @@
-import MastodonKit
+@testable import MastodonKit
 import XCTest
 
 final class AttachmentTests: XCTestCase {
@@ -35,7 +35,7 @@ final class AttachmentTests: XCTestCase {
             """
             .data(using: .utf8)!
 
-        let attachment = try! JSONDecoder().decode(Attachment.self, from: data)
+        let attachment = try! Client.makeJSONDecoder().decode(Attachment.self, from: data)
         XCTAssertEqual(attachment.id, "22345792")
         XCTAssertEqual(attachment.type, .image)
         XCTAssertEqual(attachment.url, URL(string: "https://files.mastodon.social/media_attachments/files/022/345/792/original/57859aede991da25.jpeg"))

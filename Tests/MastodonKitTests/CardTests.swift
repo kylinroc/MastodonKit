@@ -1,4 +1,4 @@
-import MastodonKit
+@testable import MastodonKit
 import XCTest
 
 final class CardTests: XCTestCase {
@@ -22,7 +22,7 @@ final class CardTests: XCTestCase {
             """#
             .data(using: .utf8)!
 
-        let card = try! JSONDecoder().decode(Card.self, from: data)
+        let card = try! Client.makeJSONDecoder().decode(Card.self, from: data)
         XCTAssertEqual(card.url, URL(string: "https://www.youtube.com/watch?v=OMv_EPMED8Y"))
         XCTAssertEqual(card.title, "♪ Brand New Friend (Christmas Song!)")
         XCTAssertEqual(card.description, "")
