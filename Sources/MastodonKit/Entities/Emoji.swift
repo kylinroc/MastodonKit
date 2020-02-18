@@ -27,3 +27,13 @@ public struct Emoji: Codable {
     /// Added in 3.0.0
     public var category: String?
 }
+
+extension Emoji {
+    private enum CodingKeys: String, CodingKey {
+        case shortcode
+        case url
+        case staticURL = "static_url"
+        case visibleInPicker = "visible_in_picker"
+        case category
+    }
+}
