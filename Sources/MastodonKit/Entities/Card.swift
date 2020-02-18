@@ -1,6 +1,5 @@
 import Foundation
 
-/// Type of Card.
 public enum CardType: String, Codable {
     case link
     case photo

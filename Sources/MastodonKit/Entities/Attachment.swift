@@ -1,6 +1,5 @@
 import Foundation
 
-/// Type of Attachment.
 public enum AttachmentType: String, Codable {
     /// Unsupported or unrecognized file type.
     ///
