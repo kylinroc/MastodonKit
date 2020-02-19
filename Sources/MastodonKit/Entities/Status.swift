@@ -47,7 +47,7 @@ public final class Status: Codable {
     /// Added in 0.1.0
     public let inReplyToID: String?
 
-    /// The status which boosted by this status.
+    /// The status being reblogged.
     ///
     /// Added in 0.1.0
     public let reblog: Status?
@@ -102,10 +102,10 @@ public final class Status: Codable {
     /// Added in 1.0.0
     public let inReplyToAccountID: String?
 
-    /// Primary langauges of this status.
+    /// Primary language of this status
     ///
     /// Added in 1.4.0
-    public let language: [String]?
+    public let language: String?
 
     /// Have you muted notifications for this status's conversation?
     ///
