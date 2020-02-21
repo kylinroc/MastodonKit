@@ -19,3 +19,11 @@ public struct Tag: Codable {
 
     private var _history: [History]?
 }
+
+extension Tag {
+    private enum CodingKeys: String, CodingKey {
+        case name
+        case url
+        case _history = "history"
+    }
+}
