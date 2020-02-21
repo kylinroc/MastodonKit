@@ -2,6 +2,13 @@ import Foundation
 
 /// Represents a status posted by an account.
 public final class Status: Codable {
+    public enum Visibility: String, Codable {
+        case `public`
+        case unlisted
+        case `private`
+        case direct
+    }
+
     /// ID of the status in the database.
     ///
     /// Added in 0.1.0
@@ -141,13 +148,4 @@ public final class Status: Codable {
     ///
     /// Added in 3.1.0
     public let bookmarked: Bool?
-}
-
-extension Status {
-    public enum Visibility: String, Codable {
-        case `public`
-        case unlisted
-        case `private`
-        case direct
-    }
 }
