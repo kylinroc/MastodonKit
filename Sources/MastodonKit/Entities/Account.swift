@@ -105,5 +105,33 @@ public final class Account: Codable {
     /// Whether the account has opted into discovery features such as the profile directory.
     ///
     /// Added in 3.1.0
-    public let discoverable: Bool
+    public var discoverable: Bool { _discoverable ?? false }
+
+    private let _discoverable: Bool?
+}
+
+extension Account {
+    private enum CodingKeys: String, CodingKey {
+        case id
+        case username
+        case acct
+        case url
+        case displayName = "display_name"
+        case note
+        case avatar
+        case header
+        case locked
+        case createdAt = "created_at"
+        case statusesCount = "statuses_count"
+        case followersCount = "followers_count"
+        case followingCount = "following_count"
+        case avatarStatic = "avatar_static"
+        case headerStatic = "header_static"
+        case moved
+        case emojis
+        case fields
+        case bot
+        case source
+        case _discoverable
+    }
 }
