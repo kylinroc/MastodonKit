@@ -39,3 +39,14 @@ public struct Source: Codable {
     /// Added in 3.0.0
     public var followRequestsCount: Int
 }
+
+extension Source {
+    private enum CodingKeys: String, CodingKey {
+        case note
+        case privacy
+        case sensitive
+        case fields
+        case language
+        case followRequestsCount = "follow_requests_count"
+    }
+}
