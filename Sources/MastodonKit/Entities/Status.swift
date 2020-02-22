@@ -149,3 +149,36 @@ public final class Status: Codable {
     /// Added in 3.1.0
     public let bookmarked: Bool?
 }
+
+extension Status {
+    private enum CodingKeys: String, CodingKey {
+        case id
+        case uri
+        case createdAt = "created_at"
+        case account
+        case content
+        case reblogsCount = "reblogs_count"
+        case favouritesCount = "favourites_count"
+        case url
+        case inReplyToID = "in_reply_to_id"
+        case reblog
+        case favourited
+        case reblogged
+        case mediaAttachments = "media_attachments"
+        case mentions
+        case tags
+        case visibility
+        case sensitive
+        case application
+        case spoilerText = "spoiler_text"
+        case inReplyToAccountID = "in_reply_to_account_id"
+        case language
+        case muted
+        case pinned
+        case emojis
+        case repliesCount = "replies_count"
+        case card
+        case poll
+        case bookmarked
+    }
+}

@@ -42,7 +42,8 @@ public struct Card: Codable {
     /// A link to the author of the original resource.
     ///
     /// Added in 1.3.0
-    public var authorURL: URL?
+    public var authorURL: URL? { URL(string: _authorURL) }
+    private var _authorURL: String?
 
     /// The provider of the original resource.
     ///
@@ -52,7 +53,8 @@ public struct Card: Codable {
     /// A link to the provider of the original resource.
     ///
     /// Added in 1.3.0
-    public var providerURL: URL?
+    public var providerURL: URL? { URL(string: _providerURL) }
+    private var _providerURL: String?
 
     /// HTML to be used for generating the preview card.
     ///
@@ -72,14 +74,7 @@ public struct Card: Codable {
     /// Used for photo embeds, instead of custom `html`.
     ///
     /// Added in 2.1.0
-    public var embedURL: URL? {
-        if let _embedURL = _embedURL {
-            return URL(string: _embedURL)
-        } else {
-            return nil
-        }
-    }
-
+    public var embedURL: URL? { URL(string: _embedURL) }
     private var _embedURL: String?
 }
 
@@ -91,9 +86,9 @@ extension Card {
         case image
         case type
         case authorName = "author_name"
-        case authorURL = "author_url"
+        case _authorURL = "author_url"
         case providerName = "provider_name"
-        case providerURL = "provider_url"
+        case _providerURL = "provider_url"
         case html
         case width
         case height
