@@ -25,7 +25,8 @@ public final class Account: Codable {
     /// The profile's display name.
     ///
     /// Added in 0.1.0
-    public let displayName: String
+    public var displayName: String { _displayName.isEmpty ? username : _displayName }
+    private let _displayName: String
 
     /// The profile's bio / description.
     ///
@@ -118,7 +119,7 @@ extension Account {
         case username
         case acct
         case url
-        case displayName = "display_name"
+        case _displayName = "display_name"
         case note
         case avatarURL = "avatar"
         case header
