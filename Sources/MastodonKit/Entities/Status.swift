@@ -97,7 +97,7 @@ public final class Status: Codable {
     /// The application used to post this status.
     ///
     /// Added in 0.9.9
-    public let application: Application
+    public let application: Application?
 
     /// Subject or summary line, below which status content is collapsed until expanded.
     ///
