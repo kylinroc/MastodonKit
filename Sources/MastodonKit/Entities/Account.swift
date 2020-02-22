@@ -35,7 +35,7 @@ public final class Account: Codable {
     /// An image icon that is shown next to statuses and in the profile.
     ///
     /// Added in 0.1.0
-    public let avatar: URL
+    public let avatarURL: URL
 
     /// An image banner that is shown above the profile and in profile cards.
     ///
@@ -67,10 +67,12 @@ public final class Account: Codable {
     /// Added in 0.1.0
     public let followingCount: Int
 
-    /// A static version of the avatar. Equal to `avatar` if its value is a static image; different if `avatar` is an animated GIF.
+    /// A static version of the avatar.
+    ///
+    /// Equal to `avatarURL` if its value is a static image; different if `avatarURL` is an animated GIF.
     ///
     /// Added in 1.1.2
-    public let avatarStatic: URL
+    public let staticAvatarURL: URL
 
     /// A static version of the header. Equal to `header` if its value is a static image; different if `header` is an animated GIF.
     ///
@@ -118,14 +120,14 @@ extension Account {
         case url
         case displayName = "display_name"
         case note
-        case avatar
+        case avatarURL = "avatar"
         case header
         case locked
         case createdAt = "created_at"
         case statusesCount = "statuses_count"
         case followersCount = "followers_count"
         case followingCount = "following_count"
-        case avatarStatic = "avatar_static"
+        case staticAvatarURL = "avatar_static"
         case headerStatic = "header_static"
         case moved
         case emojis
