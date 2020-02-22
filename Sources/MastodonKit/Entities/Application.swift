@@ -10,7 +10,7 @@ public struct Application: Codable {
     /// The website associated with your application.
     ///
     /// Added in 0.9.9
-    public var website: URL?
+    public var website: String?
 
     /// Client ID key, to be used for obtaining OAuth tokens.
     ///
