@@ -79,11 +79,11 @@ extension Client {
 extension Client.Request {
     public static func createAnApplication(
         clientName: String,
-        redirectURIs: String = "urn:ietf:wg:oauth:2.0:oob"
+        redirectURI: String = "urn:ietf:wg:oauth:2.0:oob"
     ) -> Client.Request<Application> {
         .init(path: "/api/v1/apps", httpMethod: .post, parameters: [
             "client_name": clientName,
-            "redirect_uris": redirectURIs,
+            "redirect_uris": redirectURI,
         ])
     }
 

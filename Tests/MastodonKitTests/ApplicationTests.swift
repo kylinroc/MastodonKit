@@ -22,5 +22,6 @@ final class ApplicationTests: XCTestCase {
         XCTAssertEqual(application.clientID, "TWhM-tNSuncnqN7DBJmoyeLnk6K3iJJ71KKXxgL1hPM")
         XCTAssertEqual(application.clientSecret, "ZEaFUFmF0umgBX1qKJDjaU99Q31lDkOU8NutzTOoliw")
         XCTAssertEqual(application.vapidKey, "BCk-QqERU0q-CfYZjcuB6lnyyOYfJ2AifKqfeGIm7Z-HiTU5T9eTG5GxVA0_OH5mMlI4UkkDTpaZwozy0TzdZ2M=")
+        XCTAssertEqual(application.redirectURI, "urn:ietf:wg:oauth:2.0:oob")
     }
 }

@@ -26,6 +26,8 @@ public struct Application: Codable {
     ///
     /// Added in 2.8.0
     public var vapidKey: String?
+
+    public var redirectURI: String?
 }
 
 extension Application {
@@ -35,5 +37,6 @@ extension Application {
         case clientID = "client_id"
         case clientSecret = "client_secret"
         case vapidKey = "vapid_key"
+        case redirectURI = "redirect_uri"
     }
 }
