@@ -39,17 +39,30 @@ public final class Client {
                 return
             }
 
-            guard let data = data else {
-                return
+            guard let response = response as? HTTPURLResponse else {
+                fatalError()
             }
 
-            do {
-                let decoder = Self.makeJSONDecoder()
-                decoder.dateDecodingStrategy = .formatted(Self.dateFormatter)
-                let value = try decoder.decode(T.self, from: data)
-                completion(.success(value))
-            } catch {
-                completion(.failure(error))
+            if response.statusCode == 200 {
+                guard let data = data else {
+                    fatalError()
+                }
+
+                do {
+                    let value = try Client.makeJSONDecoder().decode(T.self, from: data)
+                    completion(.success(value))
+                } catch {
+                    completion(.failure(error))
+                }
+            } else {
+                if let data = data {
+                    do {
+                        let error = try Client.makeJSONDecoder().decode(MastodonURLError.self, from: data)
+                        completion(.failure(error))
+                    } catch {
+                        completion(.failure(error))
+                    }
+                }
             }
         }.resume()
     }
