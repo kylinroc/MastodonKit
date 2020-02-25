@@ -110,6 +110,16 @@ extension Client.Request {
             "limit": "\(limit)",
         ])
     }
+
+    public static func obtainToken(for application: Application, authorizationCode: String) -> Client.Request<Token> {
+        .init(path: "/oauth/token", httpMethod: .post, parameters: [
+            "client_id": application.clientID!,
+            "client_secret": application.clientSecret!,
+            "redirect_uri": application.redirectURI!,
+            "code": authorizationCode,
+            "grant_type": "authorization_code",
+        ])
+    }
 }
 
 extension Client {
