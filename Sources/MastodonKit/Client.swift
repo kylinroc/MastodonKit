@@ -66,6 +66,18 @@ public final class Client {
             }
         }.resume()
     }
+
+    public func authenticationURL(for application: Application) -> URL {
+        var urlComponents = URLComponents(url: baseURL, resolvingAgainstBaseURL: true)!
+        urlComponents.path = "/oauth/authorize"
+        urlComponents.queryItems = [
+            URLQueryItem(name: "client_id", value: application.clientID),
+            URLQueryItem(name: "client_secret", value: application.clientSecret),
+            URLQueryItem(name: "redirect_uri", value: application.redirectURI),
+            URLQueryItem(name: "response_type", value: "code"),
+        ]
+        return urlComponents.url!
+    }
 }
 
 extension Client {
