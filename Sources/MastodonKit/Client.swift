@@ -7,9 +7,11 @@ public enum HTTPMethod: String {
 
 public final class Client {
     public let baseURL: URL
+    public let token: Token?
 
-    public init(baseURL: URL) {
+    public init(baseURL: URL, token: Token? = nil) {
         self.baseURL = baseURL
+        self.token = token
     }
 
     public func send<T>(request: Request<T>, completion: @escaping (Result<T, Error>) -> Void) {
@@ -31,6 +33,9 @@ public final class Client {
                 completion(.failure(error))
                 return
             }
+        }
+        if let token = token {
+            urlRequest.addValue("\(token.tokenType) \(token.accessToken)", forHTTPHeaderField: "Authorization")
         }
 
         URLSession.shared.dataTask(with: urlRequest) { data, response, error in
@@ -109,6 +114,10 @@ extension Client.Request {
             "only_media": "\(onlyMedia)",
             "limit": "\(limit)",
         ])
+    }
+
+    public static func fetchHomeTimeline() -> Client.Request<[Status]> {
+        .init(path: "/api/v1/timelines/home", httpMethod: .get, parameters: [:])
     }
 
     public static func obtainToken(for application: Application, authorizationCode: String) -> Client.Request<Token> {
