@@ -10,30 +10,7 @@ public final class Client {
     }
 
     public func send<T>(request: Request<T>, completion: @escaping (Result<T, Error>) -> Void) {
-        var urlRequest: URLRequest
-        switch request.httpMethod {
-        case .get:
-            var urlComponents = URLComponents(url: baseURL, resolvingAgainstBaseURL: false)!
-            urlComponents.path = request.path
-            urlComponents.queryItems = request.parameters.map(URLQueryItem.init)
-            urlRequest = URLRequest(url: urlComponents.url!)
-        case .post:
-            let url = baseURL.appendingPathComponent(request.path)
-            urlRequest = URLRequest(url: url)
-            urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
-            urlRequest.httpMethod = request.httpMethod.rawValue
-            do {
-                urlRequest.httpBody = try JSONEncoder().encode(request.parameters)
-            } catch {
-                completion(.failure(error))
-                return
-            }
-        }
-        if let token = token {
-            urlRequest.addValue("\(token.tokenType) \(token.accessToken)", forHTTPHeaderField: "Authorization")
-        }
-
-        URLSession.shared.dataTask(with: urlRequest) { data, response, error in
+        URLSession.shared.dataTask(with: makeURLRequest(request)) { data, response, error in
             if let error = error {
                 completion(.failure(error))
                 return
@@ -77,6 +54,34 @@ public final class Client {
             URLQueryItem(name: "response_type", value: "code"),
         ]
         return urlComponents.url!
+    }
+
+    private func makeURLRequest<T>(_ request: Request<T>) -> URLRequest {
+        var urlRequest: URLRequest
+
+        switch request.httpMethod {
+        case .get:
+            var urlComponents = URLComponents(url: baseURL, resolvingAgainstBaseURL: false)!
+            urlComponents.path = request.path
+            urlComponents.queryItems = request.parameters.map(URLQueryItem.init)
+            urlRequest = URLRequest(url: urlComponents.url!)
+        case .post:
+            let url = baseURL.appendingPathComponent(request.path)
+            urlRequest = URLRequest(url: url)
+            urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
+            urlRequest.httpMethod = request.httpMethod.rawValue
+            do {
+                urlRequest.httpBody = try JSONEncoder().encode(request.parameters)
+            } catch {
+                assertionFailure("\(error)")
+            }
+        }
+
+        if let token = token {
+            urlRequest.addValue("\(token.tokenType) \(token.accessToken)", forHTTPHeaderField: "Authorization")
+        }
+
+        return urlRequest
     }
 }
 
