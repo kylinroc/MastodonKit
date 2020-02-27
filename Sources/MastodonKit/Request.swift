@@ -1,3 +1,8 @@
+public enum HTTPMethod: String {
+    case get = "GET"
+    case post = "POST"
+}
+
 public struct Request<T: Decodable> {
     var path: String
     var httpMethod: HTTPMethod

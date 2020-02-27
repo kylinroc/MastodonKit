@@ -1,10 +1,5 @@
 import Foundation
 
-public enum HTTPMethod: String {
-    case get = "GET"
-    case post = "POST"
-}
-
 public final class Client {
     public let baseURL: URL
     public let token: Token?
