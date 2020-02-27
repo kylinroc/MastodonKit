@@ -46,14 +46,14 @@ extension Application {
         clientName: String,
         redirectURI: String = "urn:ietf:wg:oauth:2.0:oob"
     ) -> Request<Application> {
-        .init(path: "/api/v1/apps", httpMethod: .post, parameters: [
+        Request(path: "/api/v1/apps", httpMethod: .post, parameters: [
             "client_name": clientName,
             "redirect_uris": redirectURI,
         ])
     }
 
     public func obtainToken(authorizationCode: String) -> Request<Token> {
-        .init(path: "/oauth/token", httpMethod: .post, parameters: [
+        Request(path: "/oauth/token", httpMethod: .post, parameters: [
             "client_id": clientID!,
             "client_secret": clientSecret!,
             "redirect_uri": redirectURI!,
