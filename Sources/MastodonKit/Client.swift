@@ -86,52 +86,6 @@ public final class Client {
 }
 
 extension Client {
-    public struct Request<T: Decodable> {
-        var path: String
-        var httpMethod: HTTPMethod
-        var parameters: [String: String]
-    }
-}
-
-extension Client.Request {
-    public static func createAnApplication(
-        clientName: String,
-        redirectURI: String = "urn:ietf:wg:oauth:2.0:oob"
-    ) -> Client.Request<Application> {
-        .init(path: "/api/v1/apps", httpMethod: .post, parameters: [
-            "client_name": clientName,
-            "redirect_uris": redirectURI,
-        ])
-    }
-
-    public static func fetchPublicTimeline(
-        local: Bool = false,
-        onlyMedia: Bool = false,
-        limit: Int = 20
-    ) -> Client.Request<[Status]> {
-        .init(path: "/api/v1/timelines/public", httpMethod: .get, parameters: [
-            "local": "\(local)",
-            "only_media": "\(onlyMedia)",
-            "limit": "\(limit)",
-        ])
-    }
-
-    public static func fetchHomeTimeline() -> Client.Request<[Status]> {
-        .init(path: "/api/v1/timelines/home", httpMethod: .get, parameters: [:])
-    }
-
-    public static func obtainToken(for application: Application, authorizationCode: String) -> Client.Request<Token> {
-        .init(path: "/oauth/token", httpMethod: .post, parameters: [
-            "client_id": application.clientID!,
-            "client_secret": application.clientSecret!,
-            "redirect_uri": application.redirectURI!,
-            "code": authorizationCode,
-            "grant_type": "authorization_code",
-        ])
-    }
-}
-
-extension Client {
     static let dateFormatter: DateFormatter = {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SZ"
