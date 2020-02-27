@@ -3,7 +3,7 @@ public enum HTTPMethod: String {
     case post = "POST"
 }
 
-public struct Request<T: Decodable> {
+public struct Request<Reponse: Decodable> {
     var path: String
     var httpMethod: HTTPMethod
     var parameters: [String: String]
