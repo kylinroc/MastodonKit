@@ -109,7 +109,6 @@ public final class Account: Codable {
     ///
     /// Added in 3.1.0
     public var discoverable: Bool { _discoverable ?? false }
-
     private let _discoverable: Bool?
 }
 
