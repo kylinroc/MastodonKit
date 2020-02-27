@@ -5,19 +5,18 @@ public struct Tag: Codable {
     /// The value of the hashtag after the # sign.
     ///
     /// Added in 0.9.0
-    public var name: String
+    public let name: String
 
     /// A link to the hashtag on the instance.
     ///
     /// Added in 0.9.0
-    public var url: URL
+    public let url: URL
 
     /// Usage statistics for given days.
     ///
     /// Added in 2.4.1
     public var history: [History] { _history ?? [] }
-
-    private var _history: [History]?
+    private let _history: [History]?
 }
 
 extension Tag {

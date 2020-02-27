@@ -12,70 +12,70 @@ public struct Card: Codable {
     /// Location of linked resource.
     ///
     /// Added in 1.0.0
-    public var url: URL
+    public let url: URL
 
     /// Title of linked resource.
     ///
     /// Added in 1.0.0
-    public var title: String
+    public let title: String
 
     /// Description of preview.
     ///
     /// Added in 1.0.0
-    public var description: String
+    public let description: String
 
     /// Preview thumbnail.
     ///
     /// Added in 1.0.0
-    public var image: URL?
+    public let image: URL?
 
     /// The type of the preview card.
     ///
     /// Added in 1.3.0
-    public var type: CardType
+    public let type: CardType
 
     /// The author of the original resource.
     ///
     /// Added in 1.3.0
-    public var authorName: String?
+    public let authorName: String?
 
     /// A link to the author of the original resource.
     ///
     /// Added in 1.3.0
     public var authorURL: URL? { URL(string: _authorURL) }
-    private var _authorURL: String?
+    private let _authorURL: String?
 
     /// The provider of the original resource.
     ///
     /// Added in 1.3.0
-    public var providerName: String?
+    public let providerName: String?
 
     /// A link to the provider of the original resource.
     ///
     /// Added in 1.3.0
     public var providerURL: URL? { URL(string: _providerURL) }
-    private var _providerURL: String?
+    private let _providerURL: String?
 
     /// HTML to be used for generating the preview card.
     ///
     /// Added in 1.3.0
-    public var html: String?
+    public let html: String?
 
     /// Width of preview, in pixels.
     ///
     /// Added in 1.3.0
-    public var width: Double?
+    public let width: Double?
 
     /// Height of preview, in pixels.
     ///
     /// Added in 1.3.0
-    public var height: Double?
+    public let height: Double?
 
     /// Used for photo embeds, instead of custom `html`.
     ///
     /// Added in 2.1.0
     public var embedURL: URL? { URL(string: _embedURL) }
-    private var _embedURL: String?
+    private let _embedURL: String?
 }
 
 extension Card {

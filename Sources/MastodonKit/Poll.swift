@@ -5,52 +5,52 @@ public struct Poll: Codable {
     /// The ID of the poll in the database.
     ///
     /// Added in 2.8.0
-    public var id: String
+    public let id: String
 
     /// When the poll ends.
     ///
     /// Added in 2.8.0
-    public var expiresAt: Date?
+    public let expiresAt: Date?
 
     /// Is the poll currently expired?
     ///
     /// Added in 2.8.0
-    public var expired: Bool
+    public let expired: Bool
 
     /// Does the poll allow multiple-choice answers?
     ///
     /// Added in 2.8.0
-    public var multiple: Bool
+    public let multiple: Bool
 
     /// How many votes have been received.
     ///
     /// Added in 2.8.0
-    public var votesCount: Int
+    public let votesCount: Int
 
     /// How many unique accounts have voted on a multiple-choice poll.
     ///
     /// Added in 2.8.0
-    public var votersCount: Int?
+    public let votersCount: Int?
 
     /// When called with a user token, has the authorized user voted?
     ///
     /// Added in 2.8.0
-    public var voted: Bool?
+    public let voted: Bool?
 
     /// When called with a user token, which options has the authorized user chosen? Contains an array of index values for `options`.
     ///
     /// Added in 2.8.0
-    public var ownVotes: [Int]?
+    public let ownVotes: [Int]?
 
     /// Possible answers for the poll.
     ///
     /// Added in 2.8.0
-    public var options: [Option]
+    public let options: [Option]
 
     /// Custom emoji to be used for rendering poll options.
     ///
     /// Added in 2.8.0
-    public var emojis: [Emoji]
+    public let emojis: [Emoji]
 }
 
 extension Poll {

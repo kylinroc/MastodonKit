@@ -12,32 +12,32 @@ public struct Source: Codable {
     /// Profile bio.
     ///
     /// Added in 1.5.0
-    public var note: String
+    public let note: String
 
     /// The default post privacy to be used for new statuses.
     ///
     /// Added in 1.5.0
-    public var privacy: Privacy
+    public let privacy: Privacy
 
     /// Whether new statuses should be marked sensitive by default.
     ///
     /// Added in 1.5.0
-    public var sensitive: Bool
+    public let sensitive: Bool
 
     /// Metadata about the account.
     ///
     /// Added in 2.4.0
-    public var fields: [Field]
+    public let fields: [Field]
 
     /// The default posting language for new statuses.
     ///
     /// Added in 2.4.2
-    public var language: String?
+    public let language: String?
 
     /// The number of pending follow requests.
     ///
     /// Added in 3.0.0
-    public var followRequestsCount: Int
+    public let followRequestsCount: Int
 }
 
 extension Source {

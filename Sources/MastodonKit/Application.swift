@@ -5,29 +5,29 @@ public struct Application: Codable {
     /// The name of your application.
     ///
     /// Added in 0.9.9
-    public var name: String
+    public let name: String
 
     /// The website associated with your application.
     ///
     /// Added in 0.9.9
-    public var website: String?
+    public let website: String?
 
     /// Client ID key, to be used for obtaining OAuth tokens.
     ///
     /// Added in 0.9.9
-    public var clientID: String?
+    public let clientID: String?
 
     /// Client secret key, to be used for obtaining OAuth tokens.
     ///
     /// Added in 0.9.9
-    public var clientSecret: String?
+    public let clientSecret: String?
 
     /// Used for Push Streaming API.
     ///
     /// Added in 2.8.0
-    public var vapidKey: String?
+    public let vapidKey: String?
 
-    public var redirectURI: String?
+    public let redirectURI: String?
 }
 
 extension Application {

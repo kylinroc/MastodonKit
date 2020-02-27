@@ -4,9 +4,9 @@ public enum HTTPMethod: String {
 }
 
 public struct Request<Reponse: Decodable> {
-    var path: String
-    var httpMethod: HTTPMethod
-    var parameters: [String: String]
+    let path: String
+    let httpMethod: HTTPMethod
+    let parameters: [String: String]
 }
 
 extension Request {
