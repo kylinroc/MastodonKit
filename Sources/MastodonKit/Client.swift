@@ -1,6 +1,20 @@
 import Foundation
 
 public final class Client {
+    static let dateFormatter: DateFormatter = {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SZ"
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+        dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
+        return dateFormatter
+    }()
+
+    static func makeJSONDecoder() -> JSONDecoder {
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .formatted(dateFormatter)
+        return decoder
+    }
+
     public let baseURL: URL
     public let token: Token?
 
@@ -82,21 +96,5 @@ public final class Client {
         }
 
         return urlRequest
-    }
-}
-
-extension Client {
-    static let dateFormatter: DateFormatter = {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SZ"
-        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
-        dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
-        return dateFormatter
-    }()
-
-    static func makeJSONDecoder() -> JSONDecoder {
-        let decoder = JSONDecoder()
-        decoder.dateDecodingStrategy = .formatted(dateFormatter)
-        return decoder
     }
 }
