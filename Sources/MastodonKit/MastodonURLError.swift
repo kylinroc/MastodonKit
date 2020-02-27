@@ -10,3 +10,10 @@ public struct MastodonURLError: Codable, Error {
     /// Added in 0.6.0
     public let errorDescription: String?
 }
+
+extension MastodonURLError {
+    private enum CodingKeys: String, CodingKey {
+        case error
+        case errorDescription = "error_description"
+    }
+}
