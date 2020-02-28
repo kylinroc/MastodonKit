@@ -23,7 +23,7 @@ public final class Client {
         self.token = token
     }
 
-    public func send<T>(request: Request<T>, completion: @escaping (Result<T, Error>) -> Void) {
+    public func send<T>(_ request: Request<T>, completion: @escaping (Result<T, Error>) -> Void) {
         URLSession.shared.dataTask(with: makeURLRequest(request)) { data, response, error in
             if let error = error {
                 completion(.failure(error))

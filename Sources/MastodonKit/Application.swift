@@ -43,11 +43,11 @@ extension Application {
 
 extension Application {
     public static func create(
-        clientName: String,
+        name: String,
         redirectURI: String = "urn:ietf:wg:oauth:2.0:oob"
     ) -> Request<Application> {
         Request(path: "/api/v1/apps", httpMethod: .post, parameters: [
-            "client_name": clientName,
+            "client_name": name,
             "redirect_uris": redirectURI,
         ])
     }
