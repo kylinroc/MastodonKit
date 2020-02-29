@@ -27,7 +27,7 @@ public enum AttachmentType: String, Codable {
     case audio
 }
 
-/// Represents a file or media attachment that can be added to a status.
+/// Represents a file or media attachment that can be added to a toot.
 public struct Attachment: Codable {
     /// The ID of the attachment in the database.
     ///

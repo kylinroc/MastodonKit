@@ -1,6 +1,6 @@
 import Foundation
 
-/// Represents an application that interfaces with the REST API to access accounts or post statuses.
+/// Represents an application that interfaces with the REST API to access accounts or post toots.
 public struct Application: Codable {
     /// The name of your application.
     ///

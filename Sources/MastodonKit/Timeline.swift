@@ -1,5 +1,5 @@
 public enum Timeline {
-    public static func home() -> Request<[Status]> {
+    public static func home() -> Request<[Toot]> {
         Request(path: "/api/v1/timelines/home", httpMethod: .get, parameters: [:])
     }
 
@@ -7,7 +7,7 @@ public enum Timeline {
         local: Bool = false,
         onlyMedia: Bool = false,
         limit: Int = 20
-    ) -> Request<[Status]> {
+    ) -> Request<[Toot]> {
         Request(path: "/api/v1/timelines/public", httpMethod: .get, parameters: [
             "local": "\(local)",
             "only_media": "\(onlyMedia)",

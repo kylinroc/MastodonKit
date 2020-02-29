@@ -1,7 +1,7 @@
 import Foundation
 
-/// Represents a status posted by an account.
-public final class Status: Codable {
+/// Represents a toot posted by an account.
+public final class Toot: Codable {
     public enum Visibility: String, Codable {
         case `public`
         case unlisted
@@ -9,97 +9,105 @@ public final class Status: Codable {
         case direct
     }
 
-    /// ID of the status in the database.
+    /// ID of the toot in the database.
     ///
     /// Added in 0.1.0
     public let id: String
 
-    /// URI of the status used for federation.
+    /// URI of the toot used for federation.
     ///
     /// Added in 0.1.0
     public let uri: String
 
-    /// The date when this status was created.
+    /// The date when this toot was created.
     ///
     /// Added in 0.1.0
     public let createdAt: Date
 
-    /// The account that authored this status.
+    /// The account that authored this toot.
     ///
     /// Added in 0.1.0
     public let account: Account
 
-    /// HTML-encoded status content.
+    /// HTML-encoded toot content.
     ///
     /// Added in 0.1.0
     public let content: String
 
-    /// How many boosts this status has received.
+    /// How many boosts this toot has received.
     ///
     /// Added in 0.1.0
     public let reblogsCount: Int
 
-    /// How many favourites this status has received.
+    /// How many favourites this toot has received.
     ///
     /// Added in 0.1.0
     public let favouritesCount: Int
 
-    /// A link to the status's HTML representation.
+    /// A link to the toot's HTML representation.
     ///
     /// Added in 0.1.0
     public let url: URL?
 
-    /// ID of the status being replied.
+    /// ID of the toot being replied.
     ///
     /// Added in 0.1.0
     public let inReplyToID: String?
 
-    /// The status being reblogged.
+    /// The toot being reblogged.
     ///
     /// Added in 0.1.0
-    public let reblog: Status?
+    public let reblog: Toot?
 
-    /// Have you favourited this status?
+    /// Have you favourited this toot?
     ///
     /// Added in 0.1.0
     public let favourited: Bool?
 
-    /// Have you boosted this status?
+    /// Have you boosted this toot?
     ///
     /// Added in 0.1.0
     public let reblogged: Bool?
 
-    /// Media that is attached to this status.
+    /// Media that is attached to this toot.
+
+
+
+
+
+
+
+
     ///
     /// Added in 0.6.0
     public let mediaAttachments: [Attachment]
 
-    /// Mentions of users within the status content.
+    /// Mentions of users within the toot content.
     ///
     /// Added in 0.6.0
     public let mentions: [Mention]
 
-    /// Hashtags used within the status content.
+    /// Hashtags used within the toot content.
     ///
     /// Added in 0.9.0
     public let tags: [Tag]
 
-    /// Visibility of this status.
+    /// Visibility of this toot.
     ///
     /// Added in 0.9.9
     public let visibility: Visibility
 
-    /// Is this status marked as sensitive content?
+    /// Is this toot marked as sensitive content?
     ///
     /// Added in 0.9.9
     public let sensitive: Bool
 
-    /// The application used to post this status.
+    /// The application used to post this toot.
     ///
     /// Added in 0.9.9
     public let application: Application?
 
-    /// Subject or summary line, below which status content is collapsed until expanded.
+    /// Subject or summary line, below which toot content is collapsed until expanded.
     ///
     /// Added in 1.0.0
     public let spoilerText: String
@@ -109,48 +117,48 @@ public final class Status: Codable {
     /// Added in 1.0.0
     public let inReplyToAccountID: String?
 
-    /// Primary language of this status
+    /// Primary language of this toot.
     ///
     /// Added in 1.4.0
     public let language: String?
 
-    /// Have you muted notifications for this status's conversation?
+    /// Have you muted notifications for this toot's conversation?
     ///
     /// Added in 1.4.0
     public let muted: Bool?
 
-    /// Have you pinned this status? Only appears if the status is pinnable.
+    /// Have you pinned this toot? Only appears if the toot is pinnable.
     ///
     /// Added in 1.6.0
     public let pinned: Bool?
 
-    /// Custom emoji to be used when rendering status content.
+    /// Custom emoji to be used when rendering toot content.
     ///
     /// Added in 2.0.0
     public let emojis: [Emoji]
 
-    /// How many replies this status has received.
+    /// How many replies this toot has received.
     ///
     /// Added in 2.5.0
     public let repliesCount: Int
 
-    /// Preview card for links included within status content.
+    /// Preview card for links included within toot content.
     ///
     /// Added in 2.6.0
     public let card: Card?
 
-    /// The poll attached to the status.
+    /// The poll attached to the toot.
     ///
     /// Added in 2.8.0
     public let poll: Poll?
 
-    /// Have you bookmarked this status?
+    /// Have you bookmarked this toot?
     ///
     /// Added in 3.1.0
     public let bookmarked: Bool?
 }
 
-extension Status {
+extension Toot {
     private enum CodingKeys: String, CodingKey {
         case id
         case uri

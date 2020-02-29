@@ -1,6 +1,6 @@
 import Foundation
 
-/// Represents a mention of a user within the content of a status.
+/// Represents a mention of a user within the content of a toot.
 public struct Mention: Codable {
     /// The account id of the mentioned user.
     ///

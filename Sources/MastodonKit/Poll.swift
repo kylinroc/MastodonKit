@@ -1,6 +1,6 @@
 import Foundation
 
-/// Represents a poll attached to a status.
+/// Represents a poll attached to a toot.
 public struct Poll: Codable {
     /// The ID of the poll in the database.
     ///

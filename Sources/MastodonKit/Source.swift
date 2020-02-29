@@ -14,12 +14,12 @@ public struct Source: Codable {
     /// Added in 1.5.0
     public let note: String
 
-    /// The default post privacy to be used for new statuses.
+    /// The default post privacy to be used for new toots.
     ///
     /// Added in 1.5.0
     public let privacy: Privacy
 
-    /// Whether new statuses should be marked sensitive by default.
+    /// Whether new toots should be marked sensitive by default.
     ///
     /// Added in 1.5.0
     public let sensitive: Bool
@@ -29,7 +29,7 @@ public struct Source: Codable {
     /// Added in 2.4.0
     public let fields: [Field]
 
-    /// The default posting language for new statuses.
+    /// The default posting language for new toots.
     ///
     /// Added in 2.4.2
     public let language: String?

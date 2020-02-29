@@ -1,6 +1,6 @@
 import Foundation
 
-/// Represents a hashtag used within the content of a status.
+/// Represents a hashtag used within the content of a toot.
 public struct Tag: Codable {
     /// The value of the hashtag after the # sign.
     ///

@@ -1,7 +1,7 @@
 @testable import MastodonKit
 import XCTest
 
-final class StatusTest: XCTestCase {
+final class TootTest: XCTestCase {
     func testDecoding() throws {
         let data = #"""
             {
@@ -86,28 +86,28 @@ final class StatusTest: XCTestCase {
             """#
             .data(using: .utf8)!
 
-        let status = try! Client.makeJSONDecoder().decode(Status.self, from: data)
-        XCTAssertEqual(status.id, "103270115826048975")
-        XCTAssertEqual(status.uri, "https://mastodon.social/users/Gargron/statuses/103270115826048975")
-        XCTAssertEqual(status.createdAt, Client.dateFormatter.date(from: "2019-12-08T03:48:33.901Z"))
-        XCTAssertEqual(status.content, "<p>&quot;I lost my inheritance with one wrong digit on my sort code&quot;</p><p><a href=\"https://www.theguardian.com/money/2019/dec/07/i-lost-my-193000-inheritance-with-one-wrong-digit-on-my-sort-code\" rel=\"nofollow noopener noreferrer\" target=\"_blank\"><span class=\"invisible\">https://www.</span><span class=\"ellipsis\">theguardian.com/money/2019/dec</span><span class=\"invisible\">/07/i-lost-my-193000-inheritance-with-one-wrong-digit-on-my-sort-code</span}</p>")
-        XCTAssertEqual(status.reblogsCount, 6)
-        XCTAssertEqual(status.favouritesCount, 11)
-        XCTAssertEqual(status.url, URL(string: "https://mastodon.social/@Gargron/103270115826048975"))
-        XCTAssertNil(status.inReplyToID)
-        XCTAssertNil(status.reblog)
-        XCTAssertEqual(status.favourited, false)
-        XCTAssertEqual(status.reblogged, false)
-        XCTAssertEqual(status.visibility, .public)
-        XCTAssertFalse(status.sensitive)
-        XCTAssertEqual(status.spoilerText, "")
-        XCTAssertNil(status.inReplyToAccountID)
-        XCTAssertEqual(status.language, "en")
-        XCTAssertEqual(status.muted, false)
-        XCTAssertNil(status.pinned)
-        XCTAssertEqual(status.repliesCount, 5)
-        XCTAssertNotNil(status.card)
-        XCTAssertNil(status.poll)
-        XCTAssertEqual(status.bookmarked, false)
+        let toot = try! Client.makeJSONDecoder().decode(Toot.self, from: data)
+        XCTAssertEqual(toot.id, "103270115826048975")
+        XCTAssertEqual(toot.uri, "https://mastodon.social/users/Gargron/statuses/103270115826048975")
+        XCTAssertEqual(toot.createdAt, Client.dateFormatter.date(from: "2019-12-08T03:48:33.901Z"))
+        XCTAssertEqual(toot.content, "<p>&quot;I lost my inheritance with one wrong digit on my sort code&quot;</p><p><a href=\"https://www.theguardian.com/money/2019/dec/07/i-lost-my-193000-inheritance-with-one-wrong-digit-on-my-sort-code\" rel=\"nofollow noopener noreferrer\" target=\"_blank\"><span class=\"invisible\">https://www.</span><span class=\"ellipsis\">theguardian.com/money/2019/dec</span><span class=\"invisible\">/07/i-lost-my-193000-inheritance-with-one-wrong-digit-on-my-sort-code</span}</p>")
+        XCTAssertEqual(toot.reblogsCount, 6)
+        XCTAssertEqual(toot.favouritesCount, 11)
+        XCTAssertEqual(toot.url, URL(string: "https://mastodon.social/@Gargron/103270115826048975"))
+        XCTAssertNil(toot.inReplyToID)
+        XCTAssertNil(toot.reblog)
+        XCTAssertEqual(toot.favourited, false)
+        XCTAssertEqual(toot.reblogged, false)
+        XCTAssertEqual(toot.visibility, .public)
+        XCTAssertFalse(toot.sensitive)
+        XCTAssertEqual(toot.spoilerText, "")
+        XCTAssertNil(toot.inReplyToAccountID)
+        XCTAssertEqual(toot.language, "en")
+        XCTAssertEqual(toot.muted, false)
+        XCTAssertNil(toot.pinned)
+        XCTAssertEqual(toot.repliesCount, 5)
+        XCTAssertNotNil(toot.card)
+        XCTAssertNil(toot.poll)
+        XCTAssertEqual(toot.bookmarked, false)
     }
 }

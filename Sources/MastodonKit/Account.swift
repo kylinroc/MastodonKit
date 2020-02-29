@@ -33,7 +33,7 @@ public final class Account: Codable {
     /// Added in 0.1.0
     public let note: String
 
-    /// An image icon that is shown next to statuses and in the profile.
+    /// An image icon that is shown next to toots and in the profile.
     ///
     /// Added in 0.1.0
     public let avatarURL: URL
@@ -53,10 +53,10 @@ public final class Account: Codable {
     /// Added in 0.1.0
     public let createdAt: Date
 
-    /// How many statuses are attached to this account.
+    /// How many toots are attached to this account.
     ///
     /// Added in 0.1.0
-    public let statusesCount: Int
+    public let tootsCount: Int
 
     /// The reported followers of this profile.
     ///
@@ -124,7 +124,7 @@ extension Account {
         case header
         case locked
         case createdAt = "created_at"
-        case statusesCount = "statuses_count"
+        case tootsCount = "statuses_count"
         case followersCount = "followers_count"
         case followingCount = "following_count"
         case staticAvatarURL = "avatar_static"
