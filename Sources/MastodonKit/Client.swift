@@ -77,7 +77,9 @@ public final class Client {
         case .get:
             var urlComponents = URLComponents(url: baseURL, resolvingAgainstBaseURL: false)!
             urlComponents.path = request.path
-            urlComponents.queryItems = request.parameters.map(URLQueryItem.init)
+            if let parameters = request.parameters {
+                urlComponents.queryItems = parameters.map(URLQueryItem.init)
+            }
             urlRequest = URLRequest(url: urlComponents.url!)
         case .post:
             let url = baseURL.appendingPathComponent(request.path)

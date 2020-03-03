@@ -1,8 +1,8 @@
 public enum Timeline {
     public static func home(pagination: Pagination<Toot>? = nil) -> Request<[Toot]> {
-        var parameters: [String: String] = [:]
+        var parameters: [String: String]?
         if let pagination = pagination {
-            parameters[pagination.key] = pagination.value.id
+            parameters = [pagination.key: pagination.value.id]
         }
         return Request(path: "/api/v1/timelines/home", httpMethod: .get, parameters: parameters)
     }

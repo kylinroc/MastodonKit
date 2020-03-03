@@ -137,3 +137,9 @@ extension Account {
         case _discoverable
     }
 }
+
+extension Account {
+    public func verifyCredentials() -> Request<Account> {
+        Request(path: "/api/v1/accounts/verify_credentials", httpMethod: .get, parameters: nil)
+    }
+}
