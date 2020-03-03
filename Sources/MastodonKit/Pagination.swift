@@ -13,4 +13,13 @@ public enum Pagination<T> {
             return "min_id"
         }
     }
+
+    var value: T {
+        switch self {
+        case .olderThan(let value),
+             .newerThan(let value),
+             .immediatelyNewer(let value):
+            return value
+        }
+    }
 }
