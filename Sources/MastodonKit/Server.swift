@@ -1,7 +1,7 @@
 import Foundation
 
 /// Represents the software instance of Mastodon running on this domain.
-public struct Instance: Codable {
+public struct Server: Codable {
     /// The domain name of the instance.
     ///
     /// Added in 1.1.0
