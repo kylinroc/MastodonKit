@@ -15,11 +15,11 @@ public final class Client {
         return decoder
     }
 
-    public let baseURL: URL
+    public let serverURL: URL
     public let token: Token?
 
-    public init(baseURL: URL, token: Token? = nil) {
-        self.baseURL = baseURL
+    public init(serverURL: URL, token: Token? = nil) {
+        self.serverURL = serverURL
         self.token = token
     }
 
@@ -59,7 +59,7 @@ public final class Client {
     }
 
     public func authenticationURL(for application: Application) -> URL {
-        var urlComponents = URLComponents(url: baseURL, resolvingAgainstBaseURL: true)!
+        var urlComponents = URLComponents(url: serverURL, resolvingAgainstBaseURL: true)!
         urlComponents.path = "/oauth/authorize"
         urlComponents.queryItems = [
             URLQueryItem(name: "client_id", value: application.clientID),
@@ -75,14 +75,14 @@ public final class Client {
 
         switch request.httpMethod {
         case .get:
-            var urlComponents = URLComponents(url: baseURL, resolvingAgainstBaseURL: false)!
+            var urlComponents = URLComponents(url: serverURL, resolvingAgainstBaseURL: false)!
             urlComponents.path = request.path
             if let parameters = request.parameters {
                 urlComponents.queryItems = parameters.map(URLQueryItem.init)
             }
             urlRequest = URLRequest(url: urlComponents.url!)
         case .post:
-            let url = baseURL.appendingPathComponent(request.path)
+            let url = serverURL.appendingPathComponent(request.path)
             urlRequest = URLRequest(url: url)
             urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
             urlRequest.httpMethod = request.httpMethod.rawValue
