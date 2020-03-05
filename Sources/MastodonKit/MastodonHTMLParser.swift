@@ -35,11 +35,17 @@ public final class MastodonHTMLParser: NSObject {
 
     public func parse() -> NSMutableAttributedString {
         result = NSMutableAttributedString()
-        let data = "<html>\(html.replacingOccurrences(of: "<br>", with: "<br />"))</html>".data(using: .utf8)!
-        let parser = XMLParser(data: data)
+        let parser = XMLParser(data: processedHTMLData())
         parser.delegate = self
         parser.parse()
         return result
+    }
+
+    private func processedHTMLData() -> Data {
+        let html = self.html
+            .replacingOccurrences(of: "<br>", with: "<br />")
+            .replacingOccurrences(of: "&nbsp;", with: " ")
+        return "<html>\(html)</html>".data(using: .utf8)!
     }
 }
 
