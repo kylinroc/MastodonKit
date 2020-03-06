@@ -70,14 +70,6 @@ public final class Toot: Codable {
     public let reblogged: Bool?
 
     /// Media that is attached to this toot.
-
-
-
-
-
-
-
-
     ///
     /// Added in 0.6.0
     public let mediaAttachments: [Attachment]
@@ -140,7 +132,7 @@ public final class Toot: Codable {
     /// How many replies this toot has received.
     ///
     /// Added in 2.5.0
-    public let repliesCount: Int
+    public let repliesCount: Int?
 
     /// Preview card for links included within toot content.
     ///
