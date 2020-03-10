@@ -89,7 +89,7 @@ final class TootTest: XCTestCase {
         let toot = try! Client.makeJSONDecoder().decode(Toot.self, from: data)
         XCTAssertEqual(toot.id, "103270115826048975")
         XCTAssertEqual(toot.uri, "https://mastodon.social/users/Gargron/statuses/103270115826048975")
-        XCTAssertEqual(toot.createdAt, Client.dateFormatter.date(from: "2019-12-08T03:48:33.901Z"))
+        XCTAssertEqual(toot.creationDate, Client.dateFormatter.date(from: "2019-12-08T03:48:33.901Z"))
         XCTAssertEqual(toot.content, "<p>&quot;I lost my inheritance with one wrong digit on my sort code&quot;</p><p><a href=\"https://www.theguardian.com/money/2019/dec/07/i-lost-my-193000-inheritance-with-one-wrong-digit-on-my-sort-code\" rel=\"nofollow noopener noreferrer\" target=\"_blank\"><span class=\"invisible\">https://www.</span><span class=\"ellipsis\">theguardian.com/money/2019/dec</span><span class=\"invisible\">/07/i-lost-my-193000-inheritance-with-one-wrong-digit-on-my-sort-code</span}</p>")
         XCTAssertEqual(toot.reblogsCount, 6)
         XCTAssertEqual(toot.favouritesCount, 11)
