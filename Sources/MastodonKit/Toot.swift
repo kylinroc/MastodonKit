@@ -22,7 +22,7 @@ public final class Toot: Codable {
     /// The date when this toot was created.
     ///
     /// Added in 0.1.0
-    public let createdAt: Date
+    public let creationDate: Date
 
     /// The account that authored this toot.
     ///
@@ -72,7 +72,7 @@ public final class Toot: Codable {
     /// Media that is attached to this toot.
     ///
     /// Added in 0.6.0
-    public let mediaAttachments: [Attachment]
+    public let attachments: [Attachment]
 
     /// Mentions of users within the toot content.
     ///
@@ -154,7 +154,7 @@ extension Toot {
     private enum CodingKeys: String, CodingKey {
         case id
         case uri
-        case createdAt = "created_at"
+        case creationDate = "created_at"
         case account
         case content
         case reblogsCount = "reblogs_count"
@@ -164,7 +164,7 @@ extension Toot {
         case reblog
         case favourited
         case reblogged
-        case mediaAttachments = "media_attachments"
+        case attachments = "media_attachments"
         case mentions
         case tags
         case visibility
