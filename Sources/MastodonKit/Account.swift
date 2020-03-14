@@ -138,8 +138,20 @@ extension Account {
     }
 }
 
+extension Account: Equatable {
+    public static func == (lhs: Account, rhs: Account) -> Bool {
+        lhs.id == rhs.id
+    }
+}
+
+extension Account: Hashable {
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
+}
+
 extension Account {
-    public func verifyCredentials() -> Request<Account> {
+    public static func verifyCredentials() -> Request<Account> {
         Request(path: "/api/v1/accounts/verify_credentials", httpMethod: .get, parameters: nil)
     }
 }
