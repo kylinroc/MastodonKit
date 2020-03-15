@@ -57,7 +57,7 @@ public final class Toot: Codable {
     /// The toot being reblogged.
     ///
     /// Added in 0.1.0
-    public let reblog: Toot?
+    public let boostedToot: Toot?
 
     /// Have you favourited this toot?
     ///
@@ -161,7 +161,7 @@ extension Toot {
         case favouritesCount = "favourites_count"
         case url
         case inReplyToID = "in_reply_to_id"
-        case reblog
+        case boostedToot = "reblog"
         case favourited
         case reblogged
         case attachments = "media_attachments"

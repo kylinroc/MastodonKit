@@ -95,7 +95,7 @@ final class TootTest: XCTestCase {
         XCTAssertEqual(toot.favouritesCount, 11)
         XCTAssertEqual(toot.url, URL(string: "https://mastodon.social/@Gargron/103270115826048975"))
         XCTAssertNil(toot.inReplyToID)
-        XCTAssertNil(toot.reblog)
+        XCTAssertNil(toot.boostedToot)
         XCTAssertEqual(toot.favourited, false)
         XCTAssertEqual(toot.reblogged, false)
         XCTAssertEqual(toot.visibility, .public)
