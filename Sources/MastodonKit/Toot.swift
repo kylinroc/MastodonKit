@@ -92,7 +92,7 @@ public final class Toot: Codable {
     /// Is this toot marked as sensitive content?
     ///
     /// Added in 0.9.9
-    public let sensitive: Bool
+    public let isSensitive: Bool
 
     /// The application used to post this toot.
     ///
@@ -168,7 +168,7 @@ extension Toot {
         case mentions
         case tags
         case visibility
-        case sensitive
+        case isSensitive = "sensitive"
         case application
         case spoilerText = "spoiler_text"
         case inReplyToAccountID = "in_reply_to_account_id"

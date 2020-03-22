@@ -38,6 +38,7 @@ public final class MastodonHTMLParser: NSObject {
         let parser = XMLParser(data: processedHTMLData())
         parser.delegate = self
         parser.parse()
+        result.trimCharacters(in: .whitespacesAndNewlines)
         return result
     }
 
@@ -114,5 +115,17 @@ extension MastodonHTMLParser: XMLParserDelegate {
 extension NSMutableAttributedString {
     fileprivate func append(_ string: String) {
         append(NSAttributedString(string: string))
+    }
+
+    fileprivate func trimCharacters(in set: CharacterSet) {
+        let trimmedString = string.trimmingCharacters(in: set)
+        let trimmedStringRange = (string as NSString).range(of: trimmedString)
+        guard trimmedStringRange.location != NSNotFound else {
+            return
+        }
+
+        let trimmedStringEndLocation = trimmedStringRange.location + trimmedStringRange.length
+        deleteCharacters(in: NSRange(location: trimmedStringEndLocation, length: length - trimmedStringEndLocation))
+        deleteCharacters(in: NSRange(location: 0, length: trimmedStringRange.location))
     }
 }
