@@ -17,7 +17,7 @@ public struct Source: Codable {
     /// The default post privacy to be used for new toots.
     ///
     /// Added in 1.5.0
-    public let privacy: Privacy
+    public let privacy: Privacy?
 
     /// Whether new toots should be marked sensitive by default.
     ///
@@ -37,7 +37,7 @@ public struct Source: Codable {
     /// The number of pending follow requests.
     ///
     /// Added in 3.0.0
-    public let followRequestsCount: Int
+    public let followRequestsCount: Int?
 }
 
 extension Source {

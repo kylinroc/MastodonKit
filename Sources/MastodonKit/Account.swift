@@ -150,8 +150,18 @@ extension Account: Hashable {
     }
 }
 
+// MARK: - Endpoints
+
 extension Account {
     public static func verifyCredentials() -> Request<Account> {
         Request(path: "/api/v1/accounts/verify_credentials", httpMethod: .get, parameters: nil)
+    }
+
+    public static func favorites(pagination: Pagination<Toot>? = nil) -> Request<[Toot]> {
+        var parameters: [String: String]?
+        if let pagination = pagination {
+            parameters = [pagination.key: pagination.value.id]
+        }
+        return Request(path: "/api/v1/favourites", httpMethod: .get, parameters: parameters)
     }
 }
