@@ -24,41 +24,24 @@ public final class Client {
     }
 
     public func send<T>(_ request: Request<T>, completion: @escaping (Result<T, Error>) -> Void) {
-        URLSession.shared.dataTask(with: makeURLRequest(request)) { data, response, error in
-            if let error = error {
+        _send(request) { (result: Result<(T, Pagination?), Error>) in
+            switch result {
+            case .success(let (value, _)):
+                completion(.success(value))
+            case .failure(let error):
                 completion(.failure(error))
-                return
             }
-
-            guard let response = response as? HTTPURLResponse else {
-                fatalError()
-            }
-
-            if response.statusCode == 200 {
-                guard let data = data else {
-                    fatalError()
-                }
-
-                do {
-                    let value = try Client.makeJSONDecoder().decode(T.self, from: data)
-                    completion(.success(value))
-                } catch {
-                    completion(.failure(error))
-                }
-            } else {
-                if let data = data {
-                    do {
-                        let error = try Client.makeJSONDecoder().decode(MastodonURLError.self, from: data)
-                        completion(.failure(error))
-                    } catch {
-                        completion(.failure(error))
-                    }
-                }
-            }
-        }.resume()
+        }
     }
 
     public func send<T>(_ request: PageableRequest<T>, completion: @escaping (Result<(T, Pagination?), Error>) -> Void) {
+        _send(request, completion: completion)
+    }
+
+    private func _send<T: Decodable>(
+        _ request: RequestProtocol,
+        completion: @escaping (Result<(T, Pagination?), Error>) -> Void
+    ) {
         URLSession.shared.dataTask(with: makeURLRequest(request)) { data, response, error in
             if let error = error {
                 completion(.failure(error))
@@ -69,11 +52,11 @@ public final class Client {
                 fatalError()
             }
 
-            if response.statusCode == 200 {
+            switch response.statusCode {
+            case 200:
                 guard let data = data else {
                     fatalError()
                 }
-
 
                 do {
                     let value = try Client.makeJSONDecoder().decode(T.self, from: data)
@@ -82,7 +65,7 @@ public final class Client {
                 } catch {
                     completion(.failure(error))
                 }
-            } else {
+            default:
                 if let data = data {
                     do {
                         let error = try Client.makeJSONDecoder().decode(MastodonURLError.self, from: data)
