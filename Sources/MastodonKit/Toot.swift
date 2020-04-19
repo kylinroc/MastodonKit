@@ -182,3 +182,9 @@ extension Toot {
         case bookmarked
     }
 }
+
+extension Toot {
+    public func favorite() -> Request<Toot> {
+        Request(path: "/api/v1/statuses/\(id)/favourite", httpMethod: .post, parameters: nil)
+    }
+}

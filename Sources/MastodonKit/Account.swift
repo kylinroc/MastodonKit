@@ -157,11 +157,11 @@ extension Account {
         Request(path: "/api/v1/accounts/verify_credentials", httpMethod: .get, parameters: nil)
     }
 
-    public static func favorites(pagination: Pagination.Item? = nil) -> Request<[Toot]> {
-        var parameters: [String: String]?
+    public static func favorites(pagination: Pagination.Item? = nil) -> PageableRequest<[Toot]> {
+        var parameters: [String: String]? = ["limit": "3"]
         if let pagination = pagination {
             parameters = [pagination.key: pagination.value]
         }
-        return Request(path: "/api/v1/favourites", httpMethod: .get, parameters: parameters)
+        return PageableRequest(path: "/api/v1/favourites", httpMethod: .get, parameters: parameters)
     }
 }
