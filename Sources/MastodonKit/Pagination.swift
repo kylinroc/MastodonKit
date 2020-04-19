@@ -1,3 +1,5 @@
+import Foundation
+
 public struct Pagination {
     public enum Item {
         case olderThan(String)
@@ -24,20 +26,33 @@ public struct Pagination {
             }
         }
 
-        init?(_ string: Substring) {
-            let value = String(string.drop(while: { $0 != "=" }).dropFirst().prefix(while: { $0 != ">"}))
-            if string.contains("max_id") {
-                self = .olderThan(value)
-            }
-            else if string.contains("since_id") {
-                self = .newerThan(value)
-            }
-            else if string.contains("min_id") {
-                self = .immediatelyNewer(value)
-            }
-            else {
+        init?(_ string: String) {
+            let string = String(string.dropFirst().prefix(while: { $0 != ">" }))
+            guard let queryItems = URLComponents(string: string)?.queryItems else {
                 return nil
             }
+
+            for queryItem in queryItems {
+                guard let value = queryItem.value else {
+                    continue
+                }
+
+                switch queryItem.name {
+                case "max_id":
+                    self = .olderThan(value)
+                    return
+                case "since_id":
+                    self = .newerThan(value)
+                    return
+                case "min_id":
+                    self = .immediatelyNewer(value)
+                    return
+                default:
+                    continue
+                }
+            }
+
+            return nil
         }
     }
 
@@ -47,7 +62,7 @@ public struct Pagination {
     init(_ string: String) {
         var next: Item?
         var previous: Item?
-        string.split(separator: ",").forEach {
+        string.components(separatedBy: ", ").forEach {
             if $0.contains(#"rel="next""#) {
                 next = Item($0)
             }
