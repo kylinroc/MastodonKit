@@ -58,6 +58,43 @@ public final class Client {
         }.resume()
     }
 
+    public func send<T>(_ request: PageableRequest<T>, completion: @escaping (Result<(T, Pagination?), Error>) -> Void) {
+        URLSession.shared.dataTask(with: makeURLRequest(request)) { data, response, error in
+            if let error = error {
+                completion(.failure(error))
+                return
+            }
+
+            guard let response = response as? HTTPURLResponse else {
+                fatalError()
+            }
+
+            if response.statusCode == 200 {
+                guard let data = data else {
+                    fatalError()
+                }
+
+
+                do {
+                    let value = try Client.makeJSONDecoder().decode(T.self, from: data)
+                    let pagination = (response.allHeaderFields["Link"] as? String).map(Pagination.init)
+                    completion(.success((value, pagination)))
+                } catch {
+                    completion(.failure(error))
+                }
+            } else {
+                if let data = data {
+                    do {
+                        let error = try Client.makeJSONDecoder().decode(MastodonURLError.self, from: data)
+                        completion(.failure(error))
+                    } catch {
+                        completion(.failure(error))
+                    }
+                }
+            }
+        }.resume()
+    }
+
     public func authenticationURL(for application: Application) -> URL {
         var urlComponents = URLComponents(url: serverURL, resolvingAgainstBaseURL: true)!
         urlComponents.path = "/oauth/authorize"
@@ -70,7 +107,7 @@ public final class Client {
         return urlComponents.url!
     }
 
-    private func makeURLRequest<T>(_ request: Request<T>) -> URLRequest {
+    private func makeURLRequest(_ request: RequestProtocol) -> URLRequest {
         var urlRequest: URLRequest
 
         switch request.httpMethod {
