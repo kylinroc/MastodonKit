@@ -78,7 +78,7 @@ public final class Client {
         }.resume()
     }
 
-    public func authenticationURL(for application: Application) -> URL {
+    public func authenticationURL(for application: Application, scopes: [Scope]) -> URL {
         var urlComponents = URLComponents(url: serverURL, resolvingAgainstBaseURL: true)!
         urlComponents.path = "/oauth/authorize"
         urlComponents.queryItems = [
@@ -86,6 +86,7 @@ public final class Client {
             URLQueryItem(name: "client_secret", value: application.clientSecret),
             URLQueryItem(name: "redirect_uri", value: application.redirectURI),
             URLQueryItem(name: "response_type", value: "code"),
+            URLQueryItem(name: "scope", value: scopes.map(\.rawValue).joined(separator: " ")),
         ]
         return urlComponents.url!
     }

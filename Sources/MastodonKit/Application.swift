@@ -44,19 +44,22 @@ extension Application {
 extension Application {
     public static func create(
         name: String,
-        redirectURI: String = "urn:ietf:wg:oauth:2.0:oob"
+        redirectURI: String = "urn:ietf:wg:oauth:2.0:oob",
+        scopes: [Scope] = [.read]
     ) -> Request<Application> {
         Request(path: "/api/v1/apps", httpMethod: .post, parameters: [
             "client_name": name,
             "redirect_uris": redirectURI,
+            "scopes": scopes.map(\.rawValue).joined(separator: " "),
         ])
     }
 
-    public func obtainToken(authorizationCode: String) -> Request<Token> {
+    public func obtainToken(authorizationCode: String, scopes: [Scope]) -> Request<Token> {
         Request(path: "/oauth/token", httpMethod: .post, parameters: [
             "client_id": clientID!,
             "client_secret": clientSecret!,
             "redirect_uri": redirectURI!,
+            "scope": scopes.map(\.rawValue).joined(separator: " "),
             "code": authorizationCode,
             "grant_type": "authorization_code",
         ])
