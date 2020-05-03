@@ -78,7 +78,7 @@ final class AccountTests: XCTestCase {
         XCTAssertEqual(account.avatarURL, URL(string: "https://files.mastodon.social/accounts/avatars/000/023/634/original/6ca8804dc46800ad.png"))
         XCTAssertEqual(account.header, URL(string: "https://files.mastodon.social/accounts/headers/000/023/634/original/256eb8d7ac40f49a.png"))
         XCTAssertFalse(account.locked)
-        XCTAssertEqual(account.createdAt, Client.dateFormatter.date(from: "2017-02-08T02:00:53.274Z"))
+        XCTAssertEqual(account.creationDate, Client.dateFormatter.date(from: "2017-02-08T02:00:53.274Z"))
         XCTAssertEqual(account.tootsCount, 28468)
         XCTAssertEqual(account.followersCount, 547)
         XCTAssertEqual(account.followingCount, 404)

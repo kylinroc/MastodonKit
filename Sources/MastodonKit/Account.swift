@@ -51,7 +51,7 @@ public final class Account: Codable {
     /// When the account was created.
     ///
     /// Added in 0.1.0
-    public let createdAt: Date
+    public let creationDate: Date
 
     /// How many toots are attached to this account.
     ///
@@ -123,7 +123,7 @@ extension Account {
         case avatarURL = "avatar"
         case header
         case locked
-        case createdAt = "created_at"
+        case creationDate = "created_at"
         case tootsCount = "statuses_count"
         case followersCount = "followers_count"
         case followingCount = "following_count"

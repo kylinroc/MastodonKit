@@ -99,7 +99,7 @@ final class TootTest: XCTestCase {
         XCTAssertEqual(toot.favourited, false)
         XCTAssertEqual(toot.reblogged, false)
         XCTAssertEqual(toot.visibility, .public)
-        XCTAssertFalse(toot.sensitive)
+        XCTAssertFalse(toot.isSensitive)
         XCTAssertEqual(toot.spoilerText, "")
         XCTAssertNil(toot.inReplyToAccountID)
         XCTAssertEqual(toot.language, "en")

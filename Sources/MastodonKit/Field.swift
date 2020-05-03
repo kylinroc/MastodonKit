@@ -15,13 +15,13 @@ public struct Field: Codable {
     /// Timestamp of when the server verified a URL value for a rel="me” link.
     ///
     /// Added in 2.6.0
-    public let verifiedAt: Date?
+    public let verifiedDate: Date?
 }
 
 extension Field {
     private enum CodingKeys: String, CodingKey {
         case name
         case value
-        case verifiedAt = "verified_at"
+        case verifiedDate = "verified_at"
     }
 }
