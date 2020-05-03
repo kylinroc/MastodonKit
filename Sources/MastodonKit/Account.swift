@@ -164,4 +164,15 @@ extension Account {
         }
         return PageableRequest(path: "/api/v1/favourites", httpMethod: .get, parameters: parameters)
     }
+
+    public func toots(
+        excludeReplies: Bool,
+        onlyMedia: Bool = false,
+        pagination: Pagination.Item? = nil
+    ) -> PageableRequest<[Toot]> {
+        PageableRequest(path: "/api/v1/accounts/\(id)/statuses", httpMethod: .get, parameters: [
+            "exclude_replies": "\(excludeReplies)",
+            "only_media": "\(onlyMedia)",
+        ])
+    }
 }
