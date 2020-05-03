@@ -41,7 +41,7 @@ public final class Account: Codable {
     /// An image banner that is shown above the profile and in profile cards.
     ///
     /// Added in 0.1.0
-    public let header: URL
+    public let headerURL: URL
 
     /// Whether the account manually approves follow requests.
     ///
@@ -121,7 +121,7 @@ extension Account {
         case _displayName = "display_name"
         case note
         case avatarURL = "avatar"
-        case header
+        case headerURL = "header"
         case locked
         case creationDate = "created_at"
         case tootsCount = "statuses_count"
