@@ -158,7 +158,7 @@ extension Account {
     }
 
     public static func favorites(pagination: Pagination.Item? = nil) -> PageableRequest<[Toot]> {
-        var parameters: [String: String]? = ["limit": "3"]
+        var parameters: [String: String]? = [:]
         if let pagination = pagination {
             parameters = [pagination.key: pagination.value]
         }
@@ -170,9 +170,29 @@ extension Account {
         onlyMedia: Bool = false,
         pagination: Pagination.Item? = nil
     ) -> PageableRequest<[Toot]> {
-        PageableRequest(path: "/api/v1/accounts/\(id)/statuses", httpMethod: .get, parameters: [
+        var parameters = [
             "exclude_replies": "\(excludeReplies)",
             "only_media": "\(onlyMedia)",
-        ])
+        ]
+        if let pagination = pagination {
+            parameters = [pagination.key: pagination.value]
+        }
+        return PageableRequest(path: "/api/v1/accounts/\(id)/statuses", httpMethod: .get, parameters: parameters)
+    }
+
+    public func refresh() -> Request<Account> {
+        Request(path: "/api/v1/accounts/\(id)", httpMethod: .get, parameters: nil)
+    }
+
+    public func relationship() -> Request<[Relationship]> {
+        Request(path: "/api/v1/accounts/relationships", httpMethod: .get, parameters: ["id": "\(id)"])
+    }
+
+    public func follow() -> Request<Relationship> {
+        Request(path: "/api/v1/accounts/\(id)/follow", httpMethod: .post, parameters: nil)
+    }
+
+    public func unfollow() -> Request<Relationship> {
+        Request(path: "/api/v1/accounts/\(id)/unfollow", httpMethod: .post, parameters: nil)
     }
 }

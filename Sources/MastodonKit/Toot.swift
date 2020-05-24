@@ -62,12 +62,12 @@ public final class Toot: Codable {
     /// Have you favourited this toot?
     ///
     /// Added in 0.1.0
-    public let favourited: Bool?
+    public let favorited: Bool?
 
     /// Have you boosted this toot?
     ///
     /// Added in 0.1.0
-    public let reblogged: Bool?
+    public let boosted: Bool?
 
     /// Media that is attached to this toot.
     ///
@@ -162,8 +162,8 @@ extension Toot {
         case url
         case inReplyToID = "in_reply_to_id"
         case boostedToot = "reblog"
-        case favourited
-        case reblogged
+        case favorited = "favourited"
+        case boosted = "reblogged"
         case attachments = "media_attachments"
         case mentions
         case tags
@@ -184,7 +184,19 @@ extension Toot {
 }
 
 extension Toot {
+    public func boost() -> Request<Toot> {
+        Request(path: "/api/v1/statuses/\(id)/reblog", httpMethod: .post, parameters: nil)
+    }
+
+    public func unboost() -> Request<Toot> {
+        Request(path: "/api/v1/statuses/\(id)/unreblog", httpMethod: .post, parameters: nil)
+    }
+
     public func favorite() -> Request<Toot> {
         Request(path: "/api/v1/statuses/\(id)/favourite", httpMethod: .post, parameters: nil)
+    }
+
+    public func unfavorite() -> Request<Toot> {
+        Request(path: "/api/v1/statuses/\(id)/unfavourite", httpMethod: .post, parameters: nil)
     }
 }

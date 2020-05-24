@@ -1,7 +1,7 @@
 import Foundation
 
 /// Represents an OAuth token used for authenticating with the API and performing actions.
-public struct Token: Codable {
+public struct Token: Codable, Equatable {
     /// An OAuth token to be used for authorization.
     ///
     /// Added in 0.1.0
