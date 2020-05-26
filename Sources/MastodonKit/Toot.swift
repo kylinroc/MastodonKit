@@ -184,6 +184,16 @@ extension Toot {
 }
 
 extension Toot {
+    public static func publish(content: String, replyTo toot: Toot? = nil) -> Request<Toot> {
+        var parameters: [String: String] = [
+            "status": content,
+        ]
+        if let toot = toot {
+            parameters["in_reply_to_id"] = toot.id
+        }
+        return Request(path: "/api/v1/statuses", httpMethod: .post, parameters: parameters)
+    }
+
     public func boost() -> Request<Toot> {
         Request(path: "/api/v1/statuses/\(id)/reblog", httpMethod: .post, parameters: nil)
     }

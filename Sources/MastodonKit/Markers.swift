@@ -35,3 +35,9 @@ public struct Markers: Codable {
     /// Added in 3.0.0
     let notification: Marker
 }
+
+extension Markers {
+    public static func get() -> Request<Markers> {
+        Request(path: "/api/v1/markers", httpMethod: .get, parameters: nil)
+    }
+}

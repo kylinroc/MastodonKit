@@ -118,8 +118,6 @@ public final class Client {
             urlRequest.addValue("\(token.tokenType) \(token.accessToken)", forHTTPHeaderField: "Authorization")
         }
 
-        urlRequest.timeoutInterval = 10
-
         return urlRequest
     }
 }
