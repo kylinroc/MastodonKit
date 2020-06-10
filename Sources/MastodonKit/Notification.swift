@@ -39,7 +39,7 @@ public struct Notification: Decodable {
     /// Status that was the object of the notification, e.g. in mentions, reblogs, favourites, or polls.
     ///
     /// Added in 0.9.9
-    public let status: Toot?
+    public let toot: Toot?
 }
 
 extension Notification {
@@ -48,7 +48,7 @@ extension Notification {
         case type
         case createdAt = "created_at"
         case account
-        case status
+        case toot = "status"
     }
 }
 
