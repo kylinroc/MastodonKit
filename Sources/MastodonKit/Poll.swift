@@ -10,7 +10,7 @@ public struct Poll: Codable {
     /// When the poll ends.
     ///
     /// Added in 2.8.0
-    public let expiresAt: Date?
+    public let expiresDate: Date?
 
     /// Is the poll currently expired?
     ///
@@ -56,7 +56,7 @@ public struct Poll: Codable {
 extension Poll {
     private enum CodingKeys: String, CodingKey {
         case id
-        case expiresAt = "expires_at"
+        case expiresDate = "expires_at"
         case expired
         case multiple
         case votesCount = "votes_count"

@@ -1,12 +1,12 @@
 public enum NotificationType: String, Decodable {
     case follow
     case mention
-    case reblog
+    case boost = "reblog"
 
     /// Someone favourited one of your statuses
     ///
     /// Added in 0.9.9
-    case favourite
+    case favorite = "favourite"
 
     /// A poll you have voted in or created has ended.
     ///
