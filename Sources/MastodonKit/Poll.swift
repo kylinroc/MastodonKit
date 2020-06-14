@@ -15,7 +15,7 @@ public struct Poll: Codable {
     /// Is the poll currently expired?
     ///
     /// Added in 2.8.0
-    public let expired: Bool
+    public let isExpired: Bool
 
     /// Does the poll allow multiple-choice answers?
     ///
@@ -57,7 +57,7 @@ extension Poll {
     private enum CodingKeys: String, CodingKey {
         case id
         case expiresDate = "expires_at"
-        case expired
+        case isExpired = "expired"
         case multiple
         case votesCount = "votes_count"
         case votersCount = "voters_count"
