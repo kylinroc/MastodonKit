@@ -37,12 +37,12 @@ public final class Toot: Codable {
     /// How many boosts this toot has received.
     ///
     /// Added in 0.1.0
-    public let reblogsCount: Int
+    public let boostCount: Int
 
-    /// How many favourites this toot has received.
+    /// How many favorites this toot has received.
     ///
     /// Added in 0.1.0
-    public let favouritesCount: Int
+    public let favoriteCount: Int
 
     /// A link to the toot's HTML representation.
     ///
@@ -157,8 +157,8 @@ extension Toot {
         case creationDate = "created_at"
         case account
         case content
-        case reblogsCount = "reblogs_count"
-        case favouritesCount = "favourites_count"
+        case boostCount = "reblogs_count"
+        case favoriteCount = "favourites_count"
         case url
         case inReplyToID = "in_reply_to_id"
         case boostedToot = "reblog"
@@ -208,5 +208,17 @@ extension Toot {
 
     public func unfavorite() -> Request<Toot> {
         Request(path: "/api/v1/statuses/\(id)/unfavourite", httpMethod: .post, parameters: nil)
+    }
+
+    public func context() -> Request<Context> {
+        Request(path: "/api/v1/statuses/\(id)/context", httpMethod: .get, parameters: nil)
+    }
+
+    public func bookmark() -> Request<Toot> {
+        Request(path: "/api/v1/statuses/\(id)/bookmark", httpMethod: .post, parameters: nil)
+    }
+
+    public func unbookmark() -> Request<Toot> {
+        Request(path: "/api/v1/statuses/\(id)/unbookmark", httpMethod: .post, parameters: nil)
     }
 }

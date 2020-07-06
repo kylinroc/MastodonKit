@@ -165,6 +165,14 @@ extension Account {
         return PageableRequest(path: "/api/v1/favourites", httpMethod: .get, parameters: parameters)
     }
 
+    public static func bookmarks(pagination: Pagination.Item? = nil) -> PageableRequest<[Toot]> {
+        var parameters: [String: String]? = [:]
+        if let pagination = pagination {
+            parameters = [pagination.key: pagination.value]
+        }
+        return PageableRequest(path: "/api/v1/bookmarks", httpMethod: .get, parameters: parameters)
+    }
+
     public func toots(
         excludeReplies: Bool,
         onlyMedia: Bool = false,

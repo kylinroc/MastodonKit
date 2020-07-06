@@ -47,7 +47,7 @@ public struct Attachment: Codable {
     /// The location of a scaled-down preview of the attachment.
     ///
     /// Added in 0.6.0
-    public let previewURL: URL
+    public let previewURL: URL?
 
     /// The location of the full-size original attachment on the remote website.
     ///
