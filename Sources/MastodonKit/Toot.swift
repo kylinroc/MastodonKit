@@ -102,7 +102,7 @@ public final class Toot: Codable {
     /// Subject or summary line, below which toot content is collapsed until expanded.
     ///
     /// Added in 1.0.0
-    public let spoilerText: String
+    public let contentWarning: String
 
     /// ID of the account being replied to.
     ///
@@ -170,7 +170,7 @@ extension Toot {
         case visibility
         case isSensitive = "sensitive"
         case application
-        case spoilerText = "spoiler_text"
+        case contentWarning = "spoiler_text"
         case inReplyToAccountID = "in_reply_to_account_id"
         case language
         case muted
