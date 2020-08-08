@@ -1,6 +1,6 @@
 import Foundation
 
-public enum CardType: String, Codable {
+public enum CardType: String, Decodable {
     case link
     case photo
     case video
@@ -8,7 +8,7 @@ public enum CardType: String, Codable {
 }
 
 /// Represents a rich preview card that is generated using OpenGraph tags from a URL.
-public struct Card: Codable {
+public struct Card: Decodable {
     /// Location of linked resource.
     ///
     /// Added in 1.0.0
@@ -42,8 +42,7 @@ public struct Card: Codable {
     /// A link to the author of the original resource.
     ///
     /// Added in 1.3.0
-    public var authorURL: URL? { URL(string: _authorURL) }
-    private let _authorURL: String?
+    public let authorURL: URL?
 
     /// The provider of the original resource.
     ///
@@ -53,8 +52,7 @@ public struct Card: Codable {
     /// A link to the provider of the original resource.
     ///
     /// Added in 1.3.0
-    public var providerURL: URL? { URL(string: _providerURL) }
-    private let _providerURL: String?
+    public let providerURL: URL?
 
     /// HTML to be used for generating the preview card.
     ///
@@ -74,8 +72,7 @@ public struct Card: Codable {
     /// Used for photo embeds, instead of custom `html`.
     ///
     /// Added in 2.1.0
-    public var embedURL: URL? { URL(string: _embedURL) }
-    private let _embedURL: String?
+    public var embedURL: URL?
 }
 
 extension Card {
@@ -86,12 +83,41 @@ extension Card {
         case image
         case type
         case authorName = "author_name"
-        case _authorURL = "author_url"
+        case authorURL = "author_url"
         case providerName = "provider_name"
-        case _providerURL = "provider_url"
+        case providerURL = "provider_url"
         case html
         case width
         case height
-        case _embedURL = "embed_url"
+        case embedURL = "embed_url"
+    }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        url = try container.decode(URL.self, forKey: .url)
+        title = try container.decode(String.self, forKey: .title)
+        description = try container.decode(String.self, forKey: .description)
+        image = try container.decodeIfPresent(URL.self, forKey: .image)
+        type = try container.decode(CardType.self, forKey: .type)
+        authorName = try container.decodeIfPresent(String.self, forKey: .authorName)
+        if let string = try container.decodeIfPresent(String.self, forKey: .authorURL) {
+            authorURL = URL(string: string)
+        } else {
+            authorURL = nil
+        }
+        providerName = try container.decodeIfPresent(String.self, forKey: .providerName)
+        if let string = try container.decodeIfPresent(String.self, forKey: .providerURL) {
+            providerURL = URL(string: string)
+        } else {
+            providerURL = nil
+        }
+        html = try container.decodeIfPresent(String.self, forKey: .html)
+        width = try container.decodeIfPresent(Double.self, forKey: .width)
+        height = try container.decodeIfPresent(Double.self, forKey: .height)
+        if let string = try container.decodeIfPresent(String.self, forKey: .embedURL) {
+            embedURL = URL(string: string)
+        } else {
+            embedURL = nil
+        }
     }
 }
