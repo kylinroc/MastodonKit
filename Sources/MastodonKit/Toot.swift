@@ -1,8 +1,8 @@
 import Foundation
 
 /// Represents a toot posted by an account.
-public final class Toot: Codable {
-    public enum Visibility: String, Codable {
+public final class Toot: Decodable {
+    public enum Visibility: String, Decodable {
         case `public`
         case unlisted
         case `private`
@@ -148,6 +148,51 @@ public final class Toot: Codable {
     ///
     /// Added in 3.1.0
     public let bookmarked: Bool?
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        id = try container.decode(String.self, forKey: .id)
+        uri = try container.decode(String.self, forKey: .uri)
+        creationDate = try container.decode(Date.self, forKey: .creationDate)
+        account = try container.decode(Account.self, forKey: .account)
+        content = try container.decode(String.self, forKey: .content)
+        boostCount = try container.decode(Int.self, forKey: .boostCount)
+        favoriteCount = try container.decode(Int.self, forKey: .favoriteCount)
+
+        if let string = try container.decodeIfPresent(String.self, forKey: .url) {
+            if let url = URL(string: string) {
+                self.url = url
+            } else if let string = string.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
+                      let url = URL(string: string) {
+                self.url = url
+            } else {
+                self.url = nil
+            }
+        } else {
+            self.url = nil
+        }
+
+        inReplyToID = try container.decodeIfPresent(String.self, forKey: .inReplyToID)
+        boostedToot = try container.decodeIfPresent(Toot.self, forKey: .boostedToot)
+        favorited = try container.decodeIfPresent(Bool.self, forKey: .favorited)
+        boosted = try container.decodeIfPresent(Bool.self, forKey: .boosted)
+        attachments = try container.decode([Attachment].self, forKey: .attachments)
+        mentions = try container.decode([Mention].self, forKey: .mentions)
+        tags = try container.decode([Tag].self, forKey: .tags)
+        visibility = try container.decode(Visibility.self, forKey: .visibility)
+        isSensitive = try container.decode(Bool.self, forKey: .isSensitive)
+        application = try container.decodeIfPresent(Application.self, forKey: .application)
+        contentWarning = try container.decode(String.self, forKey: .contentWarning)
+        inReplyToAccountID = try container.decodeIfPresent(String.self, forKey: .inReplyToAccountID)
+        language = try container.decodeIfPresent(String.self, forKey: .language)
+        muted = try container.decodeIfPresent(Bool.self, forKey: .muted)
+        pinned = try container.decodeIfPresent(Bool.self, forKey: .pinned)
+        emojis = try container.decode([Emoji].self, forKey: .emojis)
+        repliesCount = try container.decodeIfPresent(Int.self, forKey: .repliesCount)
+        card = try container.decodeIfPresent(Card.self, forKey: .card)
+        poll = try container.decodeIfPresent(Poll.self, forKey: .poll)
+        bookmarked = try container.decodeIfPresent(Bool.self, forKey: .bookmarked)
+    }
 }
 
 extension Toot {
