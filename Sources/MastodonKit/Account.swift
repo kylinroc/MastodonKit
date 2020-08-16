@@ -188,10 +188,6 @@ extension Account {
         return PageableRequest(path: "/api/v1/accounts/\(id)/statuses", httpMethod: .get, parameters: parameters)
     }
 
-    public func refresh() -> Request<Account> {
-        Request(path: "/api/v1/accounts/\(id)", httpMethod: .get, parameters: nil)
-    }
-
     public func relationship() -> Request<[Relationship]> {
         Request(path: "/api/v1/accounts/relationships", httpMethod: .get, parameters: ["id": "\(id)"])
     }
