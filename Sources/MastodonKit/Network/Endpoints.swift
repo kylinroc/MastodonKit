@@ -27,6 +27,10 @@ public enum Endpoints {
         )
     }
 
+    public static func pinnedToots(of account: Account) -> Request<[Toot]> {
+        Request(path: "/api/v1/accounts/\(account.id)/statuses", httpMethod: .get, parameters: ["pinned": "true"])
+    }
+
     public static func account(id: String) -> Request<Account> {
         Request(path: "/api/v1/accounts/\(id)", httpMethod: .get, parameters: nil)
     }
