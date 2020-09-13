@@ -2,7 +2,13 @@ import Foundation
 
 extension Account {
     /// Represents a profile field as a name-value pair with optional verification.
-    public struct Metadata: Codable {
+    public struct Metadata: Codable, Hashable {
+        private enum CodingKeys: String, CodingKey {
+            case name
+            case value
+            case verifiedDate = "verified_at"
+        }
+
         /// The key of a given field's key-value pair.
         ///
         /// Added in 2.4.0
@@ -17,15 +23,5 @@ extension Account {
         ///
         /// Added in 2.6.0
         public let verifiedDate: Date?
-    }
-}
-
-extension Account.Metadata: Hashable {}
-
-extension Account.Metadata {
-    private enum CodingKeys: String, CodingKey {
-        case name
-        case value
-        case verifiedDate = "verified_at"
     }
 }
