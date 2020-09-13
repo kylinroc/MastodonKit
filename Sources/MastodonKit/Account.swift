@@ -1,7 +1,35 @@
 import Foundation
 
 /// Represents a user of Mastodon and their associated profile.
-public final class Account: Codable {
+public final class Account: Codable, Hashable {
+    private enum CodingKeys: String, CodingKey {
+        case id
+        case username
+        case acct
+        case url
+        case _displayName = "display_name"
+        case note
+        case avatarURL = "avatar"
+        case headerURL = "header"
+        case locked
+        case creationDate = "created_at"
+        case tootsCount = "statuses_count"
+        case followersCount = "followers_count"
+        case followingCount = "following_count"
+        case staticAvatarURL = "avatar_static"
+        case headerStatic = "header_static"
+        case moved
+        case emojis
+        case metadata = "fields"
+        case bot
+        case source
+        case _discoverable
+    }
+
+    public static func == (lhs: Account, rhs: Account) -> Bool {
+        lhs.id == rhs.id
+    }
+
     /// The account id.
     ///
     /// Added in 0.1.0
@@ -110,93 +138,8 @@ public final class Account: Codable {
     /// Added in 3.1.0
     public var discoverable: Bool { _discoverable ?? false }
     private let _discoverable: Bool?
-}
 
-extension Account {
-    private enum CodingKeys: String, CodingKey {
-        case id
-        case username
-        case acct
-        case url
-        case _displayName = "display_name"
-        case note
-        case avatarURL = "avatar"
-        case headerURL = "header"
-        case locked
-        case creationDate = "created_at"
-        case tootsCount = "statuses_count"
-        case followersCount = "followers_count"
-        case followingCount = "following_count"
-        case staticAvatarURL = "avatar_static"
-        case headerStatic = "header_static"
-        case moved
-        case emojis
-        case metadata = "fields"
-        case bot
-        case source
-        case _discoverable
-    }
-}
-
-extension Account: Equatable {
-    public static func == (lhs: Account, rhs: Account) -> Bool {
-        lhs.id == rhs.id
-    }
-}
-
-extension Account: Hashable {
     public func hash(into hasher: inout Hasher) {
         hasher.combine(id)
-    }
-}
-
-// MARK: - Endpoints
-
-extension Account {
-    public static func verifyCredentials() -> Request<Account> {
-        Request(path: "/api/v1/accounts/verify_credentials", httpMethod: .get, parameters: nil)
-    }
-
-    public static func favorites(pagination: Pagination.Item? = nil) -> PageableRequest<[Toot]> {
-        var parameters: [String: String]? = [:]
-        if let pagination = pagination {
-            parameters = [pagination.key: pagination.value]
-        }
-        return PageableRequest(path: "/api/v1/favourites", httpMethod: .get, parameters: parameters)
-    }
-
-    public static func bookmarks(pagination: Pagination.Item? = nil) -> PageableRequest<[Toot]> {
-        var parameters: [String: String]? = [:]
-        if let pagination = pagination {
-            parameters = [pagination.key: pagination.value]
-        }
-        return PageableRequest(path: "/api/v1/bookmarks", httpMethod: .get, parameters: parameters)
-    }
-
-    public func toots(
-        excludeReplies: Bool,
-        onlyMedia: Bool = false,
-        pagination: Pagination.Item? = nil
-    ) -> PageableRequest<[Toot]> {
-        var parameters = [
-            "exclude_replies": "\(excludeReplies)",
-            "only_media": "\(onlyMedia)",
-        ]
-        if let pagination = pagination {
-            parameters = [pagination.key: pagination.value]
-        }
-        return PageableRequest(path: "/api/v1/accounts/\(id)/statuses", httpMethod: .get, parameters: parameters)
-    }
-
-    public func relationship() -> Request<[Relationship]> {
-        Request(path: "/api/v1/accounts/relationships", httpMethod: .get, parameters: ["id": "\(id)"])
-    }
-
-    public func follow() -> Request<Relationship> {
-        Request(path: "/api/v1/accounts/\(id)/follow", httpMethod: .post, parameters: nil)
-    }
-
-    public func unfollow() -> Request<Relationship> {
-        Request(path: "/api/v1/accounts/\(id)/unfollow", httpMethod: .post, parameters: nil)
     }
 }

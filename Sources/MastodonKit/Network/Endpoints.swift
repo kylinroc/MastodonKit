@@ -1,4 +1,8 @@
 public enum Endpoints {
+    public static var verifyCredentials: Request<Account> {
+        Request(path: "/api/v1/accounts/verify_credentials", httpMethod: .get, parameters: nil)
+    }
+
     public static func following(of account: Account, pagination: Pagination.Item? = nil) -> PageableRequest<[Account]> {
         let parameters: [String: String]?
         if let pagination = pagination {
@@ -33,6 +37,54 @@ public enum Endpoints {
 
     public static func account(id: String) -> Request<Account> {
         Request(path: "/api/v1/accounts/\(id)", httpMethod: .get, parameters: nil)
+    }
+
+    public static func favorites(pagination: Pagination.Item? = nil) -> PageableRequest<[Toot]> {
+        var parameters: [String: String]? = [:]
+        if let pagination = pagination {
+            parameters = [pagination.key: pagination.value]
+        }
+        return PageableRequest(path: "/api/v1/favourites", httpMethod: .get, parameters: parameters)
+    }
+
+    public static func bookmarks(pagination: Pagination.Item? = nil) -> PageableRequest<[Toot]> {
+        var parameters: [String: String]? = [:]
+        if let pagination = pagination {
+            parameters = [pagination.key: pagination.value]
+        }
+        return PageableRequest(path: "/api/v1/bookmarks", httpMethod: .get, parameters: parameters)
+    }
+
+    public static func toots(
+        of account: Account,
+        excludeReplies: Bool,
+        onlyMedia: Bool = false,
+        pagination: Pagination.Item? = nil
+    ) -> PageableRequest<[Toot]> {
+        var parameters = [
+            "exclude_replies": "\(excludeReplies)",
+            "only_media": "\(onlyMedia)",
+        ]
+        if let pagination = pagination {
+            parameters = [pagination.key: pagination.value]
+        }
+        return PageableRequest(
+            path: "/api/v1/accounts/\(account.id)/statuses",
+            httpMethod: .get,
+            parameters: parameters
+        )
+    }
+
+    public static func relationship(with account: Account) -> Request<[Relationship]> {
+        Request(path: "/api/v1/accounts/relationships", httpMethod: .get, parameters: ["id": "\(account.id)"])
+    }
+
+    public static func follow(_ account: Account) -> Request<Relationship> {
+        Request(path: "/api/v1/accounts/\(account.id)/follow", httpMethod: .post, parameters: nil)
+    }
+
+    public static func unfollow(_ account: Account) -> Request<Relationship> {
+        Request(path: "/api/v1/accounts/\(account.id)/unfollow", httpMethod: .post, parameters: nil)
     }
 }
 
