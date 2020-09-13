@@ -93,7 +93,7 @@ public final class Account: Codable {
     /// Additional metadata attached to a profile as name-value pairs.
     ///
     /// Added in 2.4.0
-    public let fields: [Field]
+    public let metadata: [Metadata]
 
     /// A presentational flag. Indicates that the account may perform automated actions, may not be monitored, or identifies as a robot.
     ///
@@ -131,7 +131,7 @@ extension Account {
         case headerStatic = "header_static"
         case moved
         case emojis
-        case fields
+        case metadata = "fields"
         case bot
         case source
         case _discoverable
