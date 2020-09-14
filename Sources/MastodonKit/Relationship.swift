@@ -1,5 +1,19 @@
 /// Represents the relationship between accounts.
-public struct Relationship: Decodable {
+public struct Relationship: Codable {
+    private enum CodingKeys: String, CodingKey {
+        case id
+        case following
+        case followedBy = "followed_by"
+        case blocking
+        case requested
+        case muting
+        case domainBlocking = "domain_blocking"
+        case mutingNotifications = "muting_notifications"
+        case showingReblogs = "showing_reblogs"
+        case endorsed
+        case blockedBy = "blocked_by"
+    }
+
     /// The account id.
     ///
     /// Added in 0.6.0
@@ -54,20 +68,4 @@ public struct Relationship: Decodable {
     ///
     /// Added in 2.8.0
     public let blockedBy: Bool
-}
-
-extension Relationship {
-    private enum CodingKeys: String, CodingKey {
-        case id
-        case following
-        case followedBy = "followed_by"
-        case blocking
-        case requested
-        case muting
-        case domainBlocking = "domain_blocking"
-        case mutingNotifications = "muting_notifications"
-        case showingReblogs = "showing_reblogs"
-        case endorsed
-        case blockedBy = "blocked_by"
-    }
 }
