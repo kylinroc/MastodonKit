@@ -86,6 +86,22 @@ public enum Endpoints {
     public static func unfollow(_ account: Account) -> Request<Relationship> {
         Request(path: "/api/v1/accounts/\(account.id)/unfollow", httpMethod: .post, parameters: nil)
     }
+
+    public static func unblock(_ account: Account) -> Request<Relationship> {
+        Request(path: "/api/v1/accounts/\(account.id)/unblock", httpMethod: .post, parameters: nil)
+    }
+
+    public static func block(_ account: Account) -> Request<Relationship> {
+        Request(path: "/api/v1/accounts/\(account.id)/block", httpMethod: .post, parameters: nil)
+    }
+
+    public static func unmute(_ account: Account) -> Request<Relationship> {
+        Request(path: "/api/v1/accounts/\(account.id)/unmute", httpMethod: .post, parameters: nil)
+    }
+
+    public static func mute(_ account: Account) -> Request<Relationship> {
+        Request(path: "/api/v1/accounts/\(account.id)/mute", httpMethod: .post, parameters: nil)
+    }
 }
 
 extension Endpoints {
