@@ -4,9 +4,9 @@ public struct Relationship: Codable {
         case id
         case following
         case followedBy = "followed_by"
-        case blocking
-        case requested
-        case muting
+        case isBlocked = "blocking"
+        case isRequested = "requested"
+        case isMuted = "muting"
         case domainBlocking = "domain_blocking"
         case mutingNotifications = "muting_notifications"
         case showingReblogs = "showing_reblogs"
@@ -32,17 +32,17 @@ public struct Relationship: Codable {
     /// Are you blocking this user?
     ///
     /// Added in 0.6.0
-    public let blocking: Bool
+    public let isBlocked: Bool
 
     /// Do you have a pending follow request for this user?
     ///
     /// Added in 0.9.9
-    public let requested: Bool
+    public let isRequested: Bool
 
     /// Are you muting this user?
     ///
     /// Added in 1.1.0
-    public let muting: Bool
+    public let isMuted: Bool
 
     /// Are you blocking this user's domain?
     ///
