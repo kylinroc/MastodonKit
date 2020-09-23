@@ -102,6 +102,18 @@ public enum Endpoints {
     public static func mute(_ account: Account) -> Request<Relationship> {
         Request(path: "/api/v1/accounts/\(account.id)/mute", httpMethod: .post, parameters: nil)
     }
+
+    public static func createApplication(
+        name: String,
+        redirectURI: String = "urn:ietf:wg:oauth:2.0:oob",
+        scopes: [Scope] = [.read]
+    ) -> Request<Application> {
+        Request(path: "/api/v1/apps", httpMethod: .post, parameters: [
+            "client_name": name,
+            "redirect_uris": redirectURI,
+            "scopes": scopes.map(\.rawValue).joined(separator: " "),
+        ])
+    }
 }
 
 extension Endpoints {

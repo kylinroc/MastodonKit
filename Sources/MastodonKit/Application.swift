@@ -2,6 +2,15 @@ import Foundation
 
 /// Represents an application that interfaces with the REST API to access accounts or post toots.
 public struct Application: Codable {
+    private enum CodingKeys: String, CodingKey {
+        case name
+        case website
+        case clientID = "client_id"
+        case clientSecret = "client_secret"
+        case vapidKey = "vapid_key"
+        case redirectURI = "redirect_uri"
+    }
+
     /// The name of your application.
     ///
     /// Added in 0.9.9
@@ -31,29 +40,6 @@ public struct Application: Codable {
 }
 
 extension Application {
-    private enum CodingKeys: String, CodingKey {
-        case name
-        case website
-        case clientID = "client_id"
-        case clientSecret = "client_secret"
-        case vapidKey = "vapid_key"
-        case redirectURI = "redirect_uri"
-    }
-}
-
-extension Application {
-    public static func create(
-        name: String,
-        redirectURI: String = "urn:ietf:wg:oauth:2.0:oob",
-        scopes: [Scope] = [.read]
-    ) -> Request<Application> {
-        Request(path: "/api/v1/apps", httpMethod: .post, parameters: [
-            "client_name": name,
-            "redirect_uris": redirectURI,
-            "scopes": scopes.map(\.rawValue).joined(separator: " "),
-        ])
-    }
-
     public func obtainToken(authorizationCode: String, scopes: [Scope]) -> Request<Token> {
         Request(path: "/oauth/token", httpMethod: .post, parameters: [
             "client_id": clientID!,
