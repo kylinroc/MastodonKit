@@ -2,8 +2,8 @@ import Foundation
 
 extension Responses {
     /// Represents a toot posted by an account.
-    public final class Toot: Decodable {
-        public enum Visibility: String, Decodable {
+    public final class Toot: Codable {
+        public enum Visibility: String, Codable {
             case `public`
             case unlisted
             case `private`
@@ -135,11 +135,6 @@ extension Responses {
         /// Added in 2.5.0
         public let repliesCount: Int?
 
-        /// Preview card for links included within toot content.
-        ///
-        /// Added in 2.6.0
-        public let card: Card?
-
         /// The poll attached to the toot.
         ///
         /// Added in 2.8.0
@@ -190,7 +185,6 @@ extension Responses {
             pinned = try container.decodeIfPresent(Bool.self, forKey: .pinned)
             emojis = try container.decode([Emoji].self, forKey: .emojis)
             repliesCount = try container.decodeIfPresent(Int.self, forKey: .repliesCount)
-            card = try container.decodeIfPresent(Card.self, forKey: .card)
             poll = try container.decodeIfPresent(Poll.self, forKey: .poll)
             bookmarked = try container.decodeIfPresent(Bool.self, forKey: .bookmarked)
         }
@@ -224,7 +218,6 @@ extension Responses.Toot {
         case pinned
         case emojis
         case repliesCount = "replies_count"
-        case card
         case poll
         case bookmarked
     }
