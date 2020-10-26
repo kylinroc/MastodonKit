@@ -135,11 +135,6 @@ extension Responses {
         /// Added in 2.5.0
         public let repliesCount: Int?
 
-        /// The poll attached to the toot.
-        ///
-        /// Added in 2.8.0
-        public let poll: Poll?
-
         /// Have you bookmarked this toot?
         ///
         /// Added in 3.1.0
@@ -185,7 +180,6 @@ extension Responses {
             pinned = try container.decodeIfPresent(Bool.self, forKey: .pinned)
             emojis = try container.decode([Emoji].self, forKey: .emojis)
             repliesCount = try container.decodeIfPresent(Int.self, forKey: .repliesCount)
-            poll = try container.decodeIfPresent(Poll.self, forKey: .poll)
             bookmarked = try container.decodeIfPresent(Bool.self, forKey: .bookmarked)
         }
     }
@@ -218,7 +212,6 @@ extension Responses.Toot {
         case pinned
         case emojis
         case repliesCount = "replies_count"
-        case poll
         case bookmarked
     }
 }
