@@ -78,7 +78,7 @@ public final class Client {
         }.resume()
     }
 
-    public func authenticationURL(for application: Application, scopes: [Scope]) -> URL {
+    public func authenticationURL(for application: Responses.Application, scopes: [Scope]) -> URL {
         var urlComponents = URLComponents(url: serverURL, resolvingAgainstBaseURL: true)!
         urlComponents.path = "/oauth/authorize"
         urlComponents.queryItems = [

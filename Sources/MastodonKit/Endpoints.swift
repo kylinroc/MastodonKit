@@ -37,7 +37,7 @@ public enum Endpoints {
         )
     }
 
-    public static func pinnedToots(of account: Responses.Account) -> Request<[Toot]> {
+    public static func pinnedToots(of account: Responses.Account) -> Request<[Responses.Toot]> {
         Request(path: "/api/v1/accounts/\(account.id)/statuses", httpMethod: .get, parameters: ["pinned": "true"])
     }
 
@@ -45,7 +45,7 @@ public enum Endpoints {
         Request(path: "/api/v1/accounts/\(id)", httpMethod: .get, parameters: nil)
     }
 
-    public static func favorites(pagination: Pagination.Item? = nil) -> PageableRequest<[Toot]> {
+    public static func favorites(pagination: Pagination.Item? = nil) -> PageableRequest<[Responses.Toot]> {
         var parameters: [String: String]? = [:]
         if let pagination = pagination {
             parameters = [pagination.key: pagination.value]
@@ -53,7 +53,7 @@ public enum Endpoints {
         return PageableRequest(path: "/api/v1/favourites", httpMethod: .get, parameters: parameters)
     }
 
-    public static func bookmarks(pagination: Pagination.Item? = nil) -> PageableRequest<[Toot]> {
+    public static func bookmarks(pagination: Pagination.Item? = nil) -> PageableRequest<[Responses.Toot]> {
         var parameters: [String: String]? = [:]
         if let pagination = pagination {
             parameters = [pagination.key: pagination.value]
@@ -66,7 +66,7 @@ public enum Endpoints {
         excludeReplies: Bool,
         onlyMedia: Bool = false,
         pagination: Pagination.Item? = nil
-    ) -> PageableRequest<[Toot]> {
+    ) -> PageableRequest<[Responses.Toot]> {
         var parameters = [
             "exclude_replies": "\(excludeReplies)",
             "only_media": "\(onlyMedia)",
@@ -113,7 +113,7 @@ public enum Endpoints {
         name: String,
         redirectURI: String = "urn:ietf:wg:oauth:2.0:oob",
         scopes: [Scope] = [.read]
-    ) -> Request<Application> {
+    ) -> Request<Responses.Application> {
         Request(path: "/api/v1/apps", httpMethod: .post, parameters: [
             "client_name": name,
             "redirect_uris": redirectURI,
@@ -124,7 +124,7 @@ public enum Endpoints {
 
 extension Endpoints {
     public enum Timelines {
-        public static func home(pagination: Pagination.Item? = nil) -> PageableRequest<[Toot]> {
+        public static func home(pagination: Pagination.Item? = nil) -> PageableRequest<[Responses.Toot]> {
             var parameters: [String: String]?
             if let pagination = pagination {
                 parameters = [pagination.key: pagination.value]
@@ -135,7 +135,7 @@ extension Endpoints {
         public static func `public`(
             local: Bool = false,
             pagination: Pagination.Item? = nil
-        ) -> PageableRequest<[Toot]> {
+        ) -> PageableRequest<[Responses.Toot]> {
             var parameters: [String: String] = [
                 "local": "\(local)",
             ]
@@ -145,7 +145,7 @@ extension Endpoints {
             return PageableRequest(path: "/api/v1/timelines/public", httpMethod: .get, parameters: parameters)
         }
 
-        public static func tag(_ tag: Tag, pagination: Pagination.Item? = nil) -> PageableRequest<[Toot]> {
+        public static func tag(_ tag: Tag, pagination: Pagination.Item? = nil) -> PageableRequest<[Responses.Toot]> {
             var parameters: [String: String]?
             if let pagination = pagination {
                 parameters = [pagination.key: pagination.value]

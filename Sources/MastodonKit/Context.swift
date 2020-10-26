@@ -3,10 +3,10 @@ public struct Context: Decodable {
     /// Parents in the thread.
     ///
     /// Added in 0.6.0
-    public let ancestors: [Toot]
+    public let ancestors: [Responses.Toot]
 
     /// Children in the thread.
     ///
     /// Added in 0.6.0
-    public let descendants: [Toot]
+    public let descendants: [Responses.Toot]
 }

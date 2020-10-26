@@ -39,7 +39,7 @@ public struct Notification: Decodable {
     /// Status that was the object of the notification, e.g. in mentions, reblogs, favourites, or polls.
     ///
     /// Added in 0.9.9
-    public let toot: Toot?
+    public let toot: Responses.Toot?
 }
 
 extension Notification {
