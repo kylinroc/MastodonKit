@@ -27,7 +27,7 @@ public struct Source: Codable {
     /// Metadata about the account.
     ///
     /// Added in 2.4.0
-    public let fields: [Account.Metadata]
+    public let fields: [Responses.Metadata]
 
     /// The default posting language for new toots.
     ///

@@ -50,7 +50,7 @@ public struct Server: Codable {
     /// A user that can be contacted, as an alternative to `email`.
     ///
     /// Added in 2.3.0
-    public let contactAccount: Account?
+    public let contactAccount: Responses.Account?
 
     /// Whether registrations are enabled.
     ///

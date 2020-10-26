@@ -1,9 +1,12 @@
 public enum Endpoints {
-    public static var verifyCredentials: Request<Account> {
+    public static var verifyCredentials: Request<Responses.Account> {
         Request(path: "/api/v1/accounts/verify_credentials", httpMethod: .get, parameters: nil)
     }
 
-    public static func following(of account: Account, pagination: Pagination.Item? = nil) -> PageableRequest<[Account]> {
+    public static func following(
+        of account: Responses.Account,
+        pagination: Pagination.Item? = nil
+    ) -> PageableRequest<[Responses.Account]> {
         let parameters: [String: String]?
         if let pagination = pagination {
             parameters = [pagination.key: pagination.value]
@@ -17,7 +20,10 @@ public enum Endpoints {
         )
     }
 
-    public static func followers(of account: Account, pagination: Pagination.Item? = nil) -> PageableRequest<[Account]> {
+    public static func followers(
+        of account: Responses.Account,
+        pagination: Pagination.Item? = nil
+    ) -> PageableRequest<[Responses.Account]> {
         let parameters: [String: String]?
         if let pagination = pagination {
             parameters = [pagination.key: pagination.value]
@@ -31,11 +37,11 @@ public enum Endpoints {
         )
     }
 
-    public static func pinnedToots(of account: Account) -> Request<[Toot]> {
+    public static func pinnedToots(of account: Responses.Account) -> Request<[Toot]> {
         Request(path: "/api/v1/accounts/\(account.id)/statuses", httpMethod: .get, parameters: ["pinned": "true"])
     }
 
-    public static func account(id: String) -> Request<Account> {
+    public static func account(id: String) -> Request<Responses.Account> {
         Request(path: "/api/v1/accounts/\(id)", httpMethod: .get, parameters: nil)
     }
 
@@ -56,7 +62,7 @@ public enum Endpoints {
     }
 
     public static func toots(
-        of account: Account,
+        of account: Responses.Account,
         excludeReplies: Bool,
         onlyMedia: Bool = false,
         pagination: Pagination.Item? = nil
@@ -75,31 +81,31 @@ public enum Endpoints {
         )
     }
 
-    public static func relationship(with account: Account) -> Request<[Relationship]> {
+    public static func relationship(with account: Responses.Account) -> Request<[Relationship]> {
         Request(path: "/api/v1/accounts/relationships", httpMethod: .get, parameters: ["id": "\(account.id)"])
     }
 
-    public static func follow(_ account: Account) -> Request<Relationship> {
+    public static func follow(_ account: Responses.Account) -> Request<Relationship> {
         Request(path: "/api/v1/accounts/\(account.id)/follow", httpMethod: .post, parameters: nil)
     }
 
-    public static func unfollow(_ account: Account) -> Request<Relationship> {
+    public static func unfollow(_ account: Responses.Account) -> Request<Relationship> {
         Request(path: "/api/v1/accounts/\(account.id)/unfollow", httpMethod: .post, parameters: nil)
     }
 
-    public static func unblock(_ account: Account) -> Request<Relationship> {
+    public static func unblock(_ account: Responses.Account) -> Request<Relationship> {
         Request(path: "/api/v1/accounts/\(account.id)/unblock", httpMethod: .post, parameters: nil)
     }
 
-    public static func block(_ account: Account) -> Request<Relationship> {
+    public static func block(_ account: Responses.Account) -> Request<Relationship> {
         Request(path: "/api/v1/accounts/\(account.id)/block", httpMethod: .post, parameters: nil)
     }
 
-    public static func unmute(_ account: Account) -> Request<Relationship> {
+    public static func unmute(_ account: Responses.Account) -> Request<Relationship> {
         Request(path: "/api/v1/accounts/\(account.id)/unmute", httpMethod: .post, parameters: nil)
     }
 
-    public static func mute(_ account: Account) -> Request<Relationship> {
+    public static func mute(_ account: Responses.Account) -> Request<Relationship> {
         Request(path: "/api/v1/accounts/\(account.id)/mute", httpMethod: .post, parameters: nil)
     }
 

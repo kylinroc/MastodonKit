@@ -1,6 +1,6 @@
 import Foundation
 
-extension Account {
+extension Responses {
     /// Represents a profile field as a name-value pair with optional verification.
     public struct Metadata: Codable, Hashable {
         private enum CodingKeys: String, CodingKey {

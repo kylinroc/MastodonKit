@@ -34,7 +34,7 @@ public struct Notification: Decodable {
     /// The account that performed the action that generated the notification.
     ///
     /// Added in 0.9.9
-    public let account: Account
+    public let account: Responses.Account
 
     /// Status that was the object of the notification, e.g. in mentions, reblogs, favourites, or polls.
     ///
