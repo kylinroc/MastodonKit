@@ -7,75 +7,77 @@ public enum CardType: String, Decodable {
     case rich
 }
 
-/// Represents a rich preview card that is generated using OpenGraph tags from a URL.
-public struct Card: Decodable {
-    /// Location of linked resource.
-    ///
-    /// Added in 1.0.0
-    public let url: URL
+extension Responses {
+    /// Represents a rich preview card that is generated using OpenGraph tags from a URL.
+    public struct Card: Decodable {
+        /// Location of linked resource.
+        ///
+        /// Added in 1.0.0
+        public let url: URL
 
-    /// Title of linked resource.
-    ///
-    /// Added in 1.0.0
-    public let title: String
+        /// Title of linked resource.
+        ///
+        /// Added in 1.0.0
+        public let title: String
 
-    /// Description of preview.
-    ///
-    /// Added in 1.0.0
-    public let description: String
+        /// Description of preview.
+        ///
+        /// Added in 1.0.0
+        public let description: String
 
-    /// Preview thumbnail.
-    ///
-    /// Added in 1.0.0
-    public let image: URL?
+        /// Preview thumbnail.
+        ///
+        /// Added in 1.0.0
+        public let image: URL?
 
-    /// The type of the preview card.
-    ///
-    /// Added in 1.3.0
-    public let type: CardType
+        /// The type of the preview card.
+        ///
+        /// Added in 1.3.0
+        public let type: CardType
 
-    /// The author of the original resource.
-    ///
-    /// Added in 1.3.0
-    public let authorName: String?
+        /// The author of the original resource.
+        ///
+        /// Added in 1.3.0
+        public let authorName: String?
 
-    /// A link to the author of the original resource.
-    ///
-    /// Added in 1.3.0
-    public let authorURL: URL?
+        /// A link to the author of the original resource.
+        ///
+        /// Added in 1.3.0
+        public let authorURL: URL?
 
-    /// The provider of the original resource.
-    ///
-    /// Added in 1.3.0
-    public let providerName: String?
+        /// The provider of the original resource.
+        ///
+        /// Added in 1.3.0
+        public let providerName: String?
 
-    /// A link to the provider of the original resource.
-    ///
-    /// Added in 1.3.0
-    public let providerURL: URL?
+        /// A link to the provider of the original resource.
+        ///
+        /// Added in 1.3.0
+        public let providerURL: URL?
 
-    /// HTML to be used for generating the preview card.
-    ///
-    /// Added in 1.3.0
-    public let html: String?
+        /// HTML to be used for generating the preview card.
+        ///
+        /// Added in 1.3.0
+        public let html: String?
 
-    /// Width of preview, in pixels.
-    ///
-    /// Added in 1.3.0
-    public let width: Double?
+        /// Width of preview, in pixels.
+        ///
+        /// Added in 1.3.0
+        public let width: Double?
 
-    /// Height of preview, in pixels.
-    ///
-    /// Added in 1.3.0
-    public let height: Double?
+        /// Height of preview, in pixels.
+        ///
+        /// Added in 1.3.0
+        public let height: Double?
 
-    /// Used for photo embeds, instead of custom `html`.
-    ///
-    /// Added in 2.1.0
-    public var embedURL: URL?
+        /// Used for photo embeds, instead of custom `html`.
+        ///
+        /// Added in 2.1.0
+        public var embedURL: URL?
+    }
 }
 
-extension Card {
+extension Responses.Card {
     private enum CodingKeys: String, CodingKey {
         case url
         case title

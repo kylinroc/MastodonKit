@@ -1,6 +1,6 @@
 import Foundation
 
-extension Tag {
+extension Responses.Tag {
     /// Represents daily usage history of a hashtag.
     public struct History: Codable {
         /// UNIX timestamp on midnight of the given day.
@@ -28,7 +28,7 @@ extension Tag {
     }
 }
 
-extension Tag.History {
+extension Responses.Tag.History {
     private enum CodingKeys: String, CodingKey {
         case day
         case uses

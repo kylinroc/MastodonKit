@@ -42,7 +42,7 @@ extension Responses {
 }
 
 extension Responses.Application {
-    public func obtainToken(authorizationCode: String, scopes: [Scope]) -> Request<Token> {
+    public func obtainToken(authorizationCode: String, scopes: [Scope]) -> Request<Responses.Token> {
         Request(path: "/oauth/token", httpMethod: .post, parameters: [
             "client_id": clientID!,
             "client_secret": clientSecret!,

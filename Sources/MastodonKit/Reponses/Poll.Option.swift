@@ -1,4 +1,4 @@
-extension Poll {
+extension Responses.Poll {
     public struct Option: Codable {
         /// The text value of the poll option.
         ///
@@ -12,7 +12,7 @@ extension Poll {
     }
 }
 
-extension Poll.Option {
+extension Responses.Poll.Option {
     private enum CodingKeys: String, CodingKey {
         case title
         case votesCount = "votes_count"

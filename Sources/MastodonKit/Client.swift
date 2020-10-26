@@ -16,9 +16,9 @@ public final class Client {
     }
 
     public let serverURL: URL
-    public let token: Token?
+    public let token: Responses.Token?
 
-    public init(serverURL: URL, token: Token? = nil) {
+    public init(serverURL: URL, token: Responses.Token? = nil) {
         self.serverURL = serverURL
         self.token = token
     }

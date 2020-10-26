@@ -28,7 +28,7 @@ extension Responses {
         /// The account that authored this toot.
         ///
         /// Added in 0.1.0
-        public let account: Responses.Account
+        public let account: Account
 
         /// HTML-encoded toot content.
         ///
@@ -155,7 +155,7 @@ extension Responses {
             id = try container.decode(String.self, forKey: .id)
             uri = try container.decode(String.self, forKey: .uri)
             creationDate = try container.decode(Date.self, forKey: .creationDate)
-            account = try container.decode(Responses.Account.self, forKey: .account)
+            account = try container.decode(Account.self, forKey: .account)
             content = try container.decode(String.self, forKey: .content)
             boostCount = try container.decode(Int.self, forKey: .boostCount)
             favoriteCount = try container.decode(Int.self, forKey: .favoriteCount)
@@ -247,7 +247,7 @@ extension Responses.Toot {
         Request(path: "/api/v1/statuses/\(id)/unfavourite", httpMethod: .post, parameters: nil)
     }
 
-    public func context() -> Request<Context> {
+    public func context() -> Request<Responses.Context> {
         Request(path: "/api/v1/statuses/\(id)/context", httpMethod: .get, parameters: nil)
     }
 

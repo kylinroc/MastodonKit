@@ -81,31 +81,31 @@ public enum Endpoints {
         )
     }
 
-    public static func relationship(with account: Responses.Account) -> Request<[Relationship]> {
+    public static func relationship(with account: Responses.Account) -> Request<[Responses.Relationship]> {
         Request(path: "/api/v1/accounts/relationships", httpMethod: .get, parameters: ["id": "\(account.id)"])
     }
 
-    public static func follow(_ account: Responses.Account) -> Request<Relationship> {
+    public static func follow(_ account: Responses.Account) -> Request<Responses.Relationship> {
         Request(path: "/api/v1/accounts/\(account.id)/follow", httpMethod: .post, parameters: nil)
     }
 
-    public static func unfollow(_ account: Responses.Account) -> Request<Relationship> {
+    public static func unfollow(_ account: Responses.Account) -> Request<Responses.Relationship> {
         Request(path: "/api/v1/accounts/\(account.id)/unfollow", httpMethod: .post, parameters: nil)
     }
 
-    public static func unblock(_ account: Responses.Account) -> Request<Relationship> {
+    public static func unblock(_ account: Responses.Account) -> Request<Responses.Relationship> {
         Request(path: "/api/v1/accounts/\(account.id)/unblock", httpMethod: .post, parameters: nil)
     }
 
-    public static func block(_ account: Responses.Account) -> Request<Relationship> {
+    public static func block(_ account: Responses.Account) -> Request<Responses.Relationship> {
         Request(path: "/api/v1/accounts/\(account.id)/block", httpMethod: .post, parameters: nil)
     }
 
-    public static func unmute(_ account: Responses.Account) -> Request<Relationship> {
+    public static func unmute(_ account: Responses.Account) -> Request<Responses.Relationship> {
         Request(path: "/api/v1/accounts/\(account.id)/unmute", httpMethod: .post, parameters: nil)
     }
 
-    public static func mute(_ account: Responses.Account) -> Request<Relationship> {
+    public static func mute(_ account: Responses.Account) -> Request<Responses.Relationship> {
         Request(path: "/api/v1/accounts/\(account.id)/mute", httpMethod: .post, parameters: nil)
     }
 
@@ -145,7 +145,10 @@ extension Endpoints {
             return PageableRequest(path: "/api/v1/timelines/public", httpMethod: .get, parameters: parameters)
         }
 
-        public static func tag(_ tag: Tag, pagination: Pagination.Item? = nil) -> PageableRequest<[Responses.Toot]> {
+        public static func tag(
+            _ tag: Responses.Tag,
+            pagination: Pagination.Item? = nil
+        ) -> PageableRequest<[Responses.Toot]> {
             var parameters: [String: String]?
             if let pagination = pagination {
                 parameters = [pagination.key: pagination.value]
