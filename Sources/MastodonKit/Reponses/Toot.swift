@@ -95,25 +95,3 @@ extension Responses.Toot {
         case bookmarked
     }
 }
-
-extension Responses.Toot {
-    public func boost() -> Request<Responses.Toot> {
-        Request(path: "/api/v1/statuses/\(id)/reblog", httpMethod: .post, parameters: nil)
-    }
-
-    public func unboost() -> Request<Responses.Toot> {
-        Request(path: "/api/v1/statuses/\(id)/unreblog", httpMethod: .post, parameters: nil)
-    }
-
-    public func favorite() -> Request<Responses.Toot> {
-        Request(path: "/api/v1/statuses/\(id)/favourite", httpMethod: .post, parameters: nil)
-    }
-
-    public func unfavorite() -> Request<Responses.Toot> {
-        Request(path: "/api/v1/statuses/\(id)/unfavourite", httpMethod: .post, parameters: nil)
-    }
-
-    public func context() -> Request<Responses.Context> {
-        Request(path: "/api/v1/statuses/\(id)/context", httpMethod: .get, parameters: nil)
-    }
-}

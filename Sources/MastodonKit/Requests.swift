@@ -68,11 +68,31 @@ public enum Requests {
         ])
     }
 
+    public static func bookmark(toot: Responses.Toot) -> Request<Responses.Toot> {
+        Request(path: "/api/v1/statuses/\(toot.id)/bookmark", httpMethod: .post, parameters: nil)
+    }
+
+    public static func context(of toot: Responses.Toot) -> Request<Responses.Context> {
+        Request(path: "/api/v1/statuses/\(toot.id)/context", httpMethod: .get, parameters: nil)
+    }
+
     public static func unbookmark(toot: Responses.Toot) -> Request<Responses.Toot> {
         Request(path: "/api/v1/statuses/\(toot.id)/unbookmark", httpMethod: .post, parameters: nil)
     }
 
-    public static func bookmark(toot: Responses.Toot) -> Request<Responses.Toot> {
-        Request(path: "/api/v1/statuses/\(toot.id)/bookmark", httpMethod: .post, parameters: nil)
+    public static func unfavorite(toot: Responses.Toot) -> Request<Responses.Toot> {
+        Request(path: "/api/v1/statuses/\(toot.id)/unfavourite", httpMethod: .post, parameters: nil)
+    }
+
+    public static func boost(toot: Responses.Toot) -> Request<Responses.Toot> {
+        Request(path: "/api/v1/statuses/\(toot.id)/reblog", httpMethod: .post, parameters: nil)
+    }
+
+    public static func unboost(toot: Responses.Toot) -> Request<Responses.Toot> {
+        Request(path: "/api/v1/statuses/\(toot.id)/unreblog", httpMethod: .post, parameters: nil)
+    }
+
+    public static func favorite(toot: Responses.Toot) -> Request<Responses.Toot> {
+        Request(path: "/api/v1/statuses/\(toot.id)/favourite", httpMethod: .post, parameters: nil)
     }
 }
