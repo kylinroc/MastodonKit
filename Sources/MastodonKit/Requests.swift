@@ -7,44 +7,6 @@ public enum Requests {
         Request(path: "/api/v1/accounts/\(id)", httpMethod: .get, parameters: nil)
     }
 
-    public static func followers(
-        of account: Responses.Account,
-        pagination: Pagination.Item? = nil
-    ) -> PageableRequest<[Responses.Account]> {
-        let parameters: [String: String]?
-        if let pagination = pagination {
-            parameters = [pagination.key: pagination.value]
-        } else {
-            parameters = nil
-        }
-        return PageableRequest(
-            path: "/api/v1/accounts/\(account.id)/followers",
-            httpMethod: .get,
-            parameters: parameters
-        )
-    }
-
-    public static func following(
-        of account: Responses.Account,
-        pagination: Pagination.Item? = nil
-    ) -> PageableRequest<[Responses.Account]> {
-        let parameters: [String: String]?
-        if let pagination = pagination {
-            parameters = [pagination.key: pagination.value]
-        } else {
-            parameters = nil
-        }
-        return PageableRequest(
-            path: "/api/v1/accounts/\(account.id)/following",
-            httpMethod: .get,
-            parameters: parameters
-        )
-    }
-
-    public static func pinnedToots(of account: Responses.Account) -> Request<[Responses.Toot]> {
-        Request(path: "/api/v1/accounts/\(account.id)/statuses", httpMethod: .get, parameters: ["pinned": "true"])
-    }
-
     public static func favorites(pagination: Pagination.Item? = nil) -> PageableRequest<[Responses.Toot]> {
         var parameters: [String: String]? = [:]
         if let pagination = pagination {
@@ -102,26 +64,6 @@ public enum Requests {
             parameters = [pagination.key: pagination.value]
         }
         return PageableRequest(path: "/api/v1/bookmarks", httpMethod: .get, parameters: parameters)
-    }
-
-    public static func toots(
-        of account: Responses.Account,
-        excludeReplies: Bool,
-        onlyMedia: Bool = false,
-        pagination: Pagination.Item? = nil
-    ) -> PageableRequest<[Responses.Toot]> {
-        var parameters = [
-            "exclude_replies": "\(excludeReplies)",
-            "only_media": "\(onlyMedia)",
-        ]
-        if let pagination = pagination {
-            parameters = [pagination.key: pagination.value]
-        }
-        return PageableRequest(
-            path: "/api/v1/accounts/\(account.id)/statuses",
-            httpMethod: .get,
-            parameters: parameters
-        )
     }
 
     public static func relationship(with account: Responses.Account) -> Request<[Responses.Relationship]> {
