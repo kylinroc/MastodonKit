@@ -13,7 +13,6 @@ extension Responses {
         public let headerURL: URL
         public let id: String
         public let isLocked: Bool
-        public let metadata: [Metadata]
         public let staticAvatarURL: URL
         public let staticHeaderURL: URL
         public let tootsCount: Int
@@ -39,7 +38,6 @@ extension Responses {
             headerURL = try container.decode(URL.self, forKey: .headerURL)
             id = try container.decode(String.self, forKey: .id)
             isLocked = try container.decode(Bool.self, forKey: .isLocked)
-            metadata = try container.decode([Metadata].self, forKey: .metadata)
             staticAvatarURL = try container.decode(URL.self, forKey: .staticAvatarURL)
             staticHeaderURL = try container.decode(URL.self, forKey: .staticHeaderURL)
             tootsCount = try container.decode(Int.self, forKey: .tootsCount)
@@ -61,7 +59,6 @@ extension Responses.Account {
         case headerURL = "header"
         case id
         case isLocked = "locked"
-        case metadata = "fields"
         case staticAvatarURL = "avatar_static"
         case staticHeaderURL = "header_static"
         case tootsCount = "statuses_count"
