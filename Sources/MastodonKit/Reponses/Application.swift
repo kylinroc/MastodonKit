@@ -19,16 +19,3 @@ extension Responses.Application {
         case website
     }
 }
-
-extension Responses.Application {
-    public func obtainToken(authorizationCode: String, scopes: [Scope]) -> Request<Responses.Token> {
-        Request(path: "/oauth/token", httpMethod: .post, parameters: [
-            "client_id": clientID!,
-            "client_secret": clientSecret!,
-            "redirect_uri": redirectURI!,
-            "scope": scopes.map(\.rawValue).joined(separator: " "),
-            "code": authorizationCode,
-            "grant_type": "authorization_code",
-        ])
-    }
-}

@@ -116,12 +116,4 @@ extension Responses.Toot {
     public func context() -> Request<Responses.Context> {
         Request(path: "/api/v1/statuses/\(id)/context", httpMethod: .get, parameters: nil)
     }
-
-    public func bookmark() -> Request<Responses.Toot> {
-        Request(path: "/api/v1/statuses/\(id)/bookmark", httpMethod: .post, parameters: nil)
-    }
-
-    public func unbookmark() -> Request<Responses.Toot> {
-        Request(path: "/api/v1/statuses/\(id)/unbookmark", httpMethod: .post, parameters: nil)
-    }
 }
