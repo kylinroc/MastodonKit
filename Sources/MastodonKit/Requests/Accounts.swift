@@ -59,4 +59,8 @@ extension Requests.Account {
             parameters: parameters
         )
     }
+
+    public func follow() -> Request<Responses.Relationship> {
+        Request(path: "/api/v1/accounts/\(id)/follow", httpMethod: .post, parameters: nil)
+    }
 }

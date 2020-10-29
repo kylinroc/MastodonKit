@@ -70,10 +70,6 @@ public enum Requests {
         Request(path: "/api/v1/accounts/relationships", httpMethod: .get, parameters: ["id": "\(account.id)"])
     }
 
-    public static func follow(_ account: Responses.Account) -> Request<Responses.Relationship> {
-        Request(path: "/api/v1/accounts/\(account.id)/follow", httpMethod: .post, parameters: nil)
-    }
-
     public static func unfollow(_ account: Responses.Account) -> Request<Responses.Relationship> {
         Request(path: "/api/v1/accounts/\(account.id)/unfollow", httpMethod: .post, parameters: nil)
     }
