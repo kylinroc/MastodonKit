@@ -1,36 +1,31 @@
 import Foundation
 
-public enum Scope: String, Encodable {
-    case read
-    case write
-    case follow
-    case push
-}
-
 public struct Client {
     private let serverURL: URL
+    private let session: URLSession
 
-    public init(serverURL: URL) {
+    public init(serverURL: URL, session: URLSession = .shared) {
         self.serverURL = serverURL
+        self.session = session
     }
 
     public func createApplication(
         name: String,
-        redirectURIs: [String] = ["urn:ietf:wg:oauth:2.0:oob"],
+        redirectURI: String = "urn:ietf:wg:oauth:2.0:oob",
         scopes: [Scope] = [.read],
         website: String? = nil,
-        completion: @escaping (Result<Void, Error>) -> Void
+        completion: @escaping (Result<Responses.Application, Error>) -> Void
     ) {
         struct Parameters: Encodable {
             private enum CodingKeys: String, CodingKey {
                 case name = "client_name"
-                case redirectURIs = "redirect_uris"
+                case redirectURI = "redirect_uris"
                 case scopes
                 case website
             }
 
             let name: String
-            let redirectURIs: [String]
+            let redirectURI: String
             let scopes: [Scope]
             let website: String?
         }
@@ -39,25 +34,26 @@ public struct Client {
         var urlRequest = URLRequest(url: url)
         urlRequest.httpBody = try? JSONEncoder().encode(Parameters(
             name: name,
-            redirectURIs: redirectURIs,
+            redirectURI: redirectURI,
             scopes: scopes,
             website: website
         ))
         urlRequest.httpMethod = "POST"
         urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        URLSession.shared.dataTask(with: urlRequest) { data, response, error in
+        session.dataTask(with: urlRequest) { data, response, error in
             if let error = error {
                 completion(.failure(error))
                 return
             }
 
-            let response = response as! HTTPURLResponse
-            switch response.statusCode {
-            case 200:
-                completion(.success(()))
-            default:
-                print(response)
+            guard let data = data else {
+                completion(.failure(URLError(.badServerResponse)))
+                return
             }
+
+            completion(Result {
+                try JSONDecoder().decode(Responses.Application.self, from: data)
+            })
         }.resume()
     }
 }
