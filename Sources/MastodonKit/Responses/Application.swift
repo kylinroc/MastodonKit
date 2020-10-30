@@ -1,12 +1,12 @@
 extension Responses {
     public struct Application: Decodable {
-        let clientID: String?
-        let clientSecret: String?
-        let id: String
-        let name: String
-        let redirectURI: String
-        let vapidKey: String?
-        let website: String?
+        public let clientID: String?
+        public let clientSecret: String?
+        public let id: String
+        public let name: String
+        public let redirectURI: String
+        public let vapidKey: String?
+        public let website: String?
     }
 }
 

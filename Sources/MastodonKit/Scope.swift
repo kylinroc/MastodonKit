@@ -1,4 +1,4 @@
-public enum Scope: String, Encodable {
+public enum Scope: String {
     case read
     case write
     case follow
