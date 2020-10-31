@@ -80,36 +80,48 @@ public struct Client {
             let grantType = "client_credentials"
         }
 
-        guard let url = URL(string: "/oauth/token", relativeTo: serverURL) else {
-            completion(.failure(URLError(.badURL)))
+        do {
+            let parameters = Parameters(
+                clientID: clientID,
+                clientSecret: clientSecret,
+                redirectURI: redirectURI,
+                scope: scopes.map(\.rawValue).joined(separator: " ")
+            )
+            let httpBody = try JSONEncoder().encode(parameters)
+            let request = Request(path: "/oauth/token", httpBody: httpBody, httpMethod: .post)
+            let urlRequest = try makeURLRequest(request)
+            session.dataTask(with: urlRequest) { data, response, error in
+                if let error = error {
+                    completion(.failure(error))
+                    return
+                }
+
+                guard let data = data else {
+                    completion(.failure(URLError(.badServerResponse)))
+                    return
+                }
+
+                completion(Result {
+                    let decoder = JSONDecoder()
+                    decoder.dateDecodingStrategy = .secondsSince1970
+                    return try decoder.decode(Responses.Token.self, from: data)
+                })
+            }.resume()
+        } catch {
+            completion(.failure(error))
             return
         }
+    }
 
-        var request = URLRequest(url: url)
-        request.httpBody = try? JSONEncoder().encode(Parameters(
-            clientID: clientID,
-            clientSecret: clientSecret,
-            redirectURI: redirectURI,
-            scope: scopes.map(\.rawValue).joined(separator: " ")
-        ))
-        request.httpMethod = "POST"
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        session.dataTask(with: request) { data, response, error in
-            if let error = error {
-                completion(.failure(error))
-                return
-            }
+    private func makeURLRequest(_ request: Request) throws -> URLRequest {
+        guard let url = URL(string: request.path, relativeTo: serverURL) else {
+            throw URLError(.badURL)
+        }
 
-            guard let data = data else {
-                completion(.failure(URLError(.badServerResponse)))
-                return
-            }
-
-            completion(Result {
-                let decoder = JSONDecoder()
-                decoder.dateDecodingStrategy = .secondsSince1970
-                return try decoder.decode(Responses.Token.self, from: data)
-            })
-        }.resume()
+        var urlRequest = URLRequest(url: url)
+        urlRequest.httpBody = request.httpBody
+        urlRequest.httpMethod = request.httpMethod.rawValue
+        urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        return urlRequest
     }
 }
