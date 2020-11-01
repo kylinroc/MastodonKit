@@ -30,31 +30,33 @@ public struct Client {
             let website: String?
         }
 
-        let url = URL(string: "/api/v1/apps", relativeTo: serverURL)!
-        var urlRequest = URLRequest(url: url)
-        urlRequest.httpBody = try? JSONEncoder().encode(Parameters(
-            name: name,
-            redirectURI: redirectURI,
-            scopes: scopes.map(\.rawValue).joined(separator: " "),
-            website: website
-        ))
-        urlRequest.httpMethod = "POST"
-        urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        session.dataTask(with: urlRequest) { data, response, error in
-            if let error = error {
-                completion(.failure(error))
-                return
-            }
+        do {
+            let parameters = Parameters(
+                name: name,
+                redirectURI: redirectURI,
+                scopes: scopes.map(\.rawValue).joined(separator: " "),
+                website: website
+            )
+            let data = try JSONEncoder().encode(parameters)
+            let request = Request(path: "/api/v1/apps", httpBody: data, httpMethod: .post)
+            session.dataTask(with: try makeURLRequest(request)) { data, response, error in
+                if let error = error {
+                    completion(.failure(error))
+                    return
+                }
 
-            guard let data = data else {
-                completion(.failure(URLError(.badServerResponse)))
-                return
-            }
+                guard let data = data else {
+                    completion(.failure(URLError(.badServerResponse)))
+                    return
+                }
 
-            completion(Result {
-                try JSONDecoder().decode(Responses.Application.self, from: data)
-            })
-        }.resume()
+                completion(Result {
+                    try JSONDecoder().decode(Responses.Application.self, from: data)
+                })
+            }.resume()
+        } catch {
+            completion(.failure(error))
+        }
     }
 
     public func obtainToken(
