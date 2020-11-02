@@ -45,8 +45,8 @@ public struct Client {
         }
 
         var urlRequest = URLRequest(url: url)
-        urlRequest.httpBody = request.httpBody
         urlRequest.httpMethod = request.httpMethod.rawValue
+        urlRequest.httpBody = request.httpBody
         urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
         return urlRequest
     }
