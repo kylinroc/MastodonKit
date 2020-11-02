@@ -28,7 +28,7 @@ public enum Requests {
             website: website
         )
         let httpBody = try? JSONEncoder().encode(parameters)
-        return Request(path: "/api/v1/apps", httpBody: httpBody, httpMethod: .post)
+        return Request(path: "/api/v1/apps", httpMethod: .post, httpBody: httpBody)
     }
 
     public static func obtainToken(
@@ -59,6 +59,6 @@ public enum Requests {
             scope: scopes.map(\.rawValue).joined(separator: " ")
         )
         let httpBody = try? JSONEncoder().encode(parameters)
-        return Request(path: "/oauth/token", httpBody: httpBody, httpMethod: .post)
+        return Request(path: "/oauth/token", httpMethod: .post, httpBody: httpBody)
     }
 }
