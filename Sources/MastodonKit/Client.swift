@@ -9,113 +9,37 @@ public struct Client {
         self.session = session
     }
 
-    public func createApplication(
-        name: String,
-        redirectURI: String = "urn:ietf:wg:oauth:2.0:oob",
-        scopes: [Scope] = [.read],
-        website: String? = nil,
-        completion: @escaping (Result<Responses.Application, Error>) -> Void
-    ) {
-        struct Parameters: Encodable {
-            private enum CodingKeys: String, CodingKey {
-                case name = "client_name"
-                case redirectURI = "redirect_uris"
-                case scopes
-                case website
-            }
-
-            let name: String
-            let redirectURI: String
-            let scopes: String
-            let website: String?
-        }
-
+    public func send<Response>(_ request: Request<Response>, completion: @escaping (Result<Response, Error>) -> Void) {
         do {
-            let parameters = Parameters(
-                name: name,
-                redirectURI: redirectURI,
-                scopes: scopes.map(\.rawValue).joined(separator: " "),
-                website: website
-            )
-            let data = try JSONEncoder().encode(parameters)
-            let request = Request(path: "/api/v1/apps", httpBody: data, httpMethod: .post)
             session.dataTask(with: try makeURLRequest(request)) { data, response, error in
                 if let error = error {
                     completion(.failure(error))
                     return
                 }
 
-                guard let data = data else {
+                guard let data = data, let response = response as? HTTPURLResponse else {
                     completion(.failure(URLError(.badServerResponse)))
                     return
                 }
 
-                completion(Result {
-                    try JSONDecoder().decode(Responses.Application.self, from: data)
-                })
+                switch response.statusCode {
+                case 200:
+                    completion(Result { try JSONDecoder().decode(Response.self, from: data) })
+                default:
+                    do {
+                        let error = try JSONDecoder().decode(Responses.Error.self, from: data)
+                        completion(.failure(error))
+                    } catch {
+                        completion(.failure(error))
+                    }
+                }
             }.resume()
         } catch {
             completion(.failure(error))
         }
     }
 
-    public func obtainToken(
-        clientID: String,
-        clientSecret: String,
-        redirectURI: String,
-        scopes: [Scope] = [.read],
-        completion: @escaping (Result<Responses.Token, Error>) -> Void
-    ) {
-        struct Parameters: Encodable {
-            private enum CodingKeys: String, CodingKey {
-                case clientID = "client_id"
-                case clientSecret = "client_secret"
-                case redirectURI = "redirect_uri"
-                case scope
-                case grantType = "grant_type"
-            }
-
-            let clientID: String
-            let clientSecret: String
-            let redirectURI: String
-            let scope: String
-            let grantType = "client_credentials"
-        }
-
-        do {
-            let parameters = Parameters(
-                clientID: clientID,
-                clientSecret: clientSecret,
-                redirectURI: redirectURI,
-                scope: scopes.map(\.rawValue).joined(separator: " ")
-            )
-            let httpBody = try JSONEncoder().encode(parameters)
-            let request = Request(path: "/oauth/token", httpBody: httpBody, httpMethod: .post)
-            let urlRequest = try makeURLRequest(request)
-            session.dataTask(with: urlRequest) { data, response, error in
-                if let error = error {
-                    completion(.failure(error))
-                    return
-                }
-
-                guard let data = data else {
-                    completion(.failure(URLError(.badServerResponse)))
-                    return
-                }
-
-                completion(Result {
-                    let decoder = JSONDecoder()
-                    decoder.dateDecodingStrategy = .secondsSince1970
-                    return try decoder.decode(Responses.Token.self, from: data)
-                })
-            }.resume()
-        } catch {
-            completion(.failure(error))
-            return
-        }
-    }
-
-    private func makeURLRequest(_ request: Request) throws -> URLRequest {
+    private func makeURLRequest<Response>(_ request: Request<Response>) throws -> URLRequest {
         guard let url = URL(string: request.path, relativeTo: serverURL) else {
             throw URLError(.badURL)
         }
