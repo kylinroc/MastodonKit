@@ -22,12 +22,15 @@ public struct Client {
                     return
                 }
 
+                let jsonDecoder = JSONDecoder()
+                jsonDecoder.dateDecodingStrategy = .secondsSince1970
+
                 switch response.statusCode {
                 case 200:
-                    completion(Result { try JSONDecoder().decode(Response.self, from: data) })
+                    completion(Result { try jsonDecoder.decode(Response.self, from: data) })
                 default:
                     do {
-                        let error = try JSONDecoder().decode(Responses.Error.self, from: data)
+                        let error = try jsonDecoder.decode(Responses.Error.self, from: data)
                         completion(.failure(error))
                     } catch {
                         completion(.failure(error))
