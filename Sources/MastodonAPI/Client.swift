@@ -23,7 +23,6 @@ public struct Client {
                 }
 
                 let jsonDecoder = JSONDecoder()
-                jsonDecoder.dateDecodingStrategy = .secondsSince1970
 
                 switch response.statusCode {
                 case 200:

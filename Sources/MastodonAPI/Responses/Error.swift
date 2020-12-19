@@ -1,14 +1,14 @@
 extension Responses {
     public struct Error {
-        public let failureReason: String
-        public let errorDescription: String
+        public let reason: String
+        public let description: String?
     }
 }
 
 extension Responses.Error: Decodable {
     private enum CodingKeys: String, CodingKey {
-        case failureReason = "error"
-        case errorDescription = "error_description"
+        case reason = "error"
+        case description = "error_description"
     }
 }
 

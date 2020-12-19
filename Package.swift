@@ -3,8 +3,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "MastodonKit",
-    platforms: [.iOS(.v13)],
-    products: [.library(name: "MastodonKit", targets: ["MastodonKit"])],
-    targets: [.target(name: "MastodonKit")]
+    name: "MastodonAPI",
+    products: [.library(name: "MastodonAPI", targets: ["MastodonAPI"])],
+    targets: [.target(name: "MastodonAPI")]
 )
