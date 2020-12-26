@@ -67,4 +67,8 @@ public enum Requests {
         let httpBody = try? JSONEncoder().encode(parameters)
         return Request(path: "/oauth/token", httpMethod: .post, httpBody: httpBody)
     }
+
+    public static func verifyCredentials() -> Request<Responses.Account> {
+        return Request(path: "/api/v1/accounts/verify_credentials", httpMethod: .get, httpBody: nil)
+    }
 }

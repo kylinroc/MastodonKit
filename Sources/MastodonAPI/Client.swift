@@ -1,17 +1,17 @@
 import Foundation
 
 public struct Client {
-    private let serverURL: URL
-    private let session: URLSession
+    public var serverURL: URL
+    public var accessToken: String?
 
-    public init(serverURL: URL, session: URLSession = .shared) {
+    public init(serverURL: URL, accessToken: String? = nil) {
         self.serverURL = serverURL
-        self.session = session
+        self.accessToken = accessToken
     }
 
     public func send<Response>(_ request: Request<Response>, completion: @escaping (Result<Response, Error>) -> Void) {
         do {
-            session.dataTask(with: try makeURLRequest(request)) { data, response, error in
+            URLSession.shared.dataTask(with: try makeURLRequest(request)) { data, response, error in
                 if let error = error {
                     completion(.failure(error))
                     return
@@ -50,7 +50,10 @@ public struct Client {
         var urlRequest = URLRequest(url: url)
         urlRequest.httpMethod = request.httpMethod.rawValue
         urlRequest.httpBody = request.httpBody
-        urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        if let accessToken = accessToken {
+            urlRequest.setValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
+        }
         return urlRequest
     }
 
