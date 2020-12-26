@@ -23,6 +23,7 @@ public struct Client {
                 }
 
                 let jsonDecoder = JSONDecoder()
+                jsonDecoder.dateDecodingStrategy = .secondsSince1970
 
                 switch response.statusCode {
                 case 200:
@@ -51,5 +52,21 @@ public struct Client {
         urlRequest.httpBody = request.httpBody
         urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
         return urlRequest
+    }
+
+    public func makeAuthorizeURL(clientID: String, scopes: [Scope], redirectURI: String) -> URL? {
+        guard var urlComponents = URLComponents(url: serverURL, resolvingAgainstBaseURL: false) else {
+            return nil
+        }
+
+        urlComponents.path = "/oauth/authorize"
+        urlComponents.queryItems = [
+            URLQueryItem(name: "client_id", value: clientID),
+            URLQueryItem(name: "scope", value: scopes.map(\.rawValue).joined(separator: "+")),
+            URLQueryItem(name: "redirect_uri", value: redirectURI),
+            URLQueryItem(name: "response_type", value: "code"),
+        ]
+
+        return urlComponents.url
     }
 }
