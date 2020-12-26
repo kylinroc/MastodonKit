@@ -2,10 +2,10 @@ import Foundation
 
 extension Responses {
     public struct Token {
-        let accessToken: String
-        let tokenType: String
-        let scope: String
-        let creationDate: Date
+        public let accessToken: String
+        public let tokenType: String
+        public let scope: String
+        public let creationDate: Date
     }
 }
 
