@@ -71,4 +71,8 @@ public enum Requests {
     public static func verifyCredentials() -> Request<Responses.Account> {
         return Request(path: "/api/v1/accounts/verify_credentials", httpMethod: .get, httpBody: nil)
     }
+
+    public static func homeTimeline() -> Request<[Responses.Toot]> {
+        return Request(path: "/api/v1/timelines/home", httpMethod: .get, httpBody: nil)
+    }
 }
