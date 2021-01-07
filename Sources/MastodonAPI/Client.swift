@@ -1,4 +1,5 @@
 import Foundation
+import HTTPLinkHeader
 
 public struct Client {
     public var serverURL: URL
