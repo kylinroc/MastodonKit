@@ -1,7 +1,8 @@
 import Foundation
 
 public struct Request<Response: Decodable> {
-    let path: String
-    let httpMethod: HTTPMethod
-    let httpBody: Data?
+    var path: String
+    var httpMethod: HTTPMethod
+    var httpBody: Data?
+    var dateDecodingStrategy: JSONDecoder.DateDecodingStrategy?
 }
