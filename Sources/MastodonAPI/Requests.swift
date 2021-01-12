@@ -84,4 +84,16 @@ public enum Requests {
         dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
         return Request(path: "/api/v1/timelines/home", httpMethod: .get, dateDecodingStrategy: .formatted(dateFormatter))
     }
+
+    public static func publicTimeline() -> Request<[Responses.Toot]> {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SZ"
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+        dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
+        return Request(
+            path: "/api/v1/timelines/public",
+            httpMethod: .get,
+            dateDecodingStrategy: .formatted(dateFormatter)
+        )
+    }
 }
