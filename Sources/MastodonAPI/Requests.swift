@@ -68,8 +68,7 @@ public enum Requests {
         return Request(
             path: "/oauth/token",
             httpMethod: .post,
-            httpBody: httpBody,
-            dateDecodingStrategy: .secondsSince1970
+            httpBody: httpBody
         )
     }
 
@@ -78,22 +77,10 @@ public enum Requests {
     }
 
     public static func homeTimeline() -> Request<[Responses.Toot]> {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SZ"
-        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
-        dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
-        return Request(path: "/api/v1/timelines/home", httpMethod: .get, dateDecodingStrategy: .formatted(dateFormatter))
+        Request(path: "/api/v1/timelines/home", httpMethod: .get)
     }
 
     public static func publicTimeline() -> Request<[Responses.Toot]> {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SZ"
-        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
-        dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
-        return Request(
-            path: "/api/v1/timelines/public",
-            httpMethod: .get,
-            dateDecodingStrategy: .formatted(dateFormatter)
-        )
+        Request(path: "/api/v1/timelines/public", httpMethod: .get)
     }
 }

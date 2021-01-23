@@ -24,9 +24,11 @@ public struct Client {
                 }
 
                 let jsonDecoder = JSONDecoder()
-                if let dateDecodingStrategy = request.dateDecodingStrategy {
-                    jsonDecoder.dateDecodingStrategy = dateDecodingStrategy
-                }
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SZ"
+                dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+                dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
+                jsonDecoder.dateDecodingStrategy = .formatted(dateFormatter)
 
                 switch response.statusCode {
                 case 200:
