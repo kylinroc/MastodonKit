@@ -15,7 +15,8 @@ public struct Client {
         completion: @escaping (Result<Response, Error>) -> Void
     ) {
         do {
-            send(try makeURLRequest(request), expectedResponseType: Response.self) { result in
+            let urlRequest = try request.makeURLRequest(relativeTo: serverURL, accessToken: accessToken)
+            send(urlRequest, expectedResponseType: Response.self) { result in
                 completion(result.map({ $0.0 }))
             }
         } catch {
@@ -28,7 +29,8 @@ public struct Client {
         completion: @escaping (Result<Paged<Response>, Error>) -> Void
     ) {
         do {
-            send(try makeURLRequest(request), expectedResponseType: Response.self) { result in
+            let urlRequest = try request.makeURLRequest(relativeTo: serverURL, accessToken: accessToken)
+            send(urlRequest, expectedResponseType: Response.self) { result in
                 completion(result.map({ Paged(links: $0.1, response: $0.0) }))
             }
         } catch {
@@ -78,21 +80,6 @@ public struct Client {
                 completion(.failure(error))
             }
         }.resume()
-    }
-
-    private func makeURLRequest<Response>(_ request: Request<Response>) throws -> URLRequest {
-        guard let url = URL(string: request.path, relativeTo: serverURL) else {
-            throw URLError(.badURL)
-        }
-
-        var urlRequest = URLRequest(url: url)
-        urlRequest.httpMethod = request.httpMethod.rawValue
-        urlRequest.httpBody = request.httpBody
-        urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        if let accessToken = accessToken {
-            urlRequest.setValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
-        }
-        return urlRequest
     }
 
     public func makeAuthorizeURL(clientID: String, scopes: [Scope], redirectURI: String) -> URL? {

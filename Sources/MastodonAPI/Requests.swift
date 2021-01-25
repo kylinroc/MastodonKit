@@ -1,4 +1,5 @@
 import Foundation
+import HTTPLinkHeader
 
 public enum Requests {
     public static func registerApplication(
@@ -28,7 +29,7 @@ public enum Requests {
             website: website
         )
         let httpBody = try? JSONEncoder().encode(parameters)
-        return Request(path: "/api/v1/apps", httpMethod: .post, httpBody: httpBody)
+        return Request(path: "/api/v1/apps", httpMethod: .post(httpBody))
     }
 
     public static func obtainToken(
@@ -65,22 +66,32 @@ public enum Requests {
             grantType: "authorization_code"
         )
         let httpBody = try? JSONEncoder().encode(parameters)
-        return Request(
-            path: "/oauth/token",
-            httpMethod: .post,
-            httpBody: httpBody
-        )
+        return Request(path: "/oauth/token", httpMethod: .post(httpBody))
     }
 
     public static func verifyCredentials() -> Request<Responses.Account> {
-        Request(path: "/api/v1/accounts/verify_credentials", httpMethod: .get)
+        Request(path: "/api/v1/accounts/verify_credentials", httpMethod: .get(nil))
     }
 
-    public static func homeTimeline() -> Request<Paged<[Responses.Toot]>> {
-        Request(path: "/api/v1/timelines/home", httpMethod: .get)
+    public static func homeTimeline(pagination: HTTPLinkHeader? = nil) -> Request<Paged<[Responses.Toot]>> {
+        let queryItems: [URLQueryItem]?
+        if let pagination = pagination, let urlComponents = URLComponents(string: pagination.uriReference) {
+            queryItems = urlComponents.queryItems
+        } else {
+            queryItems = nil
+        }
+
+        return Request(path: "/api/v1/timelines/home", httpMethod: .get(queryItems))
     }
 
-    public static func publicTimeline() -> Request<Paged<[Responses.Toot]>> {
-        Request(path: "/api/v1/timelines/public", httpMethod: .get)
+    public static func publicTimeline(pagination: HTTPLinkHeader? = nil) -> Request<Paged<[Responses.Toot]>> {
+        let queryItems: [URLQueryItem]?
+        if let pagination = pagination, let urlComponents = URLComponents(string: pagination.uriReference) {
+            queryItems = urlComponents.queryItems
+        } else {
+            queryItems = nil
+        }
+
+        return Request(path: "/api/v1/timelines/public", httpMethod: .get(queryItems))
     }
 }
