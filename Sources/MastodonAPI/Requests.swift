@@ -76,11 +76,11 @@ public enum Requests {
         Request(path: "/api/v1/accounts/verify_credentials", httpMethod: .get)
     }
 
-    public static func homeTimeline() -> Request<[Responses.Toot]> {
+    public static func homeTimeline() -> Request<Paged<[Responses.Toot]>> {
         Request(path: "/api/v1/timelines/home", httpMethod: .get)
     }
 
-    public static func publicTimeline() -> Request<[Responses.Toot]> {
+    public static func publicTimeline() -> Request<Paged<[Responses.Toot]>> {
         Request(path: "/api/v1/timelines/public", httpMethod: .get)
     }
 }
