@@ -84,12 +84,15 @@ public enum Requests {
         return Request(path: "/api/v1/timelines/home", httpMethod: .get(queryItems))
     }
 
-    public static func publicTimeline(pagination: HTTPLinkHeader? = nil) -> Request<Paged<[Responses.Toot]>> {
+    public static func publicTimeline(
+        isLocal: Bool = false,
+        pagination: HTTPLinkHeader? = nil
+    ) -> Request<Paged<[Responses.Toot]>> {
         let queryItems: [URLQueryItem]?
         if let pagination = pagination, let urlComponents = URLComponents(string: pagination.uriReference) {
             queryItems = urlComponents.queryItems
         } else {
-            queryItems = nil
+            queryItems = [URLQueryItem(name: "local", value: "\(isLocal)")]
         }
 
         return Request(path: "/api/v1/timelines/public", httpMethod: .get(queryItems))
