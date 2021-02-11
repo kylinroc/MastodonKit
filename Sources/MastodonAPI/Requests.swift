@@ -97,4 +97,15 @@ public enum Requests {
 
         return Request(path: "/api/v1/timelines/public", httpMethod: .get(queryItems))
     }
+
+    public static func notifications(pagination: HTTPLinkHeader? = nil) -> Request<Paged<[Responses.Notification]>> {
+        let queryItems: [URLQueryItem]?
+        if let pagination = pagination, let urlComponents = URLComponents(string: pagination.uriReference) {
+            queryItems = urlComponents.queryItems
+        } else {
+            queryItems = nil
+        }
+        
+        return Request(path: "/api/v1/notifications", httpMethod: .get(queryItems))
+    }
 }
