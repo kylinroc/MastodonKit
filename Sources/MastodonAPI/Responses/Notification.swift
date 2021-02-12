@@ -12,11 +12,13 @@ extension Responses {
     public struct Notification: Decodable {
         public let id: String
         public let type: NotificationType
+        public let account: Account
         public let toot: Toot?
 
         private enum CodingKeys: String, CodingKey {
             case id
             case type
+            case account
             case toot = "status"
         }
     }
