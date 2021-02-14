@@ -1,7 +1,7 @@
 import Foundation
 import HTTPLinkHeader
 
-extension Requests {
+extension Requests.API.V1 {
     public enum Timelines {
         public static func home(pagination: HTTPLinkHeader? = nil) -> Request<Paged<[Responses.Toot]>> {
             let queryItems: [URLQueryItem]?
