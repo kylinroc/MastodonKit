@@ -4,8 +4,10 @@ extension Responses {
     public final class Toot: Decodable {
         public let id: String
         public let account: Account
+        public let contentWarning: String
         public let content: String
         public let attachments: [Attachment]
+        public let isSensitive: Bool
         public let creationDate: Date
         public let visibility: Visibility
         public let isBoosted: Bool
@@ -19,8 +21,10 @@ extension Responses {
         private enum CodingKeys: String, CodingKey {
             case id
             case account
+            case contentWarning = "spoiler_text"
             case content
             case attachments = "media_attachments"
+            case isSensitive = "sensitive"
             case creationDate = "created_at"
             case visibility
             case isBoosted = "reblogged"
