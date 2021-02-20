@@ -1,7 +1,7 @@
 import Foundation
 
 extension Responses {
-    public final class Toot: Decodable {
+    public final class Status: Decodable {
         public let id: String
         public let account: Account
         public let contentWarning: String
@@ -17,7 +17,7 @@ extension Responses {
         public let repliesCount: Int
         public let boostsCount: Int
         public let favoritesCount: Int
-        public let boostedToot: Toot?
+        public let boostedToot: Status?
 
         private enum CodingKeys: String, CodingKey {
             case id

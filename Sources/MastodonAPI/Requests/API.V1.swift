@@ -33,7 +33,7 @@ extension Requests.API {
             return Request(path: "/api/v1/apps", httpMethod: .post(httpBody))
         }
 
-        public static func bookmarks(pagination: HTTPLinkHeader? = nil) -> Request<Paged<[Responses.Toot]>> {
+        public static func bookmarks(pagination: HTTPLinkHeader? = nil) -> Request<Paged<[Responses.Status]>> {
             let queryItems: [URLQueryItem]?
             if let pagination = pagination, let urlComponents = URLComponents(string: pagination.uriReference) {
                 queryItems = urlComponents.queryItems
@@ -44,7 +44,7 @@ extension Requests.API {
             return Request(path: "/api/v1/bookmarks", httpMethod: .get(queryItems))
         }
 
-        public static func favourites(pagination: HTTPLinkHeader? = nil) -> Request<Paged<[Responses.Toot]>> {
+        public static func favourites(pagination: HTTPLinkHeader? = nil) -> Request<Paged<[Responses.Status]>> {
             let queryItems: [URLQueryItem]?
             if let pagination = pagination, let urlComponents = URLComponents(string: pagination.uriReference) {
                 queryItems = urlComponents.queryItems

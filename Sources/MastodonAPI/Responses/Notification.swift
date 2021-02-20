@@ -13,13 +13,13 @@ extension Responses {
         public let id: String
         public let type: NotificationType
         public let account: Account
-        public let toot: Toot?
+        public let status: Status?
 
         private enum CodingKeys: String, CodingKey {
             case id
             case type
             case account
-            case toot = "status"
+            case status
         }
     }
 }

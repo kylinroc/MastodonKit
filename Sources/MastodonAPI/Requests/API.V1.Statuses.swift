@@ -6,27 +6,27 @@ extension Requests.API.V1 {
             self.id = id
         }
 
-        public func reblog() -> Request<Responses.Toot> {
+        public func reblog() -> Request<Responses.Status> {
             Request(path: "/api/v1/statuses/\(id)/reblog", httpMethod: .post(nil))
         }
 
-        public func unreblog() -> Request<Responses.Toot> {
+        public func unreblog() -> Request<Responses.Status> {
             Request(path: "/api/v1/statuses/\(id)/unreblog", httpMethod: .post(nil))
         }
 
-        public func favourite() -> Request<Responses.Toot> {
+        public func favourite() -> Request<Responses.Status> {
             Request(path: "/api/v1/statuses/\(id)/favourite", httpMethod: .post(nil))
         }
 
-        public func unfavourite() -> Request<Responses.Toot> {
+        public func unfavourite() -> Request<Responses.Status> {
             Request(path: "/api/v1/statuses/\(id)/unfavourite", httpMethod: .post(nil))
         }
 
-        public func bookmark() -> Request<Responses.Toot> {
+        public func bookmark() -> Request<Responses.Status> {
             Request(path: "/api/v1/statuses/\(id)/bookmark", httpMethod: .post(nil))
         }
 
-        public func unbookmark() -> Request<Responses.Toot> {
+        public func unbookmark() -> Request<Responses.Status> {
             Request(path: "/api/v1/statuses/\(id)/unbookmark", httpMethod: .post(nil))
         }
     }
