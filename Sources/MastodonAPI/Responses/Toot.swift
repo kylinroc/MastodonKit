@@ -6,6 +6,7 @@ extension Responses {
         public let account: Account
         public let contentWarning: String
         public let content: String
+        public let emojis: [Emoji]
         public let attachments: [Attachment]
         public let isSensitive: Bool
         public let creationDate: Date
@@ -23,6 +24,7 @@ extension Responses {
             case account
             case contentWarning = "spoiler_text"
             case content
+            case emojis
             case attachments = "media_attachments"
             case isSensitive = "sensitive"
             case creationDate = "created_at"
