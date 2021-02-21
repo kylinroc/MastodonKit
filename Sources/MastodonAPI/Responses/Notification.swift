@@ -6,7 +6,7 @@ extension Responses {
         case boost = "reblog"
         case favorite = "favourite"
         case poll
-        case toot = "status"
+        case status
     }
 
     public struct Notification: Decodable {
