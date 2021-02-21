@@ -9,6 +9,7 @@ extension Responses {
         public let emojis: [Emoji]
         public let attachments: [Attachment]
         public let isSensitive: Bool
+        public let poll: Poll?
         public let creationDate: Date
         public let visibility: Visibility
         public let isBoosted: Bool
@@ -27,6 +28,7 @@ extension Responses {
             case emojis
             case attachments = "media_attachments"
             case isSensitive = "sensitive"
+            case poll
             case creationDate = "created_at"
             case visibility
             case isBoosted = "reblogged"
