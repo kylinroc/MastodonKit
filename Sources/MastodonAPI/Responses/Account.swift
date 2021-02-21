@@ -7,6 +7,10 @@ extension Responses {
         public let fullUsername: String
         public let displayName: String
         public let staticAvatarURL: URL
+        public let staticHeaderURL: URL
+        public let statusesCount: Int
+        public let followingCount: Int
+        public let followersCount: Int
 
         private enum CodingKeys: String, CodingKey {
             case id
@@ -14,20 +18,10 @@ extension Responses {
             case fullUsername = "acct"
             case displayName = "display_name"
             case staticAvatarURL = "avatar_static"
-        }
-
-        public init(from decoder: Decoder) throws {
-            let container = try decoder.container(keyedBy: CodingKeys.self)
-            id = try container.decode(String.self, forKey: .id)
-            username = try container.decode(String.self, forKey: .username)
-            fullUsername = try container.decode(String.self, forKey: .fullUsername)
-            if let displayName = try container.decodeIfPresent(String.self, forKey: .displayName),
-               !displayName.isEmpty {
-                self.displayName = displayName
-            } else {
-                self.displayName = username
-            }
-            staticAvatarURL = try container.decode(URL.self, forKey: .staticAvatarURL)
+            case staticHeaderURL = "header_static"
+            case statusesCount = "statuses_count"
+            case followingCount = "following_count"
+            case followersCount = "followers_count"
         }
     }
 }
