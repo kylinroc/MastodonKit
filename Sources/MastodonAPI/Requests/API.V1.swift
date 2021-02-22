@@ -3,6 +3,10 @@ import HTTPLinkHeader
 
 extension Requests.API {
     public enum V1 {
+        public static func accounts(id: String) -> Request<Responses.Account> {
+            Request(path: "/api/v1/accounts/\(id)", httpMethod: .get(nil))
+        }
+
         public static func apps(
             name: String,
             redirectURI: String = "urn:ietf:wg:oauth:2.0:oob",
