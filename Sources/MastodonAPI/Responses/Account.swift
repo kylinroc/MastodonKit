@@ -12,6 +12,9 @@ extension Responses {
         public let fullUsername: String
 
         // 0.1.0
+        public let url: URL
+
+        // 0.1.0
         public let displayName: String
 
         // 0.1.0
@@ -33,12 +36,16 @@ extension Responses {
         public let staticHeaderURL: URL
 
         // 2.4.0
+        public let emojis: [Emoji]
+
+        // 2.4.0
         public let fields: [Field]
 
         private enum CodingKeys: String, CodingKey {
             case id
             case username
             case fullUsername = "acct"
+            case url
             case displayName = "display_name"
             case note
             case statusesCount = "statuses_count"
@@ -46,6 +53,7 @@ extension Responses {
             case followersCount = "followers_count"
             case staticAvatarURL = "avatar_static"
             case staticHeaderURL = "header_static"
+            case emojis
             case fields
         }
     }
