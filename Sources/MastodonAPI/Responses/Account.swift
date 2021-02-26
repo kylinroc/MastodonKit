@@ -9,7 +9,7 @@ extension Responses {
         public let username: String
 
         // 0.1.0
-        public let fullUsername: String
+        public let usernameAtDomain: String
 
         // 0.1.0
         public let url: URL
@@ -44,7 +44,7 @@ extension Responses {
         private enum CodingKeys: String, CodingKey {
             case id
             case username
-            case fullUsername = "acct"
+            case usernameAtDomain = "acct"
             case url
             case displayName = "display_name"
             case note
