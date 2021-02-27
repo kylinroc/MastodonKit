@@ -11,6 +11,8 @@ extension Responses {
         // 0.1.0
         public let usernameAtDomain: String
 
+        public let isLocked: Bool
+
         // 0.1.0
         public let url: URL
 
@@ -45,6 +47,7 @@ extension Responses {
             case id
             case username
             case usernameAtDomain = "acct"
+            case isLocked = "locked"
             case url
             case displayName = "display_name"
             case note
