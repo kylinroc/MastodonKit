@@ -26,4 +26,8 @@ extension Requests.API.V1.Accounts {
             URLQueryItem(name: "pinned", value: "\(pinned)")
         ]))
     }
+
+    public func identityProofs() -> Request<[Responses.IdentityProof]> {
+        Request(path: "/api/v1/accounts/\(id)/identity_proofs", httpMethod: .get(nil))
+    }
 }

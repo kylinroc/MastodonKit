@@ -1,7 +1,7 @@
 import Foundation
 
 extension Responses {
-    public struct IdentityProof: Decodable {
+    public struct IdentityProof: Decodable, Hashable {
         // 2.8.0
         public let provider: String
 
