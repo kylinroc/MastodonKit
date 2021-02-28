@@ -11,6 +11,7 @@ extension Responses {
         // 0.1.0
         public let usernameAtDomain: String
 
+        // 0.1.0
         public let isLocked: Bool
 
         // 0.1.0
@@ -21,6 +22,9 @@ extension Responses {
 
         // 0.1.0
         public let note: String
+
+        // 0.1.0
+        public let creationDate: Date
 
         // 0.1.0
         public let statusesCount: Int
@@ -51,6 +55,7 @@ extension Responses {
             case url
             case displayName = "display_name"
             case note
+            case creationDate = "created_at"
             case statusesCount = "statuses_count"
             case followingCount = "following_count"
             case followersCount = "followers_count"
