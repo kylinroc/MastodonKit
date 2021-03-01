@@ -1,4 +1,5 @@
 import Foundation
+import HTTPLinkHeader
 
 extension Requests.API.V1 {
     public struct Accounts {
@@ -29,5 +30,16 @@ extension Requests.API.V1.Accounts {
 
     public func identityProofs() -> Request<[Responses.IdentityProof]> {
         Request(path: "/api/v1/accounts/\(id)/identity_proofs", httpMethod: .get(nil))
+    }
+
+    public func following(pagination: HTTPLinkHeader? = nil) -> Request<Paged<[Responses.Account]>> {
+        let queryItems: [URLQueryItem]?
+        if let pagination = pagination, let urlComponents = URLComponents(string: pagination.uriReference) {
+            queryItems = urlComponents.queryItems
+        } else {
+            queryItems = nil
+        }
+
+        return Request(path: "/api/v1/accounts/\(id)/following", httpMethod: .get(queryItems))
     }
 }
