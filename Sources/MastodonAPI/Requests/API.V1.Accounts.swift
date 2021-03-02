@@ -21,15 +21,18 @@ extension Requests.API.V1.Accounts {
     public static func verifyCredentials() -> Request<Responses.Account> {
         Request(path: "/api/v1/accounts/verify_credentials", httpMethod: .get(nil))
     }
+}
 
-    public func statuses(pinned: Bool) -> Request<Paged<[Responses.Status]>> {
-        Request(path: "/api/v1/accounts/\(id)/statuses", httpMethod: .get([
-            URLQueryItem(name: "pinned", value: "\(pinned)")
-        ]))
-    }
+extension Requests.API.V1.Accounts {
+    public func followers(pagination: HTTPLinkHeader? = nil) -> Request<Paged<[Responses.Account]>> {
+        let queryItems: [URLQueryItem]?
+        if let pagination = pagination, let urlComponents = URLComponents(string: pagination.uriReference) {
+            queryItems = urlComponents.queryItems
+        } else {
+            queryItems = nil
+        }
 
-    public func identityProofs() -> Request<[Responses.IdentityProof]> {
-        Request(path: "/api/v1/accounts/\(id)/identity_proofs", httpMethod: .get(nil))
+        return Request(path: "/api/v1/accounts/\(id)/followers", httpMethod: .get(queryItems))
     }
 
     public func following(pagination: HTTPLinkHeader? = nil) -> Request<Paged<[Responses.Account]>> {
@@ -41,5 +44,15 @@ extension Requests.API.V1.Accounts {
         }
 
         return Request(path: "/api/v1/accounts/\(id)/following", httpMethod: .get(queryItems))
+    }
+
+    public func identityProofs() -> Request<[Responses.IdentityProof]> {
+        Request(path: "/api/v1/accounts/\(id)/identity_proofs", httpMethod: .get(nil))
+    }
+
+    public func statuses(pinned: Bool) -> Request<Paged<[Responses.Status]>> {
+        Request(path: "/api/v1/accounts/\(id)/statuses", httpMethod: .get([
+            URLQueryItem(name: "pinned", value: "\(pinned)")
+        ]))
     }
 }
