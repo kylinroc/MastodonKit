@@ -50,9 +50,28 @@ extension Requests.API.V1.Accounts {
         Request(path: "/api/v1/accounts/\(id)/identity_proofs", httpMethod: .get(nil))
     }
 
-    public func statuses(pinned: Bool) -> Request<Paged<[Responses.Status]>> {
-        Request(path: "/api/v1/accounts/\(id)/statuses", httpMethod: .get([
-            URLQueryItem(name: "pinned", value: "\(pinned)")
-        ]))
+    public func statuses(
+        pinned: Bool? = nil,
+        excludeReplies: Bool? = nil,
+        onlyMedia: Bool? = nil,
+        pagination: HTTPLinkHeader? = nil
+    ) -> Request<Paged<[Responses.Status]>> {
+        var queryItems: [URLQueryItem]?
+        if let pagination = pagination, let urlComponents = URLComponents(string: pagination.uriReference) {
+            queryItems = urlComponents.queryItems
+        } else {
+            queryItems = []
+            if let pinned = pinned {
+                queryItems?.append(URLQueryItem(name: "pinned", value: "\(pinned)"))
+            }
+            if let excludeReplies = excludeReplies {
+                queryItems?.append(URLQueryItem(name: "exclude_replies", value: "\(excludeReplies)"))
+            }
+            if let onlyMedia = onlyMedia {
+                queryItems?.append(URLQueryItem(name: "only_media", value: "\(onlyMedia)"))
+            }
+        }
+
+        return Request(path: "/api/v1/accounts/\(id)/statuses", httpMethod: .get(queryItems))
     }
 }
