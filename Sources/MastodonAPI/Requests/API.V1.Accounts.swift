@@ -74,4 +74,12 @@ extension Requests.API.V1.Accounts {
 
         return Request(path: "/api/v1/accounts/\(id)/statuses", httpMethod: .get(queryItems))
     }
+
+    public func follow() -> Request<Responses.Relationship> {
+        Request(path: "/api/v1/accounts/\(id)/follow", httpMethod: .post(nil))
+    }
+
+    public func unfollow() -> Request<Responses.Relationship> {
+        Request(path: "/api/v1/accounts/\(id)/unfollow", httpMethod: .post(nil))
+    }
 }
