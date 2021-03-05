@@ -1,5 +1,5 @@
 extension Responses {
-    public struct Relationship: Decodable {
+    public struct Relationship: Decodable, Hashable {
         // 0.6.0
         public let id: String
 
