@@ -1,7 +1,7 @@
 import Foundation
 
 extension Responses {
-    public struct Emoji: Decodable, Hashable {
+    public struct Emoji: Codable, Hashable {
         public let shortcode: String
         public let staticURL: URL
 

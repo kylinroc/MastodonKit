@@ -1,7 +1,7 @@
 import Foundation
 
 extension Responses {
-    public struct Field: Decodable {
+    public struct Field: Codable {
         // 2.4.0
         public let name: String
 

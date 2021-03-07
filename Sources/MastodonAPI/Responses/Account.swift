@@ -1,7 +1,7 @@
 import Foundation
 
 extension Responses {
-    public struct Account: Decodable {
+    public struct Account: Codable {
         // 0.1.0
         public let id: String
 
