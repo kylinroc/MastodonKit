@@ -48,6 +48,18 @@ extension Requests.API {
             return Request(path: "/api/v1/bookmarks", httpMethod: .get(queryItems))
         }
 
+
+        public static func conversations(pagination: HTTPLinkHeader?) -> Request<Paged<[Responses.Conversation]>> {
+            let queryItems: [URLQueryItem]?
+            if let pagination = pagination, let urlComponents = URLComponents(string: pagination.uriReference) {
+                queryItems = urlComponents.queryItems
+            } else {
+                queryItems = nil
+            }
+
+            return Request(path: "/api/v1/conversations", httpMethod: .get(queryItems))
+        }
+
         public static func favourites(pagination: HTTPLinkHeader? = nil) -> Request<Paged<[Responses.Status]>> {
             let queryItems: [URLQueryItem]?
             if let pagination = pagination, let urlComponents = URLComponents(string: pagination.uriReference) {
