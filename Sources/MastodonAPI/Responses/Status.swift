@@ -32,6 +32,9 @@ extension Responses {
         // 0.1.0
         public let rebloggedStatus: Status?
 
+        // 0.1.0
+        public let inReplyToID: String?
+
         // 0.6.0
         public let attachments: [Attachment]
 
@@ -64,6 +67,7 @@ extension Responses {
             case reblogsCount = "reblogs_count"
             case favoritesCount = "favourites_count"
             case rebloggedStatus = "reblog"
+            case inReplyToID = "in_reply_to_id"
             case attachments = "media_attachments"
             case isSensitive = "sensitive"
             case visibility
