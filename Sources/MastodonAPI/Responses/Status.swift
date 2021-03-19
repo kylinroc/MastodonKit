@@ -38,6 +38,9 @@ extension Responses {
         // 0.6.0
         public let attachments: [Attachment]
 
+        // 0.6.0
+        public let mentions: [Mention]
+
         // 0.9.9
         public let isSensitive: Bool
 
@@ -69,6 +72,7 @@ extension Responses {
             case rebloggedStatus = "reblog"
             case inReplyToID = "in_reply_to_id"
             case attachments = "media_attachments"
+            case mentions
             case isSensitive = "sensitive"
             case visibility
             case emojis

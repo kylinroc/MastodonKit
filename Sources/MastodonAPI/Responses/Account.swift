@@ -9,7 +9,7 @@ extension Responses {
         public let username: String
 
         // 0.1.0
-        public let usernameAtDomain: String
+        public let acct: String
 
         // 0.1.0
         public let isLocked: Bool
@@ -50,7 +50,7 @@ extension Responses {
         private enum CodingKeys: String, CodingKey {
             case id
             case username
-            case usernameAtDomain = "acct"
+            case acct
             case isLocked = "locked"
             case url
             case displayName = "display_name"
