@@ -27,5 +27,19 @@ extension Requests.API.V1 {
 
             return Request(path: "/api/v1/timelines/public", httpMethod: .get(queryItems))
         }
+
+        public static func tag(
+            hashtag: String,
+            pagination: HTTPLinkHeader? = nil
+        ) -> Request<Paged<[Responses.Status]>> {
+            let queryItems: [URLQueryItem]?
+            if let pagination = pagination, let urlComponents = URLComponents(string: pagination.uriReference) {
+                queryItems = urlComponents.queryItems
+            } else {
+                queryItems = nil
+            }
+
+            return Request(path: "/api/v1/timelines/tag/\(hashtag)", httpMethod: .get(queryItems))
+        }
     }
 }
