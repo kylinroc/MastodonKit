@@ -24,7 +24,7 @@ extension Requests.API.V1.Accounts {
 }
 
 extension Requests.API.V1.Accounts {
-    public func followers(pagination: HTTPLinkHeader? = nil) -> Request<Paged<[Responses.Account]>> {
+    public func followers(pagination: HTTPLinkHeader? = nil) -> Request<Paginated<[Responses.Account]>> {
         let queryItems: [URLQueryItem]?
         if let pagination = pagination, let urlComponents = URLComponents(string: pagination.uriReference) {
             queryItems = urlComponents.queryItems
@@ -35,7 +35,7 @@ extension Requests.API.V1.Accounts {
         return Request(path: "/api/v1/accounts/\(id)/followers", httpMethod: .get(queryItems))
     }
 
-    public func following(pagination: HTTPLinkHeader? = nil) -> Request<Paged<[Responses.Account]>> {
+    public func following(pagination: HTTPLinkHeader? = nil) -> Request<Paginated<[Responses.Account]>> {
         let queryItems: [URLQueryItem]?
         if let pagination = pagination, let urlComponents = URLComponents(string: pagination.uriReference) {
             queryItems = urlComponents.queryItems
@@ -55,7 +55,7 @@ extension Requests.API.V1.Accounts {
         excludeReplies: Bool? = nil,
         onlyMedia: Bool? = nil,
         pagination: HTTPLinkHeader? = nil
-    ) -> Request<Paged<[Responses.Status]>> {
+    ) -> Request<Paginated<[Responses.Status]>> {
         var queryItems: [URLQueryItem]?
         if let pagination = pagination, let urlComponents = URLComponents(string: pagination.uriReference) {
             queryItems = urlComponents.queryItems

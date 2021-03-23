@@ -40,7 +40,7 @@ extension Requests.API.V1.Statuses {
         Request(path: "/api/v1/statuses/\(id)/unbookmark", httpMethod: .post(nil))
     }
 
-    public func rebloggedBy(pagination: HTTPLinkHeader? = nil) -> Request<Paged<[Responses.Account]>> {
+    public func rebloggedBy(pagination: HTTPLinkHeader? = nil) -> Request<Paginated<[Responses.Account]>> {
         let queryItems: [URLQueryItem]?
         if let pagination = pagination, let urlComponents = URLComponents(string: pagination.uriReference) {
             queryItems = urlComponents.queryItems
@@ -51,7 +51,7 @@ extension Requests.API.V1.Statuses {
         return Request(path: "/api/v1/statuses/\(id)/reblogged_by", httpMethod: .get(queryItems))
     }
 
-    public func favouritedBy(pagination: HTTPLinkHeader? = nil) -> Request<Paged<[Responses.Account]>> {
+    public func favouritedBy(pagination: HTTPLinkHeader? = nil) -> Request<Paginated<[Responses.Account]>> {
         let queryItems: [URLQueryItem]?
         if let pagination = pagination, let urlComponents = URLComponents(string: pagination.uriReference) {
             queryItems = urlComponents.queryItems

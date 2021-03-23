@@ -37,7 +37,7 @@ extension Requests.API {
             return Request(path: "/api/v1/apps", httpMethod: .post(httpBody))
         }
 
-        public static func bookmarks(pagination: HTTPLinkHeader? = nil) -> Request<Paged<[Responses.Status]>> {
+        public static func bookmarks(pagination: HTTPLinkHeader? = nil) -> Request<Paginated<[Responses.Status]>> {
             let queryItems: [URLQueryItem]?
             if let pagination = pagination, let urlComponents = URLComponents(string: pagination.uriReference) {
                 queryItems = urlComponents.queryItems
@@ -49,7 +49,7 @@ extension Requests.API {
         }
 
 
-        public static func conversations(pagination: HTTPLinkHeader?) -> Request<Paged<[Responses.Conversation]>> {
+        public static func conversations(pagination: HTTPLinkHeader?) -> Request<Paginated<[Responses.Conversation]>> {
             let queryItems: [URLQueryItem]?
             if let pagination = pagination, let urlComponents = URLComponents(string: pagination.uriReference) {
                 queryItems = urlComponents.queryItems
@@ -60,7 +60,7 @@ extension Requests.API {
             return Request(path: "/api/v1/conversations", httpMethod: .get(queryItems))
         }
 
-        public static func favourites(pagination: HTTPLinkHeader? = nil) -> Request<Paged<[Responses.Status]>> {
+        public static func favourites(pagination: HTTPLinkHeader? = nil) -> Request<Paginated<[Responses.Status]>> {
             let queryItems: [URLQueryItem]?
             if let pagination = pagination, let urlComponents = URLComponents(string: pagination.uriReference) {
                 queryItems = urlComponents.queryItems
@@ -71,7 +71,9 @@ extension Requests.API {
             return Request(path: "/api/v1/favourites", httpMethod: .get(queryItems))
         }
 
-        public static func notifications(pagination: HTTPLinkHeader? = nil) -> Request<Paged<[Responses.Notification]>> {
+        public static func notifications(
+            pagination: HTTPLinkHeader? = nil
+        ) -> Request<Paginated<[Responses.Notification]>> {
             let queryItems: [URLQueryItem]?
             if let pagination = pagination, let urlComponents = URLComponents(string: pagination.uriReference) {
                 queryItems = urlComponents.queryItems

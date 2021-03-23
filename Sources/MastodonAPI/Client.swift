@@ -25,13 +25,13 @@ public struct Client {
     }
 
     public func send<Response: Decodable>(
-        _ request: Request<Paged<Response>>,
-        completion: @escaping (Result<Paged<Response>, Error>) -> Void
+        _ request: Request<Paginated<Response>>,
+        completion: @escaping (Result<Paginated<Response>, Error>) -> Void
     ) {
         do {
             let urlRequest = try request.makeURLRequest(relativeTo: serverURL, accessToken: accessToken)
             send(urlRequest, expectedResponseType: Response.self) { result in
-                completion(result.map({ Paged(links: $0.1, response: $0.0) }))
+                completion(result.map({ Paginated(links: $0.1, response: $0.0) }))
             }
         } catch {
             completion(.failure(error))
