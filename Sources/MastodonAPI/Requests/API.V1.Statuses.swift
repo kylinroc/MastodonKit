@@ -1,5 +1,4 @@
 import Foundation
-import HTTPLinkHeader
 
 extension Requests.API.V1 {
     public struct Statuses {
@@ -16,12 +15,26 @@ extension Requests.API.V1.Statuses {
         Request(path: "/api/v1/statuses/\(id)/context", httpMethod: .get)
     }
 
-    public func reblog() -> Request<Responses.Status> {
-        Request(path: "/api/v1/statuses/\(id)/reblog", httpMethod: .post)
+    public func rebloggedBy(maxID: String? = nil, minID: String? = nil) -> Request<Paginated<[Responses.Account]>> {
+        var queryItems: [URLQueryItem] = []
+        if let maxID = maxID {
+            queryItems.append(URLQueryItem(name: "max_id", value: maxID))
+        }
+        if let minID = minID {
+            queryItems.append(URLQueryItem(name: "min_id", value: minID))
+        }
+        return Request(path: "/api/v1/statuses/\(id)/reblogged_by", httpMethod: .get(queryItems))
     }
 
-    public func unreblog() -> Request<Responses.Status> {
-        Request(path: "/api/v1/statuses/\(id)/unreblog", httpMethod: .post)
+    public func favouritedBy(maxID: String? = nil, minID: String? = nil) -> Request<Paginated<[Responses.Account]>> {
+        var queryItems: [URLQueryItem] = []
+        if let maxID = maxID {
+            queryItems.append(URLQueryItem(name: "max_id", value: maxID))
+        }
+        if let minID = minID {
+            queryItems.append(URLQueryItem(name: "min_id", value: minID))
+        }
+        return Request(path: "/api/v1/statuses/\(id)/favourited_by", httpMethod: .get(queryItems))
     }
 
     public func favourite() -> Request<Responses.Status> {
@@ -32,33 +45,19 @@ extension Requests.API.V1.Statuses {
         Request(path: "/api/v1/statuses/\(id)/unfavourite", httpMethod: .post)
     }
 
+    public func reblog() -> Request<Responses.Status> {
+        Request(path: "/api/v1/statuses/\(id)/reblog", httpMethod: .post)
+    }
+
+    public func unreblog() -> Request<Responses.Status> {
+        Request(path: "/api/v1/statuses/\(id)/unreblog", httpMethod: .post)
+    }
+
     public func bookmark() -> Request<Responses.Status> {
         Request(path: "/api/v1/statuses/\(id)/bookmark", httpMethod: .post)
     }
 
     public func unbookmark() -> Request<Responses.Status> {
         Request(path: "/api/v1/statuses/\(id)/unbookmark", httpMethod: .post)
-    }
-
-    public func rebloggedBy(pagination: HTTPLinkHeader? = nil) -> Request<Paginated<[Responses.Account]>> {
-        let queryItems: [URLQueryItem]?
-        if let pagination = pagination, let urlComponents = URLComponents(string: pagination.uriReference) {
-            queryItems = urlComponents.queryItems
-        } else {
-            queryItems = nil
-        }
-
-        return Request(path: "/api/v1/statuses/\(id)/reblogged_by", httpMethod: .get(queryItems))
-    }
-
-    public func favouritedBy(pagination: HTTPLinkHeader? = nil) -> Request<Paginated<[Responses.Account]>> {
-        let queryItems: [URLQueryItem]?
-        if let pagination = pagination, let urlComponents = URLComponents(string: pagination.uriReference) {
-            queryItems = urlComponents.queryItems
-        } else {
-            queryItems = nil
-        }
-
-        return Request(path: "/api/v1/statuses/\(id)/favourited_by", httpMethod: .get(queryItems))
     }
 }

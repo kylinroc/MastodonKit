@@ -1,87 +1,103 @@
 import Foundation
-import HTTPLinkHeader
 
 extension Requests.API {
-    public enum V1 {
-        public static func accounts(id: String) -> Request<Responses.Account> {
-            Request(path: "/api/v1/accounts/\(id)", httpMethod: .get)
-        }
+    public enum V1 {}
+}
 
-        public static func apps(
-            name: String,
-            redirectURI: String = "urn:ietf:wg:oauth:2.0:oob",
-            scopes: [Scope] = [.read],
-            website: String? = nil
-        ) -> Request<Responses.Application> {
-            struct Parameters: Encodable {
-                private enum CodingKeys: String, CodingKey {
-                    case name = "client_name"
-                    case redirectURI = "redirect_uris"
-                    case scopes
-                    case website
-                }
+extension Requests.API.V1 {
+    public static func accounts(id: String) -> Request<Responses.Account> {
+        Request(path: "/api/v1/accounts/\(id)", httpMethod: .get)
+    }
 
-                let name: String
-                let redirectURI: String
-                let scopes: String
-                let website: String?
+    public static func apps(
+        clientName: String,
+        redirectURIs: String = "urn:ietf:wg:oauth:2.0:oob",
+        scopes: [Scope]? = nil,
+        website: String? = nil
+    ) -> Request<Responses.Application> {
+        struct Parameters: Encodable {
+            private enum CodingKeys: String, CodingKey {
+                case clientName = "client_name"
+                case redirectURIs = "redirect_uris"
+                case scopes
+                case website
             }
 
-            let parameters = Parameters(
-                name: name,
-                redirectURI: redirectURI,
-                scopes: scopes.map(\.rawValue).joined(separator: " "),
-                website: website
-            )
-            let httpBody = try? JSONEncoder().encode(parameters)
-            return Request(path: "/api/v1/apps", httpMethod: .post(httpBody))
+            let clientName: String
+            let redirectURIs: String
+            let scopes: String?
+            let website: String?
         }
 
-        public static func bookmarks(pagination: HTTPLinkHeader? = nil) -> Request<Paginated<[Responses.Status]>> {
-            let queryItems: [URLQueryItem]?
-            if let pagination = pagination, let urlComponents = URLComponents(string: pagination.uriReference) {
-                queryItems = urlComponents.queryItems
-            } else {
-                queryItems = nil
-            }
+        let parameters = Parameters(
+            clientName: clientName,
+            redirectURIs: redirectURIs,
+            scopes: scopes?.map(\.rawValue).joined(separator: " "),
+            website: website
+        )
+        let httpBody = try? JSONEncoder().encode(parameters)
+        return Request(path: "/api/v1/apps", httpMethod: .post(httpBody))
+    }
 
-            return Request(path: "/api/v1/bookmarks", httpMethod: .get(queryItems))
+    public static func bookmarks(
+        limit: Int? = nil,
+        maxID: String? = nil,
+        sinceID: String? = nil,
+        minID: String? = nil
+    ) -> Request<Paginated<[Responses.Status]>> {
+        var queryItems: [URLQueryItem] = []
+        if let limit = limit {
+            queryItems.append(URLQueryItem(name: "limit", value: "\(limit)"))
         }
-
-
-        public static func conversations(pagination: HTTPLinkHeader?) -> Request<Paginated<[Responses.Conversation]>> {
-            let queryItems: [URLQueryItem]?
-            if let pagination = pagination, let urlComponents = URLComponents(string: pagination.uriReference) {
-                queryItems = urlComponents.queryItems
-            } else {
-                queryItems = nil
-            }
-
-            return Request(path: "/api/v1/conversations", httpMethod: .get(queryItems))
+        if let maxID = maxID {
+            queryItems.append(URLQueryItem(name: "max_id", value: maxID))
         }
-
-        public static func favourites(pagination: HTTPLinkHeader? = nil) -> Request<Paginated<[Responses.Status]>> {
-            let queryItems: [URLQueryItem]?
-            if let pagination = pagination, let urlComponents = URLComponents(string: pagination.uriReference) {
-                queryItems = urlComponents.queryItems
-            } else {
-                queryItems = nil
-            }
-
-            return Request(path: "/api/v1/favourites", httpMethod: .get(queryItems))
+        if let sinceID = sinceID {
+            queryItems.append(URLQueryItem(name: "since_id", value: sinceID))
         }
-
-        public static func notifications(
-            pagination: HTTPLinkHeader? = nil
-        ) -> Request<Paginated<[Responses.Notification]>> {
-            let queryItems: [URLQueryItem]?
-            if let pagination = pagination, let urlComponents = URLComponents(string: pagination.uriReference) {
-                queryItems = urlComponents.queryItems
-            } else {
-                queryItems = nil
-            }
-
-            return Request(path: "/api/v1/notifications", httpMethod: .get(queryItems))
+        if let minID = minID {
+            queryItems.append(URLQueryItem(name: "min_id", value: minID))
         }
+        return Request(path: "/api/v1/bookmarks", httpMethod: .get(queryItems))
+    }
+
+    public static func favourites(
+        limit: Int? = nil,
+        maxID: String? = nil,
+        minID: String? = nil
+    ) -> Request<Paginated<[Responses.Status]>> {
+        var queryItems: [URLQueryItem] = []
+        if let limit = limit {
+            queryItems.append(URLQueryItem(name: "limit", value: "\(limit)"))
+        }
+        if let maxID = maxID {
+            queryItems.append(URLQueryItem(name: "max_id", value: maxID))
+        }
+        if let minID = minID {
+            queryItems.append(URLQueryItem(name: "min_id", value: minID))
+        }
+        return Request(path: "/api/v1/favourites", httpMethod: .get(queryItems))
+    }
+
+    public static func notifications(
+        maxID: String? = nil,
+        sinceID: String? = nil,
+        minID: String? = nil,
+        limit: Int? = nil
+    ) -> Request<Paginated<[Responses.Notification]>> {
+        var queryItems: [URLQueryItem] = []
+        if let maxID = maxID {
+            queryItems.append(URLQueryItem(name: "max_id", value: maxID))
+        }
+        if let sinceID = sinceID {
+            queryItems.append(URLQueryItem(name: "since_id", value: sinceID))
+        }
+        if let minID = minID {
+            queryItems.append(URLQueryItem(name: "min_id", value: minID))
+        }
+        if let limit = limit {
+            queryItems.append(URLQueryItem(name: "limit", value: "\(limit)"))
+        }
+        return Request(path: "/api/v1/notifications", httpMethod: .get(queryItems))
     }
 }
