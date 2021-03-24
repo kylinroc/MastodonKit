@@ -4,7 +4,7 @@ import HTTPLinkHeader
 extension Requests.API {
     public enum V1 {
         public static func accounts(id: String) -> Request<Responses.Account> {
-            Request(path: "/api/v1/accounts/\(id)", httpMethod: .get(nil))
+            Request(path: "/api/v1/accounts/\(id)", httpMethod: .get)
         }
 
         public static func apps(

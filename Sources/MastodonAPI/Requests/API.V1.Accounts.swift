@@ -19,7 +19,7 @@ extension Requests.API.V1.Accounts {
     }
 
     public static func verifyCredentials() -> Request<Responses.Account> {
-        Request(path: "/api/v1/accounts/verify_credentials", httpMethod: .get(nil))
+        Request(path: "/api/v1/accounts/verify_credentials", httpMethod: .get)
     }
 }
 
@@ -47,7 +47,7 @@ extension Requests.API.V1.Accounts {
     }
 
     public func identityProofs() -> Request<[Responses.IdentityProof]> {
-        Request(path: "/api/v1/accounts/\(id)/identity_proofs", httpMethod: .get(nil))
+        Request(path: "/api/v1/accounts/\(id)/identity_proofs", httpMethod: .get)
     }
 
     public func statuses(
@@ -76,10 +76,10 @@ extension Requests.API.V1.Accounts {
     }
 
     public func follow() -> Request<Responses.Relationship> {
-        Request(path: "/api/v1/accounts/\(id)/follow", httpMethod: .post(nil))
+        Request(path: "/api/v1/accounts/\(id)/follow", httpMethod: .post)
     }
 
     public func unfollow() -> Request<Responses.Relationship> {
-        Request(path: "/api/v1/accounts/\(id)/unfollow", httpMethod: .post(nil))
+        Request(path: "/api/v1/accounts/\(id)/unfollow", httpMethod: .post)
     }
 }

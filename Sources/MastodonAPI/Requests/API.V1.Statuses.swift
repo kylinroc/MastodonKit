@@ -13,31 +13,31 @@ extension Requests.API.V1 {
 
 extension Requests.API.V1.Statuses {
     public func context() -> Request<Responses.Context> {
-        Request(path: "/api/v1/statuses/\(id)/context", httpMethod: .get(nil))
+        Request(path: "/api/v1/statuses/\(id)/context", httpMethod: .get)
     }
 
     public func reblog() -> Request<Responses.Status> {
-        Request(path: "/api/v1/statuses/\(id)/reblog", httpMethod: .post(nil))
+        Request(path: "/api/v1/statuses/\(id)/reblog", httpMethod: .post)
     }
 
     public func unreblog() -> Request<Responses.Status> {
-        Request(path: "/api/v1/statuses/\(id)/unreblog", httpMethod: .post(nil))
+        Request(path: "/api/v1/statuses/\(id)/unreblog", httpMethod: .post)
     }
 
     public func favourite() -> Request<Responses.Status> {
-        Request(path: "/api/v1/statuses/\(id)/favourite", httpMethod: .post(nil))
+        Request(path: "/api/v1/statuses/\(id)/favourite", httpMethod: .post)
     }
 
     public func unfavourite() -> Request<Responses.Status> {
-        Request(path: "/api/v1/statuses/\(id)/unfavourite", httpMethod: .post(nil))
+        Request(path: "/api/v1/statuses/\(id)/unfavourite", httpMethod: .post)
     }
 
     public func bookmark() -> Request<Responses.Status> {
-        Request(path: "/api/v1/statuses/\(id)/bookmark", httpMethod: .post(nil))
+        Request(path: "/api/v1/statuses/\(id)/bookmark", httpMethod: .post)
     }
 
     public func unbookmark() -> Request<Responses.Status> {
-        Request(path: "/api/v1/statuses/\(id)/unbookmark", httpMethod: .post(nil))
+        Request(path: "/api/v1/statuses/\(id)/unbookmark", httpMethod: .post)
     }
 
     public func rebloggedBy(pagination: HTTPLinkHeader? = nil) -> Request<Paginated<[Responses.Account]>> {
