@@ -31,7 +31,11 @@ public struct Client {
         do {
             let urlRequest = try request.makeURLRequest(relativeTo: serverURL, accessToken: accessToken)
             send(urlRequest, expectedResponseType: Response.self) { result in
-                completion(result.map({ Paginated(links: $0.1, response: $0.0) }))
+                completion(result.map({
+                    let nextLink = $0.1.first { $0.parameters.contains { $0.name == "rel" && $0.value == "next" } }
+                    let previousLink = $0.1.first { $0.parameters.contains { $0.name == "rel" && $0.value == "prev" } }
+                    return Paginated(nextLink: nextLink, previousLink: previousLink, response: $0.0)
+                }))
             }
         } catch {
             completion(.failure(error))
