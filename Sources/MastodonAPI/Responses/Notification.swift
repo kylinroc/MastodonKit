@@ -3,7 +3,7 @@ extension Responses {
         case follow
         case followRequest = "follow_request"
         case mention
-        case boost = "reblog"
+        case reblog
         case favorite = "favourite"
         case poll
         case status

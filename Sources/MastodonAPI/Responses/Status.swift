@@ -35,6 +35,9 @@ extension Responses {
         // 0.1.0
         public let inReplyToID: String?
 
+        // 0.1.0
+        public let url: URL?
+
         // 0.6.0
         public let attachments: [Attachment]
 
@@ -74,6 +77,7 @@ extension Responses {
             case favoritesCount = "favourites_count"
             case rebloggedStatus = "reblog"
             case inReplyToID = "in_reply_to_id"
+            case url
             case attachments = "media_attachments"
             case mentions
             case tags
