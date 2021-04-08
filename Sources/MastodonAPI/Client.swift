@@ -16,8 +16,8 @@ public struct Client {
     ) {
         do {
             let urlRequest = try request.makeURLRequest(relativeTo: serverURL, accessToken: accessToken)
-            send(urlRequest, expectedResponseType: Response.self) { result in
-                completion(result.map({ $0.0 }))
+            _send(urlRequest) { result in
+                completion(result.map({ $0.1 }))
             }
         } catch {
             completion(.failure(error))
@@ -30,9 +30,9 @@ public struct Client {
     ) {
         do {
             let urlRequest = try request.makeURLRequest(relativeTo: serverURL, accessToken: accessToken)
-            send(urlRequest, expectedResponseType: Response.self) { result in
+            _send(urlRequest) { result in
                 completion(result.map({
-                    Paginated(links: $0.1, response: $0.0)
+                    Paginated(links: $0.0, response: $0.1)
                 }))
             }
         } catch {
@@ -40,10 +40,9 @@ public struct Client {
         }
     }
 
-    private func send<Response: Decodable>(
+    private func _send<Response: Decodable>(
         _ request: URLRequest,
-        expectedResponseType _: Response.Type,
-        completion: @escaping (Result<(Response, [HTTPLinkHeader]), Error>) -> Void
+        completion: @escaping (Result<([HTTPLinkHeader], Response), Error>) -> Void
     ) {
         URLSession.shared.dataTask(with: request) { data, urlResponse, error in
             if let error = error {
@@ -73,7 +72,7 @@ public struct Client {
                     } else {
                         links = []
                     }
-                    completion(.success((response, links)))
+                    completion(.success((links, response)))
                 default:
                     let error = try jsonDecoder.decode(Responses.Error.self, from: data)
                     completion(.failure(error))
