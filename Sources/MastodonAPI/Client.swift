@@ -2,12 +2,28 @@ import Foundation
 import HTTPLinkHeader
 
 public struct Client {
-    public var serverURL: URL
-    public var accessToken: String?
+    private var serverURL: URL
+    private var accessToken: String?
 
     public init(serverURL: URL, accessToken: String? = nil) {
         self.serverURL = serverURL
         self.accessToken = accessToken
+    }
+
+    public func makeAuthorizeURL(clientID: String, scopes: [Scope], redirectURI: String) -> URL? {
+        guard var urlComponents = URLComponents(url: serverURL, resolvingAgainstBaseURL: false) else {
+            return nil
+        }
+
+        urlComponents.path = "/oauth/authorize"
+        urlComponents.queryItems = [
+            URLQueryItem(name: "client_id", value: clientID),
+            URLQueryItem(name: "scope", value: scopes.map(\.rawValue).joined(separator: "+")),
+            URLQueryItem(name: "redirect_uri", value: redirectURI),
+            URLQueryItem(name: "response_type", value: "code"),
+        ]
+
+        return urlComponents.url
     }
 
     public func send<Response: Decodable>(
@@ -16,9 +32,7 @@ public struct Client {
     ) {
         do {
             let urlRequest = try request.makeURLRequest(relativeTo: serverURL, accessToken: accessToken)
-            _send(urlRequest) { result in
-                completion(result.map({ $0.1 }))
-            }
+            _send(urlRequest) { completion($0.map({ $0.1 })) }
         } catch {
             completion(.failure(error))
         }
@@ -30,15 +44,21 @@ public struct Client {
     ) {
         do {
             let urlRequest = try request.makeURLRequest(relativeTo: serverURL, accessToken: accessToken)
-            _send(urlRequest) { result in
-                completion(result.map({
-                    Paginated(links: $0.0, response: $0.1)
-                }))
-            }
+            _send(urlRequest) { completion($0.map({ Paginated(links: $0.0, response: $0.1) })) }
         } catch {
             completion(.failure(error))
         }
     }
+}
+
+extension Client {
+    private static let dateFormatter: DateFormatter = {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SZ"
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+        dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
+        return dateFormatter
+    }()
 
     private func _send<Response: Decodable>(
         _ request: URLRequest,
@@ -56,11 +76,7 @@ public struct Client {
             }
 
             let jsonDecoder = JSONDecoder()
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SZ"
-            dateFormatter.locale = Locale(identifier: "en_US_POSIX")
-            dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
-            jsonDecoder.dateDecodingStrategy = .formatted(dateFormatter)
+            jsonDecoder.dateDecodingStrategy = .formatted(Self.dateFormatter)
 
             do {
                 switch httpURLResponse.statusCode {
@@ -81,21 +97,5 @@ public struct Client {
                 completion(.failure(error))
             }
         }.resume()
-    }
-
-    public func makeAuthorizeURL(clientID: String, scopes: [Scope], redirectURI: String) -> URL? {
-        guard var urlComponents = URLComponents(url: serverURL, resolvingAgainstBaseURL: false) else {
-            return nil
-        }
-
-        urlComponents.path = "/oauth/authorize"
-        urlComponents.queryItems = [
-            URLQueryItem(name: "client_id", value: clientID),
-            URLQueryItem(name: "scope", value: scopes.map(\.rawValue).joined(separator: "+")),
-            URLQueryItem(name: "redirect_uri", value: redirectURI),
-            URLQueryItem(name: "response_type", value: "code"),
-        ]
-
-        return urlComponents.url
     }
 }
