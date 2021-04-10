@@ -100,4 +100,8 @@ extension Requests.API.V1 {
         }
         return Request(path: "/api/v1/notifications", httpMethod: .get(queryItems))
     }
+
+    public static func statuses(id: String) -> Request<Responses.Status> {
+        Request(path: "/api/v1/statuses/\(id)", httpMethod: .get)
+    }
 }
