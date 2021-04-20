@@ -104,4 +104,20 @@ extension Requests.API.V1 {
     public static func statuses(id: String) -> Request<Responses.Status> {
         Request(path: "/api/v1/statuses/\(id)", httpMethod: .get)
     }
+
+    public static func statuses(status: String, inReplyToID: String?) -> Request<Responses.Status> {
+        struct Parameters: Encodable {
+            let status: String
+            let inReplyToID: String?
+
+            enum CodingKeys: String, CodingKey {
+                case status
+                case inReplyToID = "in_reply_to_id"
+            }
+        }
+
+        let parameters = Parameters(status: status, inReplyToID: inReplyToID)
+        let httpBody = try? JSONEncoder().encode(parameters)
+        return Request(path: "/api/v1/statuses", httpMethod: .post(httpBody))
+    }
 }

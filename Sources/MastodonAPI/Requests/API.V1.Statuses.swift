@@ -60,4 +60,12 @@ extension Requests.API.V1.Statuses {
     public func unbookmark() -> Request<Responses.Status> {
         Request(path: "/api/v1/statuses/\(id)/unbookmark", httpMethod: .post)
     }
+
+    public func pin() -> Request<Responses.Status> {
+        Request(path: "/api/v1/statuses/\(id)/pin", httpMethod: .post)
+    }
+
+    public func unpin() -> Request<Responses.Status> {
+        Request(path: "/api/v1/statuses/\(id)/unpin", httpMethod: .post)
+    }
 }

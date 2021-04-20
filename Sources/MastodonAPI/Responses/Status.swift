@@ -53,6 +53,9 @@ extension Responses {
         // 0.9.9
         public let visibility: Visibility
 
+        // 1.6.0
+        public let pinned: Bool?
+
         // 2.0.0
         public let emojis: [Emoji]
 
@@ -83,6 +86,7 @@ extension Responses {
             case tags
             case isSensitive = "sensitive"
             case visibility
+            case pinned
             case emojis
             case repliesCount = "replies_count"
             case poll
