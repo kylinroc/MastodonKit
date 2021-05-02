@@ -120,4 +120,12 @@ extension Requests.API.V1 {
         let httpBody = try? JSONEncoder().encode(parameters)
         return Request(path: "/api/v1/statuses", httpMethod: .post(httpBody))
     }
+
+    public static func trends(limit: Int? = nil) -> Request<[Responses.Tag]> {
+        var queryItems: [URLQueryItem] = []
+        if let limit = limit {
+            queryItems.append(URLQueryItem(name: "limit", value: "\(limit)"))
+        }
+        return Request(path: "/api/v1/trends", httpMethod: .get(queryItems))
+    }
 }
