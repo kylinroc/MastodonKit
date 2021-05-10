@@ -52,11 +52,15 @@ public struct Client {
 }
 
 extension Client {
-    private static let dateFormatter: DateFormatter = {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SZ"
-        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
-        dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
+    static let dateFormatter: ISO8601DateFormatter = {
+        let dateFormatter = ISO8601DateFormatter()
+        dateFormatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
+        return dateFormatter
+    }()
+
+    static let dateFormatterWithoutFractionalSeconds: ISO8601DateFormatter = {
+        let dateFormatter = ISO8601DateFormatter()
+        dateFormatter.formatOptions = [.withInternetDateTime]
         return dateFormatter
     }()
 
@@ -76,7 +80,18 @@ extension Client {
             }
 
             let jsonDecoder = JSONDecoder()
-            jsonDecoder.dateDecodingStrategy = .formatted(Self.dateFormatter)
+            jsonDecoder.dateDecodingStrategy = .custom { decoder in
+                let container = try decoder.singleValueContainer()
+                let string = try container.decode(String.self)
+
+                if let date = Self.dateFormatter.date(from: string) {
+                    return date
+                } else if let date = Self.dateFormatterWithoutFractionalSeconds.date(from: string) {
+                    return date
+                } else {
+                    throw DecodingError.dataCorruptedError(in: container, debugDescription: "Date string does not match format expected by formatter.")
+                }
+            }
 
             do {
                 switch httpURLResponse.statusCode {
