@@ -5,7 +5,7 @@ extension Requests.API {
 }
 
 extension Requests.API.V2 {
-    public static func search(q: String) -> Request<Responses.SearchResults> {
+    public static func search(q: String) -> Request<Responses.Results> {
         Request(path: "/api/v2/search", httpMethod: .get([URLQueryItem(name: "q", value: q)]))
     }
 }
