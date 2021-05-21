@@ -1,58 +1,58 @@
 extension Responses {
-    public struct Relationship: Decodable, Hashable {
+    public struct Relationship: Decodable {
         // 0.6.0
         public let id: String
 
         // 0.6.0
-        public let isFollowing: Bool
+        public let following: Bool
 
         // 0.6.0
-        public let isFollowedBy: Bool
+        public let followedBy: Bool
 
         // 0.6.0
-        public let isBlocking: Bool
+        public let blocking: Bool
 
         // 0.9.9
         public let requested: Bool
 
         // 1.1.0
-        public let isMuting: Bool
+        public let muting: Bool
 
         // 1.4.0
-        public let isDomainBlocking: Bool
+        public let domainBlocking: Bool
 
         // 2.1.0
-        public let isMutingNotifications: Bool
+        public let mutingNotifications: Bool
 
         // 2.1.0
-        public let isShowingReblogs: Bool
+        public let showingReblogs: Bool
 
         // 2.5.0
         public let endorsed: Bool
 
         // 2.8.0
-        public let isBlockedBy: Bool
+        public let blockedBy: Bool
 
         // 3.2.0
         public let note: String
 
         // 3.3.0
-        public let isNotifying: Bool
+        public let notifying: Bool
 
         private enum CodingKeys: String, CodingKey {
             case id
-            case isFollowing = "following"
-            case isFollowedBy = "followed_by"
-            case isBlocking = "blocking"
+            case following
+            case followedBy = "followed_by"
+            case blocking
             case requested
-            case isMuting = "muting"
-            case isDomainBlocking = "domain_blocking"
-            case isMutingNotifications = "muting_notifications"
-            case isShowingReblogs = "showing_reblogs"
+            case muting
+            case domainBlocking = "domain_blocking"
+            case mutingNotifications = "muting_notifications"
+            case showingReblogs = "showing_reblogs"
             case endorsed
-            case isBlockedBy = "blocked_by"
+            case blockedBy = "blocked_by"
             case note
-            case isNotifying = "notifying"
+            case notifying
         }
     }
 }
