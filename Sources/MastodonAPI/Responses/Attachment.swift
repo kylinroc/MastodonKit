@@ -2,46 +2,78 @@ import Foundation
 
 extension Responses {
     public enum AttachmentType: String, Decodable {
-        // 0.6.0
+        /// Unsupported or unrecognized file type.
+        ///
+        /// Added in 0.6.0.
         case unknown
-        // 0.6.0
+
+        /// Static image.
+        ///
+        /// Added in 0.6.0.
         case image
-        // 0.6.0
+
+        /// Looping, soundless animation.
+        ///
+        /// Added in 0.6.0.
         case gifv
-        // 0.6.0
+
+        /// Video clip.
+        ///
+        /// Added in 0.6.0.
         case video
-        // 2.9.1
+
+        /// Audio track.
+        ///
+        /// Added in 2.9.1.
         case audio
+
+        public init(from decoder: Decoder) throws {
+            let container = try decoder.singleValueContainer()
+            let rawValue = try container.decode(String.self)
+            self = AttachmentType(rawValue: rawValue) ?? .unknown
+        }
     }
 
-    public struct AttachmentMetadata: Decodable {}
-
     public struct Attachment: Decodable {
-        // 0.6.0
+        /// The ID of the attachment in the database.
+        ///
+        /// Added in 0.6.0.
         public let id: String
 
-        // 0.6.0
+        /// The type of the attachment.
+        ///
+        /// Added in 0.6.0.
         public let type: AttachmentType
 
-        // 0.6.0
+        /// The location of the original full-size attachment.
+        ///
+        /// Added in 0.6.0.
         public let url: URL
 
-        // 0.6.0
+        /// The location of a scaled-down preview of the attachment.
+        ///
+        /// Added in 0.6.0.
         public let previewURL: URL?
 
-        // 0.6.0
+        /// The location of the full-size original attachment on the remote website.
+        ///
+        /// Added in 0.6.0.
         public let remoteURL: URL?
 
-        // 0.6.0
+        /// A shorter URL for the attachment.
+        ///
+        /// Added in 0.6.0.
         public let textURL: URL?
 
-        // 1.5.0
-        public let metadata: AttachmentMetadata?
-
-        // 2.0.0
+        /// Alternate text that describes what is in the media attachment, to be used for the visually impaired or when media attachments do not load.
+        ///
+        /// Added in 2.0.0.
         public let description: String?
 
-        // 2.8.1
+        /// A hash computed by [the BlurHash algorithm](https://github.com/woltapp/blurhash),
+        /// for generating colorful preview thumbnails when media has not been downloaded yet.
+        ///
+        /// Added in 2.8.1.
         public let blurhash: String?
 
         private enum CodingKeys: String, CodingKey {
@@ -51,7 +83,6 @@ extension Responses {
             case previewURL = "preview_url"
             case remoteURL = "remote_url"
             case textURL = "text_url"
-            case metadata = "meta"
             case description
             case blurhash
         }
