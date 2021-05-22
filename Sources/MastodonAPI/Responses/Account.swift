@@ -47,6 +47,9 @@ extension Responses {
         // 2.4.0
         public let fields: [Field]
 
+        // 2.4.0
+        public let bot: Bool
+
         private enum CodingKeys: String, CodingKey {
             case id
             case username
@@ -63,6 +66,7 @@ extension Responses {
             case staticHeaderURL = "header_static"
             case emojis
             case fields
+            case bot
         }
     }
 }

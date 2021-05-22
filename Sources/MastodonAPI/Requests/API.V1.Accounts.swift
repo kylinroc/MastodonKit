@@ -96,4 +96,12 @@ extension Requests.API.V1.Accounts {
     public func unfollow() -> Request<Responses.Relationship> {
         Request(path: "/api/v1/accounts/\(id)/unfollow", httpMethod: .post)
     }
+
+    public func block() -> Request<Responses.Relationship> {
+        Request(path: "/api/v1/accounts/\(id)/block", httpMethod: .post)
+    }
+
+    public func unblock() -> Request<Responses.Relationship> {
+        Request(path: "/api/v1/accounts/\(id)/unblock", httpMethod: .post)
+    }
 }
