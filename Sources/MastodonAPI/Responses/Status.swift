@@ -9,19 +9,19 @@ extension Responses {
         public let account: Account
 
         // 0.1.0
-        public let contentWarning: String
+        public let spoilerText: String
 
         // 0.1.0
         public let content: String
 
         // 0.1.0
-        public let creationDate: Date
+        public let createdAt: Date
 
         // 0.1.0
-        public let isReblogged: Bool
+        public let reblogged: Bool
 
         // 0.1.0
-        public let isFavorited: Bool
+        public let favourited: Bool
 
         // 0.1.0
         public let reblogsCount: Int
@@ -30,7 +30,7 @@ extension Responses {
         public let favoritesCount: Int
 
         // 0.1.0
-        public let rebloggedStatus: Status?
+        public let reblog: Status?
 
         // 0.1.0
         public let inReplyToID: String?
@@ -39,7 +39,7 @@ extension Responses {
         public let url: URL?
 
         // 0.6.0
-        public let attachments: [Attachment]
+        public let mediaAttachments: [Attachment]
 
         // 0.6.0
         public let mentions: [Mention]
@@ -48,7 +48,7 @@ extension Responses {
         public let tags: [Tag]
 
         // 0.9.9
-        public let isSensitive: Bool
+        public let sensitive: Bool
 
         // 0.9.9
         public let visibility: Visibility
@@ -66,47 +66,47 @@ extension Responses {
         public let poll: Poll?
 
         // 3.1.0
-        public let isBookmarked: Bool
+        public let bookmarked: Bool
 
         // MARK: Decodable
 
         private enum CodingKeys: String, CodingKey {
             case id
             case account
-            case contentWarning = "spoiler_text"
+            case spoilerText = "spoiler_text"
             case content
-            case creationDate = "created_at"
-            case isReblogged = "reblogged"
-            case isFavorited = "favourited"
+            case createdAt = "created_at"
+            case reblogged
+            case favourited
             case reblogsCount = "reblogs_count"
             case favoritesCount = "favourites_count"
-            case rebloggedStatus = "reblog"
+            case reblog
             case inReplyToID = "in_reply_to_id"
             case url
-            case attachments = "media_attachments"
+            case mediaAttachments = "media_attachments"
             case mentions
             case tags
-            case isSensitive = "sensitive"
+            case sensitive
             case visibility
             case pinned
             case emojis
             case repliesCount = "replies_count"
             case poll
-            case isBookmarked = "bookmarked"
+            case bookmarked
         }
 
         public init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
             id = try container.decode(String.self, forKey: .id)
             account = try container.decode(Account.self, forKey: .account)
-            contentWarning = try container.decode(String.self, forKey: .contentWarning)
+            spoilerText = try container.decode(String.self, forKey: .spoilerText)
             content = try container.decode(String.self, forKey: .content)
-            creationDate = try container.decode(Date.self, forKey: .creationDate)
-            isReblogged = try container.decode(Bool.self, forKey: .isReblogged)
-            isFavorited = try container.decode(Bool.self, forKey: .isFavorited)
+            createdAt = try container.decode(Date.self, forKey: .createdAt)
+            reblogged = try container.decode(Bool.self, forKey: .reblogged)
+            favourited = try container.decode(Bool.self, forKey: .favourited)
             reblogsCount = try container.decode(Int.self, forKey: .reblogsCount)
             favoritesCount = try container.decode(Int.self, forKey: .favoritesCount)
-            rebloggedStatus = try container.decodeIfPresent(Status.self, forKey: .rebloggedStatus)
+            reblog = try container.decodeIfPresent(Status.self, forKey: .reblog)
             inReplyToID = try container.decodeIfPresent(String.self, forKey: .inReplyToID)
 
             if let string = try container.decodeIfPresent(String.self, forKey: .url) {
@@ -121,16 +121,16 @@ extension Responses {
                 url = nil
             }
 
-            attachments = try container.decode([Attachment].self, forKey: .attachments)
+            mediaAttachments = try container.decode([Attachment].self, forKey: .mediaAttachments)
             mentions = try container.decode([Mention].self, forKey: .mentions)
             tags = try container.decode([Tag].self, forKey: .tags)
-            isSensitive = try container.decode(Bool.self, forKey: .isSensitive)
+            sensitive = try container.decode(Bool.self, forKey: .sensitive)
             visibility = try container.decode(Visibility.self, forKey: .visibility)
             pinned = try container.decodeIfPresent(Bool.self, forKey: .pinned)
             emojis = try container.decode([Emoji].self, forKey: .emojis)
             repliesCount = try container.decode(Int.self, forKey: .repliesCount)
             poll = try container.decodeIfPresent(Poll.self, forKey: .poll)
-            isBookmarked = try container.decode(Bool.self, forKey: .isBookmarked)
+            bookmarked = try container.decode(Bool.self, forKey: .bookmarked)
         }
     }
 }
