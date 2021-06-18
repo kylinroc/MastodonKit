@@ -49,6 +49,32 @@ public struct Client {
             completion(.failure(error))
         }
     }
+
+    @available(iOS 15, *)
+    public func response<Response: Decodable>(for reqeust: Request<Response>) async throws -> Response {
+        let urlReqeust = try reqeust.makeURLRequest(relativeTo: serverURL, accessToken: accessToken)
+        let (data, urlResponse) = try await URLSession.shared.data(for: urlReqeust)
+        let httpURLResponse = urlResponse as! HTTPURLResponse
+        let jsonDecoder = JSONDecoder()
+        jsonDecoder.dateDecodingStrategy = .custom { decoder in
+            let container = try decoder.singleValueContainer()
+            let string = try container.decode(String.self)
+
+            if let date = Self.dateFormatter.date(from: string) {
+                return date
+            } else if let date = Self.dateFormatterWithoutFractionalSeconds.date(from: string) {
+                return date
+            } else {
+                throw DecodingError.dataCorruptedError(in: container, debugDescription: "Date string does not match format expected by formatter.")
+            }
+        }
+        switch httpURLResponse.statusCode {
+        case 200:
+            return try jsonDecoder.decode(Response.self, from: data)
+        default:
+            throw try jsonDecoder.decode(Responses.Error.self, from: data)
+        }
+    }
 }
 
 extension Client {
